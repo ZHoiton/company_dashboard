@@ -22,7 +22,7 @@
             }
 
             .full-height {
-                height: 100vh;
+                height: 8vh;
             }
 
             .flex-center {
@@ -65,21 +65,7 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
-        <h2 style="text-align: center"> Laravel and React application </h2>
         <div id="root"></div>
         <script src="{{mix('js/app.js')}}" ></script>
-
-        </div>
     </body>
 </html>

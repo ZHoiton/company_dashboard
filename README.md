@@ -1,18 +1,70 @@
-Prerequisite
-	Install composer
-	Install yarn
-	Install xampp
-	Setup
-	1. pull
-	2. composer install
-	3. yarn
-	4. Rename .env.example file to .envinside your project root and fill the database information. (windows wont let you do it, so you have to open your console cd your project root directory and run mv .env.example .env )
-	5. Open the console and cd your project root directory
-	6. Run composer install or php composer.phar install
-	7. Run php artisan key:generate
-	8. Start Xammp apache and Mysql
-	9. Navigate in the browser to http://localhost/phpmyadmin/
-	10. Create a DB with the name from you .env file
-	11. Run php artisan migrate
-	12. (Optional) Run php artisan db:seed to run seeders, if any.
-	13. Run php artisan serve
+#Company Dashboard
+
+Prerequisite:
+
+- [Install NodeJS](https://nodejs.org/en/)
+- [Install composer](https://getcomposer.org/)
+- [Install yarn or npm](https://yarnpkg.com/en/)
+- [Install xampp](https://www.apachefriends.org/index.html)
+
+Tools:
+
+- [eslint](http://eslint.org/) (*automatically check for code & style errors*)
+- [webpack](https://webpack.github.io/) (*bundle javascript/css files & minification*)
+- [Circle-CI](https://circleci.com/) (*continuous integration, runs tests & deploys code to webserver*)
+
+## Installation
+1. Clone the repository into an empty folder:
+
+	git clone git@github.com:ZHoiton/company_dashboard.git
+
+2. Install the dependencies with composer
+
+	composer install
+
+or
+
+	php composer.phar install
+
+3. Install dependencies with yarn or npm:
+
+		yarn
+		npm i
+
+4. Create a .env file inside your project root and fill the database information. (windows wont let you do it, so you have to open your console cd your project root directory)
+
+- Change DB_DATABASE to a name that you want for your local database
+- Change DB_USERNAME to 'root' (no quotes)
+- Change DB_PASSWORD to '' (empty field with no quotes)
+
+5. Open the console and cd your project root directory (dont close this you will need it for step 11)
+6. Generate a new key for laravel 
+
+	php artisan key:generate
+
+7. Start Xammp 
+
+- apache
+- Mysql
+
+8. Navigate in the browser to [localhost](http://localhost/phpmyadmin/)
+
+9. Create a DB with the name from you .env file
+
+10. Migrate your db from laravel:
+
+	php artisan migrate
+
+12. Populate the Database with:
+	
+	php artisan db:seed to run seeders, if any.
+
+13. Start the application:
+	
+	php artisan serve
+
+14. Open a new console and navigate to the root directory
+
+15. If you want to work on the react side of the application run:
+	
+	npm run watch
