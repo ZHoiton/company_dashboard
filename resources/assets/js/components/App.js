@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-export default class Example extends Component {
+export default class App extends Component {
     render() {
         return (
             <div className="container">
@@ -11,7 +11,7 @@ export default class Example extends Component {
                             <div className="panel-heading">Example Component</div>
 
                             <div className="panel-body">
-                                I'm an example component!
+                                I'm a shit component! a
                             </div>
                         </div>
                     </div>
@@ -21,6 +21,7 @@ export default class Example extends Component {
     }
 }
 
-if (document.getElementById('example')) {
-    ReactDOM.render(<Example />, document.getElementById('example'));
-}
+ReactDOM.render(
+    <App />,
+    document.getElementById('root')
+);
