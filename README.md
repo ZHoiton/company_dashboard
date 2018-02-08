@@ -16,15 +16,15 @@ Tools:
 ## Installation
 1. Clone the repository into an empty folder:
 
-	git clone git@github.com:ZHoiton/company_dashboard.git
+		git clone git@github.com:ZHoiton/company_dashboard.git
 
 2. Install the dependencies with composer
 
-	composer install
+		composer install
+	
+	or
 
-or
-
-	php composer.phar install
+		php composer.phar install
 
 3. Install dependencies with yarn or npm:
 
@@ -33,19 +33,19 @@ or
 
 4. Create a .env file inside your project root and fill the database information. (windows wont let you do it, so you have to open your console cd your project root directory)
 
-- Change DB_DATABASE to a name that you want for your local database
-- Change DB_USERNAME to 'root' (no quotes)
-- Change DB_PASSWORD to '' (empty field with no quotes)
+	- Change DB_DATABASE to a name that you want for your local database
+	- Change DB_USERNAME to 'root' (no quotes)
+	- Change DB_PASSWORD to '' (empty field with no quotes)
 
 5. Open the console and cd your project root directory (dont close this you will need it for step 11)
 6. Generate a new key for laravel 
 
-	php artisan key:generate
+		php artisan key:generate
 
 7. Start Xammp 
 
-- apache
-- Mysql
+	- apache
+	- Mysql
 
 8. Navigate in the browser to [localhost](http://localhost/phpmyadmin/)
 
@@ -53,18 +53,18 @@ or
 
 10. Migrate your db from laravel:
 
-	php artisan migrate
+		php artisan migrate
 
 12. Populate the Database with:
 	
-	php artisan db:seed to run seeders, if any.
+		php artisan db:seed to run seeders, if any.
 
 13. Start the application:
 	
-	php artisan serve
+		php artisan serve
 
 14. Open a new console and navigate to the root directory
 
 15. If you want to work on the react side of the application run:
 	
-	npm run watch
+		npm run watch
