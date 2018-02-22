@@ -1,0 +1,4 @@
+build/*
+utils/*
+node_modules/*
+**/node_modules/*
