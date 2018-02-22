@@ -13,10 +13,35 @@ Tools:
 - [webpack](https://webpack.github.io/) (*bundle javascript/css files & minification*)
 - [Circle-CI](https://circleci.com/) (*continuous integration, runs tests & deploys code to webserver*)
 
-## Installation
+## Installation Front-end
 1. Clone the repository into an empty folder:
 
-		git clone git@github.com:ZHoiton/company_dashboard.git
+		git clone git@github.com:ZHoiton/company_dashboard.git [FOLDER NAME]
+
+2. Navigate to the front-end folder
+
+3. Install dependencies with yarn or npm:
+
+		yarn
+
+		or 
+
+		npm i
+
+4.  Start the Project
+
+		yarn start
+
+		or 
+
+		npm start
+
+## Installation Back-end
+1. Clone the repository into an empty folder:
+
+		git clone git@github.com:ZHoiton/company_dashboard.git [FOLDER NAME]
+
+2. Navigate to the back-end folder
 
 2. Install the dependencies with composer
 
@@ -25,11 +50,6 @@ Tools:
 	or
 
 		php composer.phar install
-
-3. Install dependencies with yarn or npm:
-
-		yarn
-		npm i
 
 4. Create a .env file inside your project root and fill the database information. (windows wont let you do it, so you have to open your console cd your project root directory)
 
@@ -63,8 +83,3 @@ Tools:
 	
 		php artisan serve
 
-14. Open a new console and navigate to the root directory
-
-15. If you want to work on the react side of the application run:
-	
-		npm run watch
