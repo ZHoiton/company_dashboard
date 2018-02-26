@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ExampleChildOne from './ExampleChildOne';
 import ExampleChildTwo from './ExampleChildTwo';
+import ExampleChildThree from './ExampleChildThree';
 import Toggle from 'material-ui/Toggle';
 import './styles.css';
 
@@ -23,6 +24,7 @@ export default class ExampleParentComponent extends Component {
 		this.state = {
 			showFirstChild: false,
 			showSecondChild: false,
+			showThirdChild: false,
 		};
 	}
 
@@ -36,6 +38,11 @@ export default class ExampleParentComponent extends Component {
 		this.setState({showSecondChild:!showSecondChild});
 	};
 
+	onClickThird = () => {
+		const {showThirdChild} = this.state;
+		this.setState({showThirdChild:!showThirdChild});
+	};
+
 	/* Component lifecycle methods
 	componentWillReceiveProps(nextProps)
 	shouldComponentUpdate(nextProps, nextState)
@@ -43,17 +50,19 @@ export default class ExampleParentComponent extends Component {
 	componentDidMount(prevProps, prevState)
 	*/
 
-	// required for every component
+	//required for every component
 	render() {
-		const {	showFirstChild, showSecondChild	} = this.state;
+		const {	showFirstChild, showSecondChild, showThirdChild	} = this.state;
 		const { requiredExampleProp, exampleProp } = this.props;
 		return (
 			<div>
 				{showFirstChild?<ExampleChildOne/>:undefined}
 				{showSecondChild?<ExampleChildTwo/>:undefined}
+				{showThirdChild?<ExampleChildThree/>:undefined}
 				<div style={{display:'flex',width:'200px',margin:'auto', flexDirection: 'column'}}>
 					<Toggle label={requiredExampleProp} onToggle={this.onClickFirst}/>
 					<Toggle label={'Show Second Child'} onToggle={this.onClickSecond}/>
+					<Toggle value={true} label={'Vankatas child'} onToggle={this.onClickThird}/>
 					{exampleProp}
 				</div>
 			</div>
