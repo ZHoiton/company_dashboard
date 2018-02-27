@@ -24,7 +24,7 @@ export default class ExampleParentComponent extends Component {
 		this.state = {
 			showFirstChild: false,
 			showSecondChild: false,
-			showThirdChild: false,
+			showThirdChild: true,
 		};
 	}
 
@@ -50,7 +50,7 @@ export default class ExampleParentComponent extends Component {
 	componentDidMount(prevProps, prevState)
 	*/
 
-	//required for every component
+	// required for every component
 	render() {
 		const {	showFirstChild, showSecondChild, showThirdChild	} = this.state;
 		const { requiredExampleProp, exampleProp } = this.props;
@@ -62,7 +62,7 @@ export default class ExampleParentComponent extends Component {
 				<div style={{display:'flex',width:'200px',margin:'auto', flexDirection: 'column'}}>
 					<Toggle label={requiredExampleProp} onToggle={this.onClickFirst}/>
 					<Toggle label={'Show Second Child'} onToggle={this.onClickSecond}/>
-					<Toggle value={true} label={'Vankatas child'} onToggle={this.onClickThird}/>
+					<Toggle value={true} label={'Vankatas child'} onToggle={this.onClickThird} toggled={showThirdChild}/>
 					{exampleProp}
 				</div>
 			</div>
