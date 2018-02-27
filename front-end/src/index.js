@@ -4,9 +4,7 @@ import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { blue700, redA200 } from 'material-ui/styles/colors';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
 // const request = new XMLHttpRequest();
 // const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -17,20 +15,13 @@ import { blue700, redA200 } from 'material-ui/styles/colors';
 // console.log(request);
 // console.log(token);
 
-const muiTheme = getMuiTheme({
-	palette: {
-		primary1Color: blue700,
-		accent1Color: redA200
-	}
-});
+const muiTheme = createMuiTheme();
 
 const MaterialApp = () => (
-	<Provider store={{}}>
-		<MuiThemeProvider muiTheme={muiTheme}>
+		<MuiThemeProvider theme={muiTheme}>
 			<Router>
 				<App />
 			</Router>
 		</MuiThemeProvider>
-	</Provider>
 );
 ReactDOM.render(<MaterialApp />, document.getElementById('root'));

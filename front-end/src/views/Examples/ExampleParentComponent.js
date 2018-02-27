@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ExampleChildOne from './ExampleChildOne';
 import ExampleChildTwo from './ExampleChildTwo';
 import ExampleChildThree from './ExampleChildThree';
-import Toggle from 'material-ui/Toggle';
+import Switch from 'material-ui/Switch';
 import './styles.css';
 
 export default class ExampleParentComponent extends Component {
@@ -36,6 +36,7 @@ export default class ExampleParentComponent extends Component {
 	onClickSecond = () => {
 		const {showSecondChild} = this.state;
 		this.setState({showSecondChild:!showSecondChild});
+
 	};
 
 	onClickThird = () => {
@@ -43,6 +44,12 @@ export default class ExampleParentComponent extends Component {
 		this.setState({showThirdChild:!showThirdChild});
 	};
 
+
+	// This event does the same as the 3 events above
+	handleToggle = (event) => {
+		const { value, checked } = event.target;
+		this.setState({ [value]: checked });
+	}
 	/* Component lifecycle methods
 	componentWillReceiveProps(nextProps)
 	shouldComponentUpdate(nextProps, nextState)
@@ -60,9 +67,9 @@ export default class ExampleParentComponent extends Component {
 				{showSecondChild?<ExampleChildTwo/>:undefined}
 				{showThirdChild?<ExampleChildThree/>:undefined}
 				<div style={{display:'flex',width:'200px',margin:'auto', flexDirection: 'column'}}>
-					<Toggle label={requiredExampleProp} onToggle={this.onClickFirst}/>
-					<Toggle label={'Show Second Child'} onToggle={this.onClickSecond}/>
-					<Toggle value={true} label={'Vankatas child'} onToggle={this.onClickThird} toggled={showThirdChild}/>
+					<Switch value={requiredExampleProp} onChange={this.handleToggle}/>
+					<Switch value='showSecondChild' onChange={this.handleToggle}/>
+					<Switch value='showThirdChild' onChange={this.onClickThird} checked={showThirdChild}/>
 					{exampleProp}
 				</div>
 			</div>

@@ -37,7 +37,7 @@ Tools:
 
 		npm start
 
-## Installation Back-end
+## Installation Back-end (Setup Pending)
 1. Clone the repository into an empty folder:
 
 		git clone git@github.com:ZHoiton/company_dashboard.git [FOLDER NAME]
