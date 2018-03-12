@@ -13,11 +13,11 @@ module.exports = {
 	},
 	module: {
 		loaders: [
-			{ test: /\.(js|jsx)$/, loader: 'babel-loader', exclude: /node_modules/ },
-			{test: /\.css$/, loader: 'style-loader!css-loader'},
+			{ test: /\.(js|jsx)$/, loader: 'babel-loader', exclude: /node_modules/},
+			{ test: /\.css$/, loader: 'style-loader!css-loader'},
 			{ test: /\.js$/, exclude: ['/node_modules/','/utils'], use: ['babel-loader', 'eslint-loader'] },
-			{test: /\.(otf|eot|mp4|svg|ttf|woff|woff2)/, loader: 'file-loader'},
-			{test: /\.(jpe?g|png|gif|ico)$/, loader: 'url-loader?name=[path][name].[ext]'}
+			{ test: /\.(otf|eot|mp4|svg|ttf|woff|woff2)/, loader: 'file-loader'},
+			{ test: /\.(jpe?g|png|gif|ico)$/, loader: 'url-loader?name=[path][name].[ext]'}
 		]
 	},
 	plugins: [

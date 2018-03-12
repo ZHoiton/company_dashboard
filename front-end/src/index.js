@@ -18,10 +18,12 @@ import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 const muiTheme = createMuiTheme();
 
 const MaterialApp = () => (
-		<MuiThemeProvider theme={muiTheme}>
+	<MuiThemeProvider theme={muiTheme}>
+		<Provider>
 			<Router>
 				<App />
 			</Router>
-		</MuiThemeProvider>
+		</Provider>
+	</MuiThemeProvider>
 );
 ReactDOM.render(<MaterialApp />, document.getElementById('root'));
