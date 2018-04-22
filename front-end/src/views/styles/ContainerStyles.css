@@ -1,0 +1,10 @@
+.nav-bar-button-right {
+    
+    color: green;
+}
+
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+}
+

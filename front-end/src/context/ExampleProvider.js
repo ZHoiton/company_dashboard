@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {ExampleContext} from './contexts';
+import ExampleContext from './contexts';
 
 export default class ExampleProvider extends Component {
 	static propTypes = {
@@ -17,7 +17,7 @@ export default class ExampleProvider extends Component {
 
 	render() {
 		return (
-			<ExampleContext.Provider value={'this.state.name'}>
+			<ExampleContext.Provider value={this.state}>
 				{this.props.children}
 			</ExampleContext.Provider>
 		);

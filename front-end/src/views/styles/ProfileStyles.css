@@ -1,0 +1,29 @@
+.profile-page {
+    width: 75%;
+    height: 800px;
+    margin:auto;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-picture {
+    width: 200px;
+    height: 200px;
+}
+
+.profile-activity {
+    margin: 50px 10px;
+    padding: 10px;
+}
+
+.profile-info-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.profile-info {
+    width: 80%;
+    padding: 20px;
+}
