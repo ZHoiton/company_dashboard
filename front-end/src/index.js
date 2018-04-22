@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {StrictMode} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -21,7 +21,9 @@ const MaterialApp = () => (
 	<MuiThemeProvider theme={muiTheme}>
 		<Provider>
 			<Router>
-				<App />
+				<StrictMode>
+					<App />
+				</StrictMode>
 			</Router>
 		</Provider>
 	</MuiThemeProvider>

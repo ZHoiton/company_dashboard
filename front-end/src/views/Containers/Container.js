@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import Profile from '../Profile/Profile';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ContainerHeader from './ContainerHeader';
@@ -9,7 +9,7 @@ export default class Container extends Component{
 
 	render() {
 		return (
-			<div>
+			<Fragment>
 				<ContainerHeader/>
 				<BrowserRouter>
 					<Switch>
@@ -38,7 +38,7 @@ export default class Container extends Component{
 						/>
 					</Switch>
 				</BrowserRouter>
-			</div>
+			</Fragment>
 		);
 	}
 }
