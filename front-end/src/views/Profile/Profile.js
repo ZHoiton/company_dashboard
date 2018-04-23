@@ -4,13 +4,14 @@ import Avatar from 'material-ui/Avatar';
 import '../styles/ProfileStyles.css';
 
 export default class ExampleChildOne extends Component {
+
 	render() {
 		return (
 			<Card className='profile-page'>
 				<CardHeader title='Nikolay Pelov'/>
 				<CardContent >
 					<div className='profile-info-box'>
-						<Avatar alt="Remy Sharp" src="https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_1280.jpg" className='profile-picture'/>
+						<Avatar alt="Remy Sharp" src="http://www.techexclusive.net/wp-content/uploads/2018/01/Royalty-Free-Images.jpg" className='profile-picture'/>
 						<Card className='profile-info'>
 							<p>Height: 135 cm</p>
 							<p>Weight: 43 kg</p>
