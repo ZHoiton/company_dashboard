@@ -1,0 +1,15 @@
+.login-card {
+margin:auto;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+.text-field{
+width: 25%;
+}
+
+.button{
+width: 25%;
+margin-top: 15px;
+}
