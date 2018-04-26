@@ -13,9 +13,16 @@ class ContainerHeader extends Component{
 	static propTypes = {
 		history: PropTypes.object,
 	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			clicked: false,
+		};
+	}
 
 	onLoginClick = () => {
 		this.props.history.push('/login');
+		this.setState({clicked: true});
 	}
 
 	render() {
@@ -28,11 +35,12 @@ class ContainerHeader extends Component{
 					<Typography variant="title" color="inherit">
 						eZLink
 					</Typography>
-					<Button className='nav-bar-button-right' color='primary' onClick={this.onLoginClick}>
-						<Typography variant="button" color="inherit">
+					{!this.state.clicked ?
+						<Button className='nav-bar-button-right' color='primary' onClick={this.onLoginClick}>
+							<Typography variant="button" color="inherit">
 							Login
-						</Typography>
-					</Button>
+							</Typography>
+						</Button>:undefined}
 				</Toolbar>
 			</AppBar>
 		);

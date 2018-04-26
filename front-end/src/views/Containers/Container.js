@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import Profile from '../Profile/Profile';
 import LogIn from '../LogIn/LogIn';
+import Home from '../Home/Home';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ContainerHeader from './ContainerHeader';
 import '../styles/ContainerStyles.css';
@@ -17,7 +18,7 @@ export default class Container extends Component{
 						<Route
 							exact
 							path='/'
-							component={Profile}
+							component={Home}
 						/>
 						<Route
 							exact
@@ -27,7 +28,7 @@ export default class Container extends Component{
 						<Route
 							exact
 							path='/calendar'
-							component={Profile}
+							component={LogIn}
 						/>
 						<Route
 							path='/profile'
@@ -35,7 +36,7 @@ export default class Container extends Component{
 						/>
 						<Route
 							path='*'
-							component={Profile}
+							component={Home}
 						/>
 					</Switch>
 				</BrowserRouter>
