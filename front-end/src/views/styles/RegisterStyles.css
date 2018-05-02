@@ -1,0 +1,21 @@
+.register-card {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.text-field{
+    width: 100%; 
+}
+
+.button{
+    width:100%;
+    margin-top: 15px;
+}
+
+.register-page {
+    width: 40%;
+    height: 600px;
+    margin: auto;
+    margin-top: 40px;
+}

@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import Profile from '../Profile/Profile';
 import LogIn from '../LogIn/LogIn';
+import Register from '../Register/Register';
 import Home from '../Home/Home';
 import { Route, Switch } from 'react-router-dom';
 import ContainerHeader from './ContainerHeader';
@@ -23,6 +24,11 @@ export default class Container extends Component{
 						exact
 						path='/login'
 						component={LogIn}
+					/>
+					<Route
+						exact
+						path='/register'
+						component={Register}
 					/>
 					<Route
 						exact

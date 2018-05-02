@@ -5,6 +5,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import './FireBase';
 
 // const request = new XMLHttpRequest();
 // const token = document.querySelector('meta[name="csrf-token"]').content;
