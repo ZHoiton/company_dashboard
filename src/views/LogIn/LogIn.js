@@ -28,19 +28,19 @@ export default class Login extends Component {
 			.auth()
 			.signInWithEmailAndPassword(email, password)
 			.then(user => {
-				console.log(user);
-				console.log(user.emailVerified);
+				// console.log(user);
+				// console.log(user.emailVerified);
 				if (!user.emailVerified) this.setState({ emailError: true });
-				// this.props.history.push("/profile");
-			})
-			.catch(error => {
-				// Handle Errors here.
-				const errorCode = error.code;
-				console.log(errorCode);
-				const errorMessage = error.message;
-				console.log(errorMessage);
-				// ...
+				this.props.history.push("/profile");
 			});
+		// .catch(error => {
+		// 	// Handle Errors here.
+		// 	const errorCode = error.code;
+		// 	// console.log(errorCode);
+		// 	const errorMessage = error.message;
+		// 	// console.log(errorMessage);
+		// 	// ...
+		// });
 	};
 
 	onChange = event => {

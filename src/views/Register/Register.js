@@ -49,7 +49,7 @@ export default class Register extends Component {
 				// const errorMessage = error.message;
 				// ...
 			});
-		// this.props.history.push("/profile");
+		this.props.history.push("/profile");
 	};
 
 	render() {
