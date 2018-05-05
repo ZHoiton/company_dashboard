@@ -43,7 +43,7 @@ export default class Register extends Component {
 						// An error happened.
 					});
 			})
-			.catch(function() {
+			.catch(() => {
 				// Handle Errors here.
 				// const errorCode = error.code;
 				// const errorMessage = error.message;

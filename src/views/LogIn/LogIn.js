@@ -33,7 +33,7 @@ export default class Login extends Component {
 				if (!user.emailVerified) this.setState({ emailError: true });
 				// this.props.history.push("/profile");
 			})
-			.catch(function(error) {
+			.catch(error => {
 				// Handle Errors here.
 				const errorCode = error.code;
 				console.log(errorCode);
