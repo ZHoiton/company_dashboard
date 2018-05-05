@@ -1,15 +1,15 @@
-import Card, { CardContent, CardHeader } from 'material-ui/Card';
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField/TextField';
-import '../styles/LogInStyles.css';
-import firebase from 'firebase';
+import Card, { CardContent, CardHeader } from "material-ui/Card";
+import PropTypes from "prop-types";
+import React, { Component } from "react";
+import Button from "material-ui/Button";
+import TextField from "material-ui/TextField/TextField";
+import { FormControl, FormHelperText } from "material-ui/Form";
+import "../styles/LogInStyles.css";
+import firebase from "firebase";
 
 export default class Login extends Component {
-
 	static propTypes = {
-		history: PropTypes.object,
+		history: PropTypes.object
 	};
 
 	constructor(props) {
@@ -17,54 +17,80 @@ export default class Login extends Component {
 		this.state = {
 			users: firebase.firestore().collection("users"),
 			email: "",
+			password: "",
+			emailError: false
 		};
 	}
 
 	onLoginClick = () => {
-		const { users, email } = this.state;
-		users.add({
-			first: email,
-			last: "Lovelace",
-			born: 1815
-		})
+		const { email, password } = this.state;
+		firebase
+			.auth()
+			.signInWithEmailAndPassword(email, password)
+			.then(user => {
+				console.log(user);
+				console.log(user.emailVerified);
+				if (!user.emailVerified) this.setState({ emailError: true });
+				// this.props.history.push("/profile");
+			})
 			.catch(function(error) {
-				console.error("Error adding document: ", error);
+				// Handle Errors here.
+				const errorCode = error.code;
+				console.log(errorCode);
+				const errorMessage = error.message;
+				console.log(errorMessage);
+				// ...
 			});
-		this.props.history.push('/profile');
-	}
+	};
 
-	onChange = (e) =>{
-		console.log(e.target);
-		this.setState({email: e.target.value});
-	}
+	onChange = event => {
+		const state = {};
+		state[event.target.id] = event.target.value;
+		this.setState(state);
+	};
 
 	render() {
-		const {email} = this.state;
+		const { email, emailError } = this.state;
 		return (
-			<Card className='login-page'>
-				<CardHeader title='Log In'/>
-				<CardContent className='login-page'>
+			<Card className="login-page">
+				<CardHeader title="Log In" />
+				<CardContent className="login-page">
+					<FormControl>
+						<TextField
+							id="email"
+							label="Email"
+							value={email}
+							error={emailError}
+							className="text-field"
+							margin="normal"
+							onChange={this.onChange}
+						/>
+						{emailError ? (
+							<FormHelperText className="error" id="email-error-text">
+								verify
+							</FormHelperText>
+						) : (
+							undefined
+						)}
+					</FormControl>
 					<TextField
-						id="email"
-						label="Email"
-						value={email}
-						className='text-field'
-						margin="normal"
-						onChange={this.onChange}
-					/>
-					<TextField
-						id="password-input"
+						id="password"
 						label="Password"
-						className='text-field'
+						className="text-field"
 						type="password"
 						autoComplete="current-password"
 						margin="normal"
+						onChange={this.onChange}
 					/>
 
-					<Button variant="raised" color="primary" className='button' onClick={this.onLoginClick}>
-							Login
+					<Button
+						variant="raised"
+						color="primary"
+						className="button"
+						onClick={this.onLoginClick}
+					>
+						Login
 					</Button>
-
 				</CardContent>
 			</Card>
 		);
