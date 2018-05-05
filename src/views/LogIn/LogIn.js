@@ -15,14 +15,15 @@ export default class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			db: firebase.firestore(),
+			users: firebase.firestore().collection("users"),
+			email: "",
 		};
 	}
 
 	onLoginClick = () => {
-		const { db } = this.state;
-		db.collection("users").add({
-			first: "Ada1",
+		const { users, email } = this.state;
+		users.add({
+			first: email,
 			last: "Lovelace",
 			born: 1815
 		})
@@ -32,7 +33,13 @@ export default class Login extends Component {
 		this.props.history.push('/profile');
 	}
 
+	onChange = (e) =>{
+		console.log(e.target);
+		this.setState({email: e.target.value});
+	}
+
 	render() {
+		const {email} = this.state;
 		return (
 			<Card className='login-page'>
 				<CardHeader title='Log In'/>
@@ -40,8 +47,10 @@ export default class Login extends Component {
 					<TextField
 						id="email"
 						label="Email"
+						value={email}
 						className='text-field'
 						margin="normal"
+						onChange={this.onChange}
 					/>
 					<TextField
 						id="password-input"
