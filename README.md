@@ -4,9 +4,7 @@
 Prerequisite:
 
 - [Install NodeJS](https://nodejs.org/en/)
-- [Install composer](https://getcomposer.org/)
 - [Install yarn or npm](https://yarnpkg.com/en/)
-- [Install xampp](https://www.apachefriends.org/index.html)
 
 Tools:
 
