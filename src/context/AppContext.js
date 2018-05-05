@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ExampleContext from './contexts';
+import Context from './contexts';
 
-export default class ExampleProvider extends Component {
+export default class AppContext extends Component {
 	static propTypes = {
 		children: PropTypes.any,
 	};
@@ -11,15 +11,15 @@ export default class ExampleProvider extends Component {
 		super(props);
 
 		this.state = {
-			name: 'Lets test it!'
+			loggedIn: false,
 		};
 	}
 
 	render() {
 		return (
-			<ExampleContext.Provider value={this.state}>
+			<Context.Provider value={this.state}>
 				{this.props.children}
-			</ExampleContext.Provider>
+			</Context.Provider>
 		);
 	}
 }

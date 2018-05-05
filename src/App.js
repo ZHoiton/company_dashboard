@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Container from './views/Containers/Container';
-import ExampleProvider from './context/ExampleProvider';
+import AppContext from './context/AppContext';
 import JssProvider from 'react-jss/lib/JssProvider';
 import { create } from 'jss';
 import { createGenerateClassName, jssPreset } from 'material-ui/styles';
@@ -15,9 +15,9 @@ class App extends Component {
 		return (
 			<JssProvider jss={jss} generateClassName={generateClassName}>
 				<div>
-					<ExampleProvider>
+					<AppContext>
 						<Container/>
-					</ExampleProvider>
+					</AppContext>
 				</div>
 			</JssProvider>
 		);

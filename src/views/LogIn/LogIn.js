@@ -30,8 +30,11 @@ export default class Login extends Component {
 			.then(user => {
 				// console.log(user);
 				// console.log(user.emailVerified);
-				if (!user.emailVerified) this.setState({ emailError: true });
-				this.props.history.push("/profile");
+				if (!user.emailVerified) {
+					this.setState({ emailError: true });
+				}else {
+					this.props.history.push("/profile");
+				}
 			});
 		// .catch(error => {
 		// 	// Handle Errors here.
@@ -55,7 +58,7 @@ export default class Login extends Component {
 			<Card className="login-page">
 				<CardHeader title="Log In" />
 				<CardContent className="login-page">
-					<FormControl>
+					<FormControl fullWidth={true}>
 						<TextField
 							id="email"
 							label="Email"
