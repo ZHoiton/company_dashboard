@@ -40,6 +40,5 @@ jobs:
       - run: yarn build
 
       # deploy to firebase
-      - run: yarn rules
       - run: node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN" --non-interactive
 
