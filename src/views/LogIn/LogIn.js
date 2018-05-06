@@ -33,7 +33,7 @@ export default class Login extends Component {
 				if (!user.emailVerified) {
 					this.setState({ emailError: true });
 				}else {
-					this.props.history.push("/profile");
+					this.props.history.push("/");
 				}
 			});
 		// .catch(error => {
@@ -70,7 +70,7 @@ export default class Login extends Component {
 						/>
 						{emailError ? (
 							<FormHelperText className="error" id="email-error-text">
-								verify
+								Verify email
 							</FormHelperText>
 						) : (
 							undefined

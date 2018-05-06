@@ -4,7 +4,11 @@
 
 .nav-bar {
 	display: flex;
-	justify-content: space-between;
+	flex-direction: row;
+}
+
+.nav-bar-buttons {
+	align-self: flex-end;
 }
 
 .error {

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import Button from "material-ui/Button";
 import TextField from "material-ui/TextField/TextField";
+import { FormControl, FormHelperText } from "material-ui/Form";
 import "../styles/RegisterStyles.css";
 import firebase from "firebase";
 
@@ -15,11 +16,12 @@ export default class Register extends Component {
 		super(props);
 		this.state = {
 			users: firebase.firestore().collection("users"),
+			emailTakenError: false,
 			email: "",
 			firstName: "",
 			lastName: "",
 			password: "",
-			passwordConfirm: ""
+			passwordConfirmMatch: false
 		};
 	}
 
@@ -29,6 +31,14 @@ export default class Register extends Component {
 		this.setState(state);
 	};
 
+	isPasswordMatching = event => {
+		if (this.state.password === event.target.value) {
+			this.setState({ passwordConfirmMatch: false });
+		} else {
+			this.setState({ passwordConfirmMatch: true });
+		}
+	};
+
 	onRegisterClick = () => {
 		firebase
 			.auth()
@@ -36,23 +46,33 @@ export default class Register extends Component {
 			.then(user => {
 				user
 					.sendEmailVerification()
-					.then(function() {
+					.then(() => {
 						// Email sent.
+						this.state.users.doc(user.uid).set({
+							firstName: this.state.firstName,
+							lastName: this.state.lastName
+						});
+						this.props.history.push("/login");
 					})
-					.catch(function() {
+					.catch(() => {
 						// An error happened.
 					});
 			})
-			.catch(() => {
+			.catch(error => {
 				// Handle Errors here.
-				// const errorCode = error.code;
-				// const errorMessage = error.message;
+				const errorCode = error.code;
+				console.log(errorCode);
+				const errorMessage = error.message;
+				console.log(errorMessage);
+				if (errorCode === "auth/email-already-in-use") {
+					this.setState({ emailTakenError: true });
+				}
 				// ...
 			});
-		this.props.history.push("/profile");
 	};
 
 	render() {
+		const { emailTakenError, passwordConfirmMatch } = this.state;
 		return (
 			<Card className="register-page">
 				<CardHeader title="Register" />
@@ -71,13 +91,24 @@ export default class Register extends Component {
 						margin="normal"
 						onChange={this.onChange}
 					/>
-					<TextField
-						id="email"
-						label="Email"
-						className="text-field"
-						margin="normal"
-						onChange={this.onChange}
-					/>
+					<FormControl fullWidth={true}>
+						<TextField
+							id="email"
+							label="Email"
+							className="text-field"
+							margin="normal"
+							error={emailTakenError}
+							onChange={this.onChange}
+						/>
+
+						{emailTakenError ? (
+							<FormHelperText className="error" id="email-error-text">
+								Email already taken
+							</FormHelperText>
+						) : (
+							undefined
+						)}
+					</FormControl>
 					<TextField
 						id="password"
 						label="Password"
@@ -87,15 +118,26 @@ export default class Register extends Component {
 						margin="normal"
 						onChange={this.onChange}
 					/>
-					<TextField
-						id="passwordConfirm"
-						label="Confirm Password"
-						className="text-field"
-						type="password"
-						autoComplete="current-password"
-						margin="normal"
-						onChange={this.onChange}
-					/>
+					<FormControl fullWidth={true}>
+						<TextField
+							id="passwordConfirm"
+							label="Confirm Password"
+							className="text-field"
+							type="password"
+							autoComplete="current-password"
+							error={passwordConfirmMatch}
+							margin="normal"
+							onChange={this.isPasswordMatching}
+						/>
+
+						{passwordConfirmMatch ? (
+							<FormHelperText className="error" id="email-error-text">
+								Password does not match
+							</FormHelperText>
+						) : (
+							undefined
+						)}
+					</FormControl>
 					<Button
 						variant="raised"
 						color="primary"
