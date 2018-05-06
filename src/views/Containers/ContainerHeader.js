@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import AppBar from "material-ui/AppBar";
@@ -8,7 +8,13 @@ import Button from "material-ui/Button";
 import IconButton from "material-ui/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import firebase from "firebase";
-import Context from "../../context/contexts";
+import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
+import { MenuItem, MenuList } from 'material-ui/Menu';
+import Popover from 'material-ui/Popover';
+import Grow from 'material-ui/transitions/Grow';
+import Paper from 'material-ui/Paper';
+import Avatar from 'material-ui/Avatar';
+import { AuthContext } from "../../context/contexts";
 
 class ContainerHeader extends Component {
 	static propTypes = {
@@ -19,6 +25,7 @@ class ContainerHeader extends Component {
 		this.state = {
 			clicked: false
 		};
+		this.userName = React.createRef();
 	}
 
 	onLoginClick = () => {
@@ -26,10 +33,10 @@ class ContainerHeader extends Component {
 		this.setState({ clicked: true });
 	};
 
-	onRegisteClick = () => {
-		this.props.history.push("/register");
-		this.setState({ clicked: true });
-	};
+	handleClick = () => {
+		const { clicked } = this.state;
+		this.setState({clicked:!clicked});
+	}
 
 	onSignOutClick = () => {
 		firebase
@@ -45,6 +52,7 @@ class ContainerHeader extends Component {
 	};
 
 	render() {
+		const { clicked } =this.state;
 		return (
 			<AppBar position="static">
 				<Toolbar className="nav-bar">
@@ -54,55 +62,56 @@ class ContainerHeader extends Component {
 					<Typography variant="title" color="inherit">
 						eZLink
 					</Typography>
-					<Context>
+					<AuthContext>
 						{context =>
 							!context.userIsLoggedIn ? (
-								<Fragment>
-									<Button
-										className="nav-bar-button-right"
-										color="primary"
-										onClick={this.onLoginClick}
-									>
-										<Typography variant="button" color="inherit">
+
+								<Button
+									className="nav-bar-button-right"
+									color="primary"
+									onClick={this.onLoginClick}
+								>
+									<Typography variant="button" color="inherit">
 											Login
-										</Typography>
-									</Button>
-									<Button
-										className="nav-bar-button-right"
-										color="primary"
-										onClick={this.onRegisteClick}
-									>
-										<Typography variant="button" color="inherit">
-											Register
-										</Typography>
-									</Button>
-								</Fragment>
+									</Typography>
+								</Button>
 							) : (
-								<Fragment>
+								<div className="nav-bar-buttons" ref={this.userName}>
 									<Button
-										className="nav-bar-button-right"
-										color="primary"
-										onClick={() => {
-											this.props.history.push("/profile");
+										onClick={this.handleClick}
+									>
+										{context.user.firstName}
+									</Button>
+									<Avatar alt="Remy Sharp" onClick={this.handleClick} src={context.user.picture} />
+									<Popover
+										open={clicked}
+										anchorEl={this.userName.current}
+										anchorReference='anchorEl'
+										anchorOrigin={{
+											vertical: 'bottom',
+											horizontal: 'left',
+										}}
+										transformOrigin={{
+											vertical: 'top',
+											horizontal: 'left',
 										}}
 									>
-										<Typography variant="button" color="inherit">
-											Prpo
-										</Typography>
-									</Button>
-									<Button
-										className="nav-bar-button-right"
-										color="primary"
-										onClick={this.onSignOutClick}
-									>
-										<Typography variant="button" color="inherit">
-											Sign out
-										</Typography>
-									</Button>
-								</Fragment>
+										<ClickAwayListener onClickAway={this.handleClick}>
+											<Grow in={true}>
+												<Paper>
+													<MenuList role="menu">
+														<MenuItem onClick={this.handleClick}>Profile</MenuItem>
+														<MenuItem onClick={this.handleClick}>My account</MenuItem>
+														<MenuItem onClick={this.handleClick}>Logout</MenuItem>
+													</MenuList>
+												</Paper>
+											</Grow>
+										</ClickAwayListener>
+									</Popover>
+								</div>
 							)
 						}
-					</Context>
+					</AuthContext>
 				</Toolbar>
 			</AppBar>
 		);
