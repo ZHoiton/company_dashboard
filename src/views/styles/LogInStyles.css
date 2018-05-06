@@ -19,3 +19,8 @@
     margin: auto;
     margin-top: 40px;
 }
+
+.login-text:hover {
+    cursor: pointer;
+    
+}

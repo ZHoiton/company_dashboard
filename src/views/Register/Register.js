@@ -100,7 +100,6 @@ export default class Register extends Component {
 							error={emailTakenError}
 							onChange={this.onChange}
 						/>
-
 						{emailTakenError ? (
 							<FormHelperText className="error" id="email-error-text">
 								Email already taken

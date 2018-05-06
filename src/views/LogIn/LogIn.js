@@ -22,6 +22,10 @@ export default class Login extends Component {
 		};
 	}
 
+	onCLickRegister = () => {
+		this.props.history.push("/register");
+	};
+
 	onLoginClick = () => {
 		const { email, password } = this.state;
 		firebase
@@ -37,12 +41,12 @@ export default class Login extends Component {
 				}
 			});
 		// .catch(error => {
-		// 	// Handle Errors here.
+		// // Handle Errors here.
 		// 	const errorCode = error.code;
-		// 	// console.log(errorCode);
+		// 	console.log(errorCode);
 		// 	const errorMessage = error.message;
-		// 	// console.log(errorMessage);
-		// 	// ...
+		// 	console.log(errorMessage);
+		// // ...
 		// });
 	};
 
@@ -94,6 +98,7 @@ export default class Login extends Component {
 					>
 						Login
 					</Button>
+					<p onClick={this.onCLickRegister} className="login-text">{`Don't have an account? Register!`}</p>
 				</CardContent>
 			</Card>
 		);
