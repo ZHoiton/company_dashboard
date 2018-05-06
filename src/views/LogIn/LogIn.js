@@ -30,6 +30,8 @@ export default class Login extends Component {
 
 	onLoginClick = () => {
 		const { email, password } = this.state;
+		this.setState({emailError: false,
+			passwordError: false,});
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
@@ -42,34 +44,22 @@ export default class Login extends Component {
 						emailError: true
 					});
 				} else {
-					this.setState({
-						emailError: false
-					});
-					this.props.history.push("/");
+					this.props.history.push("/profile");
 				}
 			})
 			.catch(error => {
 				// Handle Errors here.
 				const errorCode = error.code;
+
+				let state = {};
 				if (errorCode === "auth/user-not-found") {
-					this.setState({
+					state = {
 						emailErrorMessage: "Email not found",
 						emailError: true
-					});
-				} else {
-					this.setState({
-						emailError: false
-					});
+					};
 				}
-				if (errorCode === "auth/wrong-password") {
-					this.setState({
-						passwordError: true
-					});
-				} else {
-					this.setState({
-						passwordError: false
-					});
-				}
+				state.passwordError  = errorCode === "auth/wrong-password";
+				this.setState(state);
 			});
 	};
 
