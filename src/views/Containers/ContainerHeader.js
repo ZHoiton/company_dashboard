@@ -44,12 +44,18 @@ class ContainerHeader extends Component {
 			.signOut()
 			.then(() => {
 				// Sign-out successful.
+				this.handleClick();
 				this.props.history.push("/");
 			})
 			.catch(() => {
 				// An error happened.
 			});
 	};
+
+	onProfileClick = () =>{
+		this.handleClick();
+		this.props.history.push("/profile");
+	}
 
 	render() {
 		const { clicked } =this.state;
@@ -100,9 +106,11 @@ class ContainerHeader extends Component {
 											<Grow in={true}>
 												<Paper>
 													<MenuList role="menu">
-														<MenuItem onClick={this.handleClick}>Profile</MenuItem>
-														<MenuItem onClick={this.handleClick}>My account</MenuItem>
-														<MenuItem onClick={this.handleClick}>Logout</MenuItem>
+														<MenuItem onClick={this.handleClick}>Dashboard</MenuItem>
+														<MenuItem onClick={this.onProfileClick}>Profile</MenuItem>
+														<MenuItem onClick={this.handleClick}>Calendar</MenuItem>
+														<MenuItem onClick={this.handleClick}>Messages</MenuItem>
+														<MenuItem onClick={this.onSignOutClick}>Logout</MenuItem>
 													</MenuList>
 												</Paper>
 											</Grow>

@@ -18,7 +18,9 @@ export default class Login extends Component {
 			users: firebase.firestore().collection("users"),
 			email: "",
 			password: "",
-			emailError: false
+			emailError: false,
+			passwordError: false,
+			emailErrorMessage: ""
 		};
 	}
 
@@ -35,19 +37,40 @@ export default class Login extends Component {
 				// console.log(user);
 				// console.log(user.emailVerified);
 				if (!user.emailVerified) {
-					this.setState({ emailError: true });
-				}else {
+					this.setState({
+						emailErrorMessage: "Email not verified",
+						emailError: true
+					});
+				} else {
+					this.setState({
+						emailError: false
+					});
 					this.props.history.push("/");
 				}
+			})
+			.catch(error => {
+				// Handle Errors here.
+				const errorCode = error.code;
+				if (errorCode === "auth/user-not-found") {
+					this.setState({
+						emailErrorMessage: "Email not found",
+						emailError: true
+					});
+				} else {
+					this.setState({
+						emailError: false
+					});
+				}
+				if (errorCode === "auth/wrong-password") {
+					this.setState({
+						passwordError: true
+					});
+				} else {
+					this.setState({
+						passwordError: false
+					});
+				}
 			});
-		// .catch(error => {
-		// // Handle Errors here.
-		// 	const errorCode = error.code;
-		// 	console.log(errorCode);
-		// 	const errorMessage = error.message;
-		// 	console.log(errorMessage);
-		// // ...
-		// });
 	};
 
 	onChange = event => {
@@ -57,7 +80,7 @@ export default class Login extends Component {
 	};
 
 	render() {
-		const { email, emailError } = this.state;
+		const { email, emailError, emailErrorMessage, passwordError } = this.state;
 		return (
 			<Card className="login-page">
 				<CardHeader title="Log In" />
@@ -74,21 +97,31 @@ export default class Login extends Component {
 						/>
 						{emailError ? (
 							<FormHelperText className="error" id="email-error-text">
-								Verify email
+								{emailErrorMessage}
 							</FormHelperText>
 						) : (
 							undefined
 						)}
 					</FormControl>
-					<TextField
-						id="password"
-						label="Password"
-						className="text-field"
-						type="password"
-						autoComplete="current-password"
-						margin="normal"
-						onChange={this.onChange}
-					/>
+					<FormControl fullWidth={true}>
+						<TextField
+							id="password"
+							label="Password"
+							className="text-field"
+							type="password"
+							autoComplete="current-password"
+							error={passwordError}
+							margin="normal"
+							onChange={this.onChange}
+						/>
+						{passwordError ? (
+							<FormHelperText className="error" id="email-error-text">
+								Wrong password
+							</FormHelperText>
+						) : (
+							undefined
+						)}
+					</FormControl>
 
 					<Button
 						variant="raised"
@@ -98,7 +131,10 @@ export default class Login extends Component {
 					>
 						Login
 					</Button>
-					<p onClick={this.onCLickRegister} className="login-text">{`Don't have an account? Register!`}</p>
+					<p
+						onClick={this.onCLickRegister}
+						className="login-text"
+					>{`Don't have an account? Register!`}</p>
 				</CardContent>
 			</Card>
 		);

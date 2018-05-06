@@ -61,9 +61,7 @@ export default class Register extends Component {
 			.catch(error => {
 				// Handle Errors here.
 				const errorCode = error.code;
-				console.log(errorCode);
-				const errorMessage = error.message;
-				console.log(errorMessage);
+				// console.log(errorCode);
 				if (errorCode === "auth/email-already-in-use") {
 					this.setState({ emailTakenError: true });
 				}
