@@ -1,0 +1,34 @@
+.company-container {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 500px;
+	justify-content: space-around;
+}
+
+.create-company-card {
+	width: 75%;
+	display: flex;
+	flex-direction: column;
+}
+.create-company-card .create-card-button {
+	margin: 0 10px;
+}
+.create-company-card .create-company-card-content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.create-company-card .create-company-step {
+	width: 40%;
+	margin: 30px 0;
+}
+.chip {
+	margin: 5px;
+}
+.final-step {
+	min-height: 150px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

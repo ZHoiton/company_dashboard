@@ -56,6 +56,11 @@ class ContainerHeader extends Component {
 		this.props.history.push("/profile");
 	}
 
+	onCompanyClick = () =>{
+		this.handleClick();
+		this.props.history.push("/company");
+	}
+
 	render() {
 		const { clicked } = this.state;
 		return (
@@ -107,6 +112,7 @@ class ContainerHeader extends Component {
 													<MenuList role="menu">
 														<MenuItem onClick={this.handleClick}>Dashboard</MenuItem>
 														<MenuItem onClick={this.onProfileClick}>Profile</MenuItem>
+														<MenuItem onClick={this.onCompanyClick}>Company</MenuItem>
 														<MenuItem onClick={this.handleClick}>Calendar</MenuItem>
 														<MenuItem onClick={this.handleClick}>Messages</MenuItem>
 														<MenuItem onClick={this.onSignOutClick}>Logout</MenuItem>
