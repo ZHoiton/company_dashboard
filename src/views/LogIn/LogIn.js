@@ -119,7 +119,7 @@ export default class Login extends Component {
 						className="button"
 						onClick={this.onLoginClick}
 					>
-						Login
+						{`Login`}
 					</Button>
 					<p
 						onClick={this.onCLickRegister}

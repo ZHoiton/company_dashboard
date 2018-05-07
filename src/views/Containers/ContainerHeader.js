@@ -30,7 +30,6 @@ class ContainerHeader extends Component {
 
 	onLoginClick = () => {
 		this.props.history.push("/login");
-		this.setState({ clicked: true });
 	};
 
 	handleClick = () => {
@@ -58,7 +57,7 @@ class ContainerHeader extends Component {
 	}
 
 	render() {
-		const { clicked } =this.state;
+		const { clicked } = this.state;
 		return (
 			<AppBar position="static">
 				<Toolbar className="nav-bar">
@@ -91,7 +90,7 @@ class ContainerHeader extends Component {
 									<Avatar alt="Remy Sharp" onClick={this.handleClick} src={context.user.picture} />
 									<Popover
 										open={clicked}
-										anchorEl={this.userName.current}
+										anchorEl={(this.userName.current)?this.userName.current:null}
 										anchorReference='anchorEl'
 										anchorOrigin={{
 											vertical: 'bottom',
@@ -103,7 +102,7 @@ class ContainerHeader extends Component {
 										}}
 									>
 										<ClickAwayListener onClickAway={this.handleClick}>
-											<Grow in={true}>
+											<Grow in={clicked}>
 												<Paper>
 													<MenuList role="menu">
 														<MenuItem onClick={this.handleClick}>Dashboard</MenuItem>
