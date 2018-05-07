@@ -27,9 +27,9 @@ export default class Company extends Component {
 			companyLocation: "",
 			companyFounded: "",
 			roleName: "",
-			roleList: [{ key: 0, label: "Admin" }],
+			roleList: ["Admin"],
 			groupName: "",
-			groupList: [{ key: 0, label: "Admin-Group" }]
+			groupList: ["Admin-Group"]
 		};
 	}
 
@@ -53,14 +53,13 @@ export default class Company extends Component {
 
 	onAddChip = () => {
 		const { roleList, roleName } = this.state;
-		const index = roleList.length;
-		roleList.push({ key: index, label: roleName });
+		roleList.push(roleName);
 		this.setState({});
 	};
+
 	onAddGroup = () => {
 		const { groupList, groupName } = this.state;
-		const index = groupList.length;
-		groupList.push({ key: index, label: groupName });
+		groupList.push(groupName);
 		this.setState({});
 	};
 
@@ -141,7 +140,7 @@ export default class Company extends Component {
 		switch (step) {
 		case 0:
 			return (
-				<div className="create-company-step">
+				<Fragment>
 					<TextField
 						id="company-name"
 						label="Name"
@@ -164,11 +163,11 @@ export default class Company extends Component {
 						onChange={this.onChange("companyFounded")}
 						margin="normal"
 					/>
-				</div>
+				</Fragment>
 			);
 		case 1:
 			return (
-				<div className="create-company-step">
+				<Fragment>
 					<TextField
 						id="role-name"
 						label="Name"
@@ -185,25 +184,24 @@ export default class Company extends Component {
 						Add Role
 					</Button>
 					<div>
-						{this.state.roleList.map(data => {
+						{this.state.roleList.map((data, index) => {
 							const avatar = null;
-
 							return (
 								<Chip
-									key={data.key}
+									key={index}
 									avatar={avatar}
-									label={data.label}
+									label={data}
 									onDelete={this.onDeleteChip(data)}
 									className="chip"
 								/>
 							);
 						})}
 					</div>
-				</div>
+				</Fragment>
 			);
 		case 2:
 			return (
-				<div className="create-company-step">
+				<Fragment>
 					<TextField
 						id="group-name"
 						label="Name"
@@ -220,21 +218,20 @@ export default class Company extends Component {
 						Add Group
 					</Button>
 					<div>
-						{this.state.groupList.map(data => {
+						{this.state.groupList.map((data, index) => {
 							const avatar = null;
-
 							return (
 								<Chip
-									key={data.key}
+									key={index}
 									avatar={avatar}
-									label={data.label}
+									label={data}
 									onDelete={this.onDeleteGroup(data)}
 									className="chip"
 								/>
 							);
 						})}
 					</div>
-				</div>
+				</Fragment>
 			);
 		case 3:
 			return (
@@ -243,7 +240,6 @@ export default class Company extends Component {
 					<Typography>{this.state.companyName}</Typography>
 					<Typography>{this.state.companyLocation}</Typography>
 					<Typography>{this.state.companyFounded}</Typography>
-					<Typography>{this.state.roleName}</Typography>
 				</div>
 			);
 		default:
@@ -284,7 +280,9 @@ export default class Company extends Component {
 					) : (
 						<Fragment>
 							<CardContent className="create-company-card-content">
-								{this.getStepContent(activeStep)}
+								<div className="create-company-step">
+									{this.getStepContent(activeStep)}
+								</div>
 							</CardContent>
 							<CardActions>
 								<Button disabled={activeStep === 0} onClick={this.handleBack}>
