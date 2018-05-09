@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react';
 import Profile from '../Profile/Profile';
 import LogIn from '../LogIn/LogIn';
 import Register from '../Register/Register';
-import CompanyCreate from '../Company/CompanyCreate';
+import Company from '../Company/Company';
 import Home from '../Home/Home';
 import { Route, Switch } from 'react-router-dom';
 import ContainerHeader from './ContainerHeader';
@@ -39,7 +39,7 @@ export default class Container extends Component{
 					<Route
 						exact
 						path='/company'
-						component={CompanyCreate}
+						component={Company}
 					/>
 					<Route
 						path='/profile'
