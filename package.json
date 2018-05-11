@@ -34,6 +34,7 @@
     "eslint-plugin-react": "^7.6.1",
     "file-loader": "^1.1.6",
     "firebase-tools": "^3.18.4",
+    "husky": "^1.0.0-rc.4",
     "redux-devtools": "^3.4.1",
     "url-loader": "^0.6.2"
   },
@@ -44,5 +45,10 @@
     "build": "react-scripts build",
     "lint": "eslint src",
     "eject": "react-scripts eject"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
   }
 }
