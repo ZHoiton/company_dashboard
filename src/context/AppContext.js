@@ -67,7 +67,7 @@ export default class AppContext extends Component {
 				}
 			} else {
 				// No user is signed in.
-				this.setState({ userIsLoggedIn: false, userId: "" });
+				this.setState({ userIsLoggedIn: false, user: {} });
 			}
 		});
 	};

@@ -12,7 +12,11 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
+    ],
+    "rewrites": [ {
+      "source": "**",
+      "destination": "build/index.html"
+    } ]
   },
   "storage": {
     "rules": "./firebase/storage.rules"
