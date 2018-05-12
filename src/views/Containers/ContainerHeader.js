@@ -78,7 +78,7 @@ class ContainerHeader extends Component {
 
 								<Button
 									className="nav-bar-button-right"
-									color="primary"
+									color="inherit"
 									onClick={this.onLoginClick}
 								>
 									<Typography variant="button" color="inherit">
@@ -89,6 +89,7 @@ class ContainerHeader extends Component {
 								<div className="nav-bar-buttons" ref={this.userName}>
 									<Button
 										onClick={this.handleClick}
+										color="inherit"
 									>
 										{context.user.firstName}
 									</Button>
