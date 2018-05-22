@@ -45,18 +45,16 @@ export default class Register extends Component {
 			.createUserWithEmailAndPassword(this.state.email, this.state.password)
 			.then(user => {
 				user
-					.sendEmailVerification()
-					.then(() => {
-						// Email sent.
-						this.state.users.doc(user.uid).set({
-							firstName: this.state.firstName,
-							lastName: this.state.lastName
-						});
-						this.props.history.push("/login");
-					})
-					.catch(() => {
-						// An error happened.
-					});
+					.sendEmailVerification();
+				return user;
+			})
+			.then(user => {
+				// Email sent.
+				this.state.users.doc(user.uid).set({
+					firstName: this.state.firstName,
+					lastName: this.state.lastName
+				});
+				this.props.history.push("/login");
 			})
 			.catch(error => {
 				// Handle Errors here.

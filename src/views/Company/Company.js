@@ -11,8 +11,8 @@ export default class Company extends Component {
 			<Fragment>
 				<CompanyLeftMenu />
 				<Switch>
-					<Route exact path="/create" component={CompanyCreate} />
-					<Route exact path="/overview" component={CompanyOverview} />
+					<Route exact path="/company" component={CompanyCreate} />
+					<Route exact path="/company/overview" component={CompanyOverview} />
 				</Switch>
 			</Fragment>
 		);
