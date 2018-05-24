@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, { Component } from 'react';
 import Profile from '../Profile/Profile';
 import LogIn from '../LogIn/LogIn';
 import Register from '../Register/Register';
@@ -13,7 +13,7 @@ export default class Container extends Component{
 
 	render() {
 		return (
-			<Fragment>
+			<div className="root">
 				<ContainerHeader/>
 				<Switch>
 					<Route
@@ -50,7 +50,7 @@ export default class Container extends Component{
 						component={Home}
 					/>
 				</Switch>
-			</Fragment>
+			</div>
 		);
 	}
 }

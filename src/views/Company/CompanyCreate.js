@@ -101,7 +101,7 @@ export default class CompanyCreate extends Component {
 			groupList } =this.state;
 
 		return (
-			<div className="company-container">
+			<div className="company-create-container">
 				<Card className="create-company-card">
 					<StepperContainer steps={steps} onStepChange={this.onStepChange} onTextChange={this.onTextChange} onDeleteChip={this.onDeleteChip} onAddChip={this.onAddChip} onFinishClick={this.onFinishClick} review={{...company,Roles:roleList,Groups:groupList}}/>
 				</Card>

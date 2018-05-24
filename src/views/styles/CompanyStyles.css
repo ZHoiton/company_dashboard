@@ -1,11 +1,17 @@
-.company-container {
+.company-create-container {
 	display: flex;
+	flex-basis: auto;
 	align-items: center;
-	width: 100%;
+	width: 80%;
 	height: 500px;
 	justify-content: space-around;
+	flex-grow:2;
 }
 
+.company-container {
+	display: flex;
+	flex-direction: row;
+}
 .create-company-card {
 	width: 75%;
 	display: flex;
@@ -33,6 +39,17 @@
 	justify-content: center;
 }
 
-.drawer {
-	z-index: 1;
+.sidebar {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	transition: 0.5s;
+	width: 13%;
+	z-index: 2;
+	border-color: black;
+}
+
+.sidebar.collapsed {
+	width: 5%;
 }

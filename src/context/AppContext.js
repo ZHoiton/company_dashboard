@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "./contexts";
 import firebase from "firebase";
 
-export default class AppContext extends Component {
+const AuthContext = React.createContext();
+
+export default class AuthContextComponent extends Component {
 	static propTypes = {
 		children: PropTypes.any
 	};
@@ -80,3 +81,8 @@ export default class AppContext extends Component {
 		);
 	}
 }
+
+export {
+	AuthContext,
+	AuthContextComponent
+};
