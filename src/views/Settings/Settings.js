@@ -31,13 +31,13 @@ TabContainer.propTypes = {
 const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 500
+    flexGrow: 1,
   }
 });
 
-class FullWidthTabs extends React.Component {
+class CenteredTabs extends React.Component {
   state = {
-    value: 0
+    value: 0,
   };
 
   handleChange = (event, value) => {
@@ -121,27 +121,105 @@ class FullWidthTabs extends React.Component {
             </div>
 
             <div className={classes.container}>
-                <TextField
-                  id="multiline-flexible"
-                  label="Description"
-                  fullWidth
-                  multiline
-                  rowsMax="4"  
-                  margin="normal"
-                />
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="uncontrolled-native">Department</InputLabel>
+                <NativeSelect
+                  defaultValue={30}
+                  input={<Input id="uncontrolled-native" />}
+                >
+                 
+                  <option value={"Software"}>Software</option>
+                  <option value={"HR"}>Human Resources</option>
+                  <option value={"Finance"}>Finance</option>
+                </NativeSelect>
+              </FormControl>
             </div>
+
+            <div className={classes.container}>
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="uncontrolled-native">Position</InputLabel>
+                <NativeSelect
+                  defaultValue={30}
+                  input={<Input id="uncontrolled-native" />}
+                >
+                  <option value={"CEO"}>CEO</option>
+                  <option value={"Junior Developer"}>Junior Developer</option>
+                  <option value={"Senior Developer"}>Senior Developer</option>
+                </NativeSelect>
+              </FormControl>
+            </div>
+
+            <div className={classes.container}>
+              <TextField
+                id="multiline-flexible"
+                label="Description"
+                fullWidth
+                multiline
+                rowsMax="4"
+                margin="normal"
+              />
+            </div>
+            <Button
+             variant="raised"
+             color="primary"
+             className="button"
+           >{`Save`}</Button>
           </TabContainer>
 
-          <TabContainer dir={theme.direction}>Company Settings</TabContainer>
+          <TabContainer dir={theme.direction}>Company Settings
+
+          <div className={classes.container}>
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="name-simple">Company Name</InputLabel>
+                <Input
+                  id="name-simple"
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                />
+              </FormControl>
+            </div>
+
+           <div className={classes.container}>
+             <form className={classes.container} noValidate>
+               <TextField
+                 id="date"
+                 label="Founded"
+                 type="date"
+                 defaultValue="2017-05-24"
+                 className={classes.textField}
+                 InputLabelProps={{
+                   shrink: true
+                 }}
+               />
+             </form>
+           </div>
+          
+           <div className={classes.container}>
+             <FormControl className={classes.formControl}>
+               <InputLabel htmlFor="name-simple">Location</InputLabel>
+               <Input
+                 id="name-simple"
+                 value={this.state.name}
+                 onChange={this.handleChange}
+               />
+             </FormControl>
+           </div>
+           <Button
+             variant="raised"
+             color="primary"
+             className="button"
+           >{`Save`}</Button>
+          </TabContainer>
         </SwipeableViews>
       </div>
+      
     );
   }
 }
 
-FullWidthTabs.propTypes = {
+CenteredTabs.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(FullWidthTabs);
+export default withStyles(styles, { withTheme: true })(CenteredTabs);
