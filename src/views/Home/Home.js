@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Card, { CardContent} from 'material-ui/Card';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import '../styles/ProfileStyles.css';
 
 export default class Home extends Component {

@@ -1,9 +1,12 @@
-import Card, { CardContent, CardHeader } from "material-ui/Card";
+import Card from "@material-ui/core/Card";
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 import PropTypes from "prop-types";
 import React, { Component } from "react";
-import Button from "material-ui/Button";
-import TextField from "material-ui/TextField/TextField";
-import { FormControl, FormHelperText } from "material-ui/Form";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField/TextField";
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import "../styles/RegisterStyles.css";
 import firebase from "firebase";
 

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Button from "material-ui/Button";
-import { CardActions } from "material-ui/Card";
+import Button from '@material-ui/core/Button';
+import CardActions from "@material-ui/core/CardActions";
 
 export default class Stepper extends Component {
 	static propTypes = {

@@ -1,12 +1,13 @@
 import React, { Component, Fragment} from 'react';
-import Stepper from "material-ui/Stepper";
+import Stepper from "@material-ui/core/Stepper";
 import PropTypes from 'prop-types';
 import StepperContent from './StepperContent';
-import Typography from "material-ui/Typography";
+import Typography from "@material-ui/core/Typography";
 import StepperButtons from './StepperButtons';
-import { Step, StepLabel } from "material-ui/Stepper";
-import { CardContent } from "material-ui/Card";
-import { CircularProgress } from "material-ui/Progress";
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default class StepperContainer extends Component {
 	static propTypes = {

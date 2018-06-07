@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-import AppBar from "material-ui/AppBar";
-import Toolbar from "material-ui/Toolbar";
-import Typography from "material-ui/Typography";
-import Button from "material-ui/Button";
-import IconButton from "material-ui/IconButton";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import firebase from "firebase";
-import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
-import { MenuItem, MenuList } from 'material-ui/Menu';
-import Popover from 'material-ui/Popover';
-import Grow from 'material-ui/transitions/Grow';
-import Paper from 'material-ui/Paper';
-import Avatar from 'material-ui/Avatar';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+import Popover from '@material-ui/core/Popover';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Avatar from '@material-ui/core/Avatar';
 import { AuthContext } from "../../context/AppContext";
 import { DrawerContext } from "../../context/DrawerContext";
 import classNames from 'classnames';
@@ -52,6 +53,11 @@ class ContainerHeader extends Component {
 				// An error happened.
 			});
 	};
+
+	onSettingsClick = () => {
+		this.handleClick();
+		this.props.history.push("/settings");
+	}
 
 	onProfileClick = () =>{
 		this.handleClick();
@@ -121,6 +127,7 @@ class ContainerHeader extends Component {
 																<MenuItem onClick={this.onProfileClick}>Profile</MenuItem>
 																<MenuItem onClick={this.onCompanyClick}>Company</MenuItem>
 																<MenuItem onClick={this.handleClick}>Calendar</MenuItem>
+																<MenuItem onClick={this.onSettingsClick}>Settings</MenuItem>
 																<MenuItem onClick={this.handleClick}>Messages</MenuItem>
 																<MenuItem onClick={this.onSignOutClick}>Logout</MenuItem>
 															</MenuList>

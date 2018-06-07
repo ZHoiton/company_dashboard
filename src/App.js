@@ -3,7 +3,7 @@ import Container from './views/Containers/Container';
 import { AuthContextComponent } from './context/AppContext';
 import JssProvider from 'react-jss/lib/JssProvider';
 import { create } from 'jss';
-import { createGenerateClassName, jssPreset } from 'material-ui/styles';
+import { createGenerateClassName, jssPreset } from '@material-ui/core/styles';
 import DrawerContextComponent from './context/DrawerContext';
 import './views/styles/ContainerStyles.css';
 

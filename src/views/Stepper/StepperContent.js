@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Button from "material-ui/Button";
-import TextField from "material-ui/TextField/TextField";
-import Typography from "material-ui/Typography";
-import { CardContent } from "material-ui/Card";
-import Chip from "material-ui/Chip";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField/TextField";
+import Typography from "@material-ui/core/Typography";
+import CardContent from "@material-ui/core/CardContent";
+import Chip from "@material-ui/core/Chip";
 
 export default class Stepper extends Component {
 	static propTypes = {

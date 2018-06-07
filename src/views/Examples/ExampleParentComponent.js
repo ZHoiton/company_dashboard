@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ExampleChildOne from './ExampleChildOne';
 import ExampleChildTwo from './ExampleChildTwo';
 import ExampleChildThree from './ExampleChildThree';
-import Switch from 'material-ui/Switch';
+import Switch from '@material-ui/core/Switch';
 import './styles.css';
 
 export default class ExampleParentComponent extends Component {

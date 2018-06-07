@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import Card, { CardContent, CardHeader } from 'material-ui/Card';
-import Avatar from 'material-ui/Avatar';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
+import Avatar from '@material-ui/core/Avatar';
 import '../styles/ProfileStyles.css';
 
 export default class Profile extends Component {

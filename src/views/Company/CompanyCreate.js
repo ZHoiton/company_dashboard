@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import StepperContainer from '../Stepper/Stepper';
 import PropTypes from 'prop-types';
 import firebase from "firebase";
-import Card from "material-ui/Card";
+import Card from "@material-ui/core/Card";
 import "../styles/CompanyStyles.css";
 
 export default class CompanyCreate extends Component {

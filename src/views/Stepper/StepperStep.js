@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Step, StepLabel } from "material-ui/Stepper";
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
 
 export default class Stepper extends Component {
 	static defaultProps = {

@@ -4,6 +4,7 @@ import LogIn from '../LogIn/LogIn';
 import Register from '../Register/Register';
 import Company from '../Company/Company';
 import Home from '../Home/Home';
+import Settings from '../Settings/Settings';
 import { Route, Switch } from 'react-router-dom';
 import ContainerHeader from './ContainerHeader';
 import '../styles/ContainerStyles.css';
@@ -25,6 +26,11 @@ export default class Container extends Component{
 						exact
 						path='/login'
 						component={LogIn}
+					/>
+					<Route
+						exact
+						path='/settings'
+						component={Settings}
 					/>
 					<Route
 						exact

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import List from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-import Avatar from 'material-ui/Avatar';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import Avatar from '@material-ui/core/Avatar';
 import Business from '@material-ui/icons/Business';
 import '../styles/CompanyStyles.css';
 import CompanySidebar from './CompanySidebar';
