@@ -33,7 +33,7 @@ class CenteredTabs extends Component {
 	};
 
 	render() {
-		const { classes} = this.props; 
+		const { classes} = this.props;
 		const { value } = this.state;
 
 
@@ -193,7 +193,7 @@ class CenteredTabs extends Component {
 							color="primary"
 							className="button"
 						>{`Save`}</Button>
-				</div>}
+					</div>}
 			</div>
 
 		);
