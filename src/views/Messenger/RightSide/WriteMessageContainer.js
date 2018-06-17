@@ -53,15 +53,6 @@ export default class WriteMessageContainer extends Component {
 						send_time: firebase.firestore.FieldValue.serverTimestamp() // eslint-disable-line
 					});
 					batch.commit();
-					newMessageOwner
-						.collection("messages")
-						.doc()
-						.set({
-							content: text,
-							is_from_owner: true, // eslint-disable-line
-							is_read: false, // eslint-disable-line
-							send_time: firebase.firestore.FieldValue.serverTimestamp() // eslint-disable-line
-						});
 				} else {
 					const batch = firebase.firestore().batch();
 					const owner_user = users // eslint-disable-line
@@ -112,15 +103,6 @@ export default class WriteMessageContainer extends Component {
 						send_time: firebase.firestore.FieldValue.serverTimestamp() // eslint-disable-line
 					});
 					batch.commit();
-					newMessageTarget
-						.collection("messages")
-						.doc()
-						.set({
-							content: text,
-							is_from_owner: true, // eslint-disable-line
-							is_read: false, // eslint-disable-line
-							send_time: firebase.firestore.FieldValue.serverTimestamp() // eslint-disable-line
-						});
 				} else {
 					const batch = firebase.firestore().batch();
 					const tar_user = users // eslint-disable-line

@@ -48,20 +48,23 @@
 	display: flex;
 	justify-content: flex-end;
     min-height: 50px;
-    margin: 10px 0 ;
+    word-wrap: break-word;
+	margin: 10px 0;
 	/* align-items: center; */
 }
 .target-user-message {
 	display: flex;
 	justify-content: flex-start;
+    word-wrap: break-word;
 	min-height: 50px;
-    margin: 10px 0 ;
+	margin: 10px 0;
 	/* align-items: center; */
 }
 .message {
-    display: flex;
-    justify-content:space-around;
-    align-items: center;
-    padding:20px;
-    margin: 0 10px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding: 20px;
+	margin: 0 10px;
+	max-width: 60%;
 }

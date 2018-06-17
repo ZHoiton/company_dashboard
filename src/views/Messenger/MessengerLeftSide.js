@@ -71,7 +71,7 @@ export default class MessengerLeftSide extends Component {
 									<Avatar alt="Profile picture" src={targetUser.data.target_user_photo_URL} />
 									<ListItemText
 										primary={targetUser.data.target_user_first_name + " " + targetUser.data.target_user_second_name}
-										secondary={targetUser.data.last_message}
+										secondary={targetUser.data.last_message.length > 10 ? targetUser.data.last_message.slice(0, 10) + "..." : targetUser.data.last_message}
 									/>
 									<ListItemSecondaryAction>
 										<IconButton aria-label="Settings">
