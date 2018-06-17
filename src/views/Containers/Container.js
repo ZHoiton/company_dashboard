@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Profile from '../Profile/Profile';
+import Messenger from '../Messenger/Messenger';
 import LogIn from '../LogIn/LogIn';
 import Register from '../Register/Register';
 import Company from '../Company/Company';
@@ -50,6 +51,10 @@ export default class Container extends Component{
 					<Route
 						path='/profile'
 						component={Profile}
+					/>
+					<Route
+						path='/messenger'
+						component={Messenger}
 					/>
 					<Route
 						path='*'

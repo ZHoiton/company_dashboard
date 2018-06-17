@@ -1,0 +1,67 @@
+.messenger-container {
+	display: flex;
+	height: 700px;
+	width: 80%;
+	margin: 0 auto;
+}
+.messenger-left-side-container {
+	width: 30%;
+	overflow: auto;
+	border-right: 1px solid #e5e5e5;
+}
+.messenger-right-side-container {
+	width: 70%;
+	background-color: #e5e5e5;
+	content: "1";
+}
+.messenger-empty-chat {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	height: 100%;
+}
+.messenger-chat-container {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.messenger-messages-container {
+	border-bottom: 1px solid #e5e5e5;
+	height: 80%;
+	background-color: white;
+	display: flex;
+	flex-direction: column-reverse;
+	overflow: auto;
+	padding: 10px;
+}
+.messenger-write-message-container {
+	background-color: white;
+	height: 20%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+.messenger-write-message-container-input {
+	width: 70%;
+}
+.owner-message {
+	display: flex;
+	justify-content: flex-end;
+    min-height: 50px;
+    margin: 10px 0 ;
+	/* align-items: center; */
+}
+.target-user-message {
+	display: flex;
+	justify-content: flex-start;
+	min-height: 50px;
+    margin: 10px 0 ;
+	/* align-items: center; */
+}
+.message {
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    padding:20px;
+    margin: 0 10px;
+}

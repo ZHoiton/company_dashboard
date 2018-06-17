@@ -21,9 +21,11 @@ export default class AuthContextComponent extends Component {
 				lastName: ""
 			}
 		};
+		this.onAuthStateChanged();
 	}
 
 	componentDidMount() {
+		// firebase.auth().signOut();
 		this.onAuthStateChanged();
 	}
 
@@ -34,7 +36,6 @@ export default class AuthContextComponent extends Component {
 				if (auth.emailVerified) {
 					//   this.state.userFirstName = user
 					user.id = auth.uid;
-
 					firebase
 						.firestore()
 						.collection("users")
