@@ -40,6 +40,7 @@ class CenteredTabs extends Component {
 		return (
 			<div className={classes.root}>
 				<AppBar position="static" color="default">
+				<div className="lTabs">
 					<Tabs
 						value={this.state.value}
 						onChange={this.handleChange}
@@ -47,36 +48,42 @@ class CenteredTabs extends Component {
 						textColor="primary"
 						fullWidth
 					>
-						<Tab label="Personal Settings" />
-						<Tab label="Company Settings" />
+					
+						<Tab className="tabPersonal"  label="Personal Settings" />
+						<Tab className="tabCompany" label="Company Settings" />
+				
 					</Tabs>
+					</div>
 				</AppBar>
 				{value === 0 && <div>
-					<div className={classes.container}>
+					<div className="settingsFields">
 						<FormControl className={classes.formControl}>
-							<InputLabel htmlFor="name-simple">First Name</InputLabel>
+							<InputLabel htmlFor="name-first">First Name</InputLabel>
 							<Input
+							className="txtFieldWidth"
 								id="name-simple"
-								value={this.state.name}
-								onChange={this.handleChange}
+							//	value={this.state.name}
+							//	onChange={this.handleChange}
 							/>
 						</FormControl>
 					</div>
 
-					<div className={classes.container}>
+					<div className="settingsFields">
 						<FormControl className={classes.formControl}>
-							<InputLabel htmlFor="name-simple">Last Name</InputLabel>
+							<InputLabel htmlFor="name-last">Last Name</InputLabel>
 							<Input
 								id="name-simple"
-								value={this.state.name}
-								onChange={this.handleChange}
+								className="txtFieldWidth"
+							//	value={this.state.name}
+							//	onChange={this.handleChange}
 							/>
 						</FormControl>
 					</div>
-					<div className={classes.container}>
+					<div className="settingsFields">
 						<form className={classes.container} noValidate>
 							<TextField
 								id="date"
+								className="txtFieldWidth"
 								label="Date of birth"
 								type="date"
 								defaultValue="2017-05-24"
@@ -87,11 +94,12 @@ class CenteredTabs extends Component {
 							/>
 						</form>
 					</div>
-					<div className={classes.container}>
+					<div className="settingsFields">
 						<FormControl className={classes.formControl}>
 							<InputLabel htmlFor="uncontrolled-native">Gender</InputLabel>
 							<NativeSelect
 								defaultValue={30}
+								className="txtFieldWidth"
 								input={<Input id="uncontrolled-native" />}
 							>
 								<option value={"Male"}>Male</option>
@@ -101,7 +109,7 @@ class CenteredTabs extends Component {
 						</FormControl>
 					</div>
 
-					<div className={classes.container}>
+					<div className="settingsFields">
 						<FormControl className={classes.formControl}>
 							<InputLabel htmlFor="uncontrolled-native">Department</InputLabel>
 							<NativeSelect
@@ -116,7 +124,7 @@ class CenteredTabs extends Component {
 						</FormControl>
 					</div>
 
-					<div className={classes.container}>
+					<div className="settingsFields">
 						<FormControl className={classes.formControl}>
 							<InputLabel htmlFor="uncontrolled-native">Position</InputLabel>
 							<NativeSelect
@@ -130,9 +138,9 @@ class CenteredTabs extends Component {
 						</FormControl>
 					</div>
 
-					<div className={classes.container}>
+					<div className="settingsFields">
 						<TextField
-							id="multiline-flexible"
+							id="multiline-description"
 							label="Description"
 							fullWidth
 							multiline
@@ -143,6 +151,7 @@ class CenteredTabs extends Component {
 					<Button
 						variant="raised"
 						color="primary"
+						
 						className="button"
 					>
 						{`Save`}
@@ -150,25 +159,28 @@ class CenteredTabs extends Component {
 				</div>}
 				{value === 1 &&
 					<div>
-						Company Settings
+						
 
-						<div className={classes.container}>
+						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
 								<InputLabel htmlFor="name-simple">Company Name</InputLabel>
 								<Input
-									id="name-simple"
-									value={this.state.name}
-									onChange={this.handleChange}
+									id="name-company"
+									className="txtFieldWidth"
+								//	value={this.state.name}
+								//	onChange={this.handleChange}
+								style ={{width: '100%'}}
 								/>
 							</FormControl>
 						</div>
 
-						<div className={classes.container}>
+						<div className="settingsFields">
 							<form className={classes.container} noValidate>
 								<TextField
 									id="date"
 									label="Founded"
 									type="date"
+									className="txtFieldWidth"
 									defaultValue="2017-05-24"
 									className={classes.textField}
 									InputLabelProps={{
@@ -178,16 +190,18 @@ class CenteredTabs extends Component {
 							</form>
 						</div>
 
-						<div className={classes.container}>
+						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
 								<InputLabel htmlFor="name-simple">Location</InputLabel>
 								<Input
-									id="name-simple"
-									value={this.state.name}
-									onChange={this.handleChange}
+									id="name-Location"
+									className="txtFieldWidth"
+								//	value={this.state.name}
+								//	onChange={this.handleChange}
 								/>
 							</FormControl>
 						</div>
+						
 						<Button
 							variant="raised"
 							color="primary"
