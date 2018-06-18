@@ -31,7 +31,7 @@ class CenteredTabs extends Component {
 	handleChangeIndex = index => {
 		this.setState({ value: index });
 	};
-
+ 	
 	render() {
 		const { classes} = this.props;
 		const { value } = this.state;
@@ -40,6 +40,7 @@ class CenteredTabs extends Component {
 		return (
 			<div className={classes.root}>
 				<AppBar position="static" color="default">
+				
 				<div className="lTabs">
 					<Tabs
 						value={this.state.value}
@@ -65,9 +66,10 @@ class CenteredTabs extends Component {
 							//	value={this.state.name}
 							//	onChange={this.handleChange}
 							/>
-						</FormControl>
+		
+						</FormControl>		
 					</div>
-
+				
 					<div className="settingsFields">
 						<FormControl className={classes.formControl}>
 							<InputLabel htmlFor="name-last">Last Name</InputLabel>
@@ -97,8 +99,7 @@ class CenteredTabs extends Component {
 					<div className="settingsFields">
 						<FormControl className={classes.formControl}>
 							<InputLabel htmlFor="uncontrolled-native">Gender</InputLabel>
-							<NativeSelect
-								defaultValue={30}
+							<NativeSelect		
 								className="txtFieldWidth"
 								input={<Input id="uncontrolled-native" />}
 							>
@@ -113,7 +114,6 @@ class CenteredTabs extends Component {
 						<FormControl className={classes.formControl}>
 							<InputLabel htmlFor="uncontrolled-native">Department</InputLabel>
 							<NativeSelect
-								defaultValue={30}
 								input={<Input id="uncontrolled-native" />}
 							>
 
@@ -128,7 +128,6 @@ class CenteredTabs extends Component {
 						<FormControl className={classes.formControl}>
 							<InputLabel htmlFor="uncontrolled-native">Position</InputLabel>
 							<NativeSelect
-								defaultValue={30}
 								input={<Input id="uncontrolled-native" />}
 							>
 								<option value={"CEO"}>CEO</option>
@@ -149,10 +148,10 @@ class CenteredTabs extends Component {
 						/>
 					</div>
 					<Button
+					size="large"
 						variant="raised"
 						color="primary"
-						
-						className="button"
+						className="btnSave"
 					>
 						{`Save`}
 					</Button>
@@ -201,12 +200,14 @@ class CenteredTabs extends Component {
 								/>
 							</FormControl>
 						</div>
-						
+					
 						<Button
+						size="large"
 							variant="raised"
 							color="primary"
-							className="button"
+							className="btnSave"
 						>{`Save`}</Button>
+					
 					</div>}
 			</div>
 
