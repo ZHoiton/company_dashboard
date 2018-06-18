@@ -44,12 +44,17 @@
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	transition: 0.5s;
 	width: 13%;
 	z-index: 2;
 	border-color: black;
+	transition: width 0.5s;
 }
 
 .sidebar.collapsed {
 	width: 5%;
+}
+
+.company-list-item {
+	display: flex;
+	flex-direction: row;
 }

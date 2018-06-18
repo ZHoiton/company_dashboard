@@ -18,6 +18,11 @@
 	align-self: flex-end;
 	transition: width 0.4s;
 }
+.big {
+	align-self: flex-end;
+	transition: width 0.4s;
+
+}
 .error {
 	color: red;
 }

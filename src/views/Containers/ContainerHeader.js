@@ -74,7 +74,7 @@ class ContainerHeader extends Component {
 		return (
 			<DrawerContext>
 				{context => (
-					<AppBar position="static" className={classNames(context.isOpen ? 'small' : undefined)}>
+					<AppBar position="static" className={classNames(context.isOpen ? 'small' : 'big')}>
 						<Toolbar className="nav-bar">
 
 							<IconButton color="inherit" aria-label="Menu" onClick={context.onClickOpen}>
