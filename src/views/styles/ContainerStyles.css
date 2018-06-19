@@ -8,6 +8,7 @@
 	justify-content: space-between;
 	align-items: center;
 	z-index: 5;
+	padding-left: 0px;
 }
 
 .nav-bar-buttons {

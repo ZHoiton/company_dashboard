@@ -21,7 +21,7 @@ export default class CompanyListItem extends Component {
 						<Business/>
 					</Avatar>}
 				{isOpen?
-					<div>
+					<div className="company-list-item text">
 						{company.name}
 					</div>:undefined}
 			</div>

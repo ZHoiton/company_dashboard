@@ -51,10 +51,17 @@
 }
 
 .sidebar.collapsed {
-	width: 5%;
+	width: 60px;
 }
 
 .company-list-item {
 	display: flex;
 	flex-direction: row;
+	padding: 5px 0 5px 5px;
+}
+.company-list-item.text{
+	display: flex;
+	justify-content: center;
+	color: #555555;
+	align-items: center;
 }

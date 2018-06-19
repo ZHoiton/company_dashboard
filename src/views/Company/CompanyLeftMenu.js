@@ -3,7 +3,7 @@ import List from "@material-ui/core/List";
 import PropTypes from "prop-types";
 import Divider from "@material-ui/core/Divider";
 import Avatar from "@material-ui/core/Avatar";
-import Business from "@material-ui/icons/Business";
+import Add from "@material-ui/icons/Add";
 import "../styles/CompanyStyles.css";
 import CompanySidebar from "./CompanySidebar";
 import { DrawerContext } from "../../context/DrawerContext";
@@ -46,15 +46,12 @@ export default class CompanyLeftMenu extends Component {
 			<DrawerContext>
 				{context => (
 					<CompanySidebar variant="permanent" className="drawer" isOpen={context.isOpen}>
-						<div />
+						<Divider />
 						<List>{companies.length > 0 ? companies.map((company, index) => <CompanyListItem isOpen={context.isOpen} key={index} company={company} />) : undefined}</List>
 						<Divider />
 						<List>
 							<Avatar>
-								<Business />
-							</Avatar>
-							<Avatar>
-								<Business />
+								<Add/>
 							</Avatar>
 							<button>dfasd</button>
 						</List>
