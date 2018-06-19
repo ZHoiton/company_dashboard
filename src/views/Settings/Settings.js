@@ -6,11 +6,11 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from '@material-ui/core/FormControl';
+import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import NativeSelect from "@material-ui/core/NativeSelect";
-import '../styles/SettingsStyles.css';
+import "../styles/SettingsStyles.css";
 
 class CenteredTabs extends Component {
 	static propTypes = {
@@ -20,7 +20,7 @@ class CenteredTabs extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			value: 0,
+			value: 0
 		};
 	}
 
@@ -33,132 +33,101 @@ class CenteredTabs extends Component {
 	};
 
 	render() {
-		const { classes} = this.props;
+		const { classes } = this.props;
 		const { value } = this.state;
-
 
 		return (
 			<div className={classes.root}>
 				<AppBar position="static" color="default">
-
 					<div className="lTabs">
-						<Tabs
-							value={this.state.value}
-							onChange={this.handleChange}
-							indicatorColor="primary"
-							textColor="primary"
-							fullWidth
-						>
-
-							<Tab className="tabPersonal"  label="Personal Settings" />
+						<Tabs value={this.state.value} onChange={this.handleChange} indicatorColor="primary" textColor="primary" fullWidth>
+							<Tab className="tabPersonal" label="Personal Settings" />
 							<Tab className="tabCompany" label="Company Settings" />
-
 						</Tabs>
 					</div>
 				</AppBar>
-				{value === 0 && <div>
-					<div className="settingsFields">
-						<FormControl className={classes.formControl}>
-							<InputLabel htmlFor="name-first">First Name</InputLabel>
-							<Input
-								className="txtFieldWidth"
-								id="name-simple"
-							//	value={this.state.name}
-							//	onChange={this.handleChange}
-							/>
-
-						</FormControl>
-					</div>
-
-					<div className="settingsFields">
-						<FormControl className={classes.formControl}>
-							<InputLabel htmlFor="name-last">Last Name</InputLabel>
-							<Input
-								id="name-simple"
-								className="txtFieldWidth"
-							//	value={this.state.name}
-							//	onChange={this.handleChange}
-							/>
-						</FormControl>
-					</div>
-					<div className="settingsFields">
-						<form className={classes.container} noValidate>
-							<TextField
-								id="date"
-								className="txtFieldWidth"
-								label="Date of birth"
-								type="date"
-								defaultValue="2017-05-24"
-								InputLabelProps={{
-									shrink: true
-								}}
-							/>
-						</form>
-					</div>
-					<div className="settingsFields">
-						<FormControl className={classes.formControl}>
-							<InputLabel htmlFor="uncontrolled-native">Gender</InputLabel>
-							<NativeSelect
-								className="txtFieldWidth"
-								input={<Input id="uncontrolled-native" />}
-							>
-								<option value={"Male"}>Male</option>
-								<option value={"Female"}>Female</option>
-								<option value={"Alien"}>Alien</option>
-							</NativeSelect>
-						</FormControl>
-					</div>
-
-					<div className="settingsFields">
-						<FormControl className={classes.formControl}>
-							<InputLabel htmlFor="uncontrolled-native">Department</InputLabel>
-							<NativeSelect
-								input={<Input id="uncontrolled-native" />}
-							>
-
-								<option value={"Software"}>Software</option>
-								<option value={"HR"}>Human Resources</option>
-								<option value={"Finance"}>Finance</option>
-							</NativeSelect>
-						</FormControl>
-					</div>
-
-					<div className="settingsFields">
-						<FormControl className={classes.formControl}>
-							<InputLabel htmlFor="uncontrolled-native">Position</InputLabel>
-							<NativeSelect
-								input={<Input id="uncontrolled-native" />}
-							>
-								<option value={"CEO"}>CEO</option>
-								<option value={"Junior Developer"}>Junior Developer</option>
-								<option value={"Senior Developer"}>Senior Developer</option>
-							</NativeSelect>
-						</FormControl>
-					</div>
-
-					<div className="settingsFields">
-						<TextField
-							id="multiline-description"
-							label="Description"
-							fullWidth
-							multiline
-							rowsMax="4"
-							margin="normal"
-						/>
-					</div>
-					<Button
-						size="large"
-						variant="raised"
-						color="primary"
-						className="btnSave"
-					>
-						{`Save`}
-					</Button>
-				</div>}
-				{value === 1 &&
+				{value === 0 && (
 					<div>
+						<div className="settingsFields">
+							<FormControl className={classes.formControl}>
+								<InputLabel htmlFor="name-first">First Name</InputLabel>
+								<Input
+									className="txtFieldWidth"
+									id="name-simple"
+									//	value={this.state.name}
+									//	onChange={this.handleChange}
+								/>
+							</FormControl>
+						</div>
 
+						<div className="settingsFields">
+							<FormControl className={classes.formControl}>
+								<InputLabel htmlFor="name-last">Last Name</InputLabel>
+								<Input
+									id="name-simple"
+									className="txtFieldWidth"
+									//	value={this.state.name}
+									//	onChange={this.handleChange}
+								/>
+							</FormControl>
+						</div>
+						<div className="settingsFields">
+							<form className={classes.container} noValidate>
+								<TextField
+									id="date"
+									className="txtFieldWidth"
+									label="Date of birth"
+									type="date"
+									defaultValue="2017-05-24"
+									InputLabelProps={{
+										shrink: true
+									}}
+								/>
+							</form>
+						</div>
+						<div className="settingsFields">
+							<FormControl className={classes.formControl}>
+								<InputLabel htmlFor="uncontrolled-native">Gender</InputLabel>
+								<NativeSelect className="txtFieldWidth" input={<Input id="uncontrolled-native" />}>
+									<option value={"Male"}>Male</option>
+									<option value={"Female"}>Female</option>
+									<option value={"Alien"}>Alien</option>
+								</NativeSelect>
+							</FormControl>
+						</div>
 
+						<div className="settingsFields">
+							<FormControl className={classes.formControl}>
+								<InputLabel htmlFor="uncontrolled-native">Department</InputLabel>
+								<NativeSelect input={<Input id="uncontrolled-native" />}>
+									<option value={"Software"}>Software</option>
+									<option value={"HR"}>Human Resources</option>
+									<option value={"Finance"}>Finance</option>
+								</NativeSelect>
+							</FormControl>
+						</div>
+
+						<div className="settingsFields">
+							<FormControl className={classes.formControl}>
+								<InputLabel htmlFor="uncontrolled-native">Position</InputLabel>
+								<NativeSelect input={<Input id="uncontrolled-native" />}>
+									<option value={"CEO"}>CEO</option>
+									<option value={"Junior Developer"}>Junior Developer</option>
+									<option value={"Senior Developer"}>Senior Developer</option>
+								</NativeSelect>
+							</FormControl>
+						</div>
+
+						<div className="settingsFields">
+							<TextField id="multiline-description" label="Description" fullWidth multiline rowsMax="4" margin="normal" />
+						</div>
+						<Button size="large" variant="raised" color="primary" className="btnSave">
+							{`Save`}
+						</Button>
+					</div>
+				)}
+				{value === 1 && (
+					<div>
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
 								<InputLabel htmlFor="name-simple">Company Name</InputLabel>
@@ -167,7 +136,7 @@ class CenteredTabs extends Component {
 									className="txtFieldWidth"
 									//	value={this.state.name}
 									//	onChange={this.handleChange}
-									style ={{width: '100%'}}
+									style={{ width: "100%" }}
 								/>
 							</FormControl>
 						</div>
@@ -193,22 +162,16 @@ class CenteredTabs extends Component {
 								<Input
 									id="name-Location"
 									className="txtFieldWidth"
-								//	value={this.state.name}
-								//	onChange={this.handleChange}
+									//	value={this.state.name}
+									//	onChange={this.handleChange}
 								/>
 							</FormControl>
 						</div>
 
-						<Button
-							size="large"
-							variant="raised"
-							color="primary"
-							className="btnSave"
-						>{`Save`}</Button>
-
-					</div>}
+						<Button size="large" variant="raised" color="primary" className="btnSave">{`Save`}</Button>
+					</div>
+				)}
 			</div>
-
 		);
 	}
 }
