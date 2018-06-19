@@ -43,7 +43,7 @@ export default class MessengerLeftSide extends Component {
 	updateConversations = () => {
 		this.state.conversationsRef.onSnapshot(data => {
 			const tempList = [];
-			this.setState({ conversationsArray: [] });
+			// this.setState({ conversationsArray: [] });
 			data.forEach(doc => {
 				const tempObj = {};
 				tempObj["key"] = doc.id;

@@ -9,10 +9,13 @@ import CompanySidebar from "./CompanySidebar";
 import { DrawerContext } from "../../context/DrawerContext";
 import { firestore } from "firebase";
 import CompanyListItem from "./CompanyListItem";
+import { withRouter } from "react-router-dom";
 
-export default class CompanyLeftMenu extends Component {
+class CompanyLeftMenu extends Component {
 	static propTypes = {
-		user: PropTypes.any
+		user: PropTypes.any,
+		history: PropTypes.object,
+		onCompanyChange: PropTypes.func
 	};
 	constructor(props) {
 		super(props);
@@ -27,6 +30,24 @@ export default class CompanyLeftMenu extends Component {
 	componentDidMount() {
 		const { user } = this.props;
 		const { ref } = this.state;
+		//* adding the companies which are owned by the user
+		ref
+			.doc(user.id)
+			.collection("companies")
+			.where("is_founded_by_user", "==", true)
+			.onSnapshot(snapshot => {
+				const list = [];
+				snapshot.forEach(doc => {
+					let tempObj = {};
+					tempObj = doc.data();
+					tempObj["key"] = doc.id;
+					list.push(tempObj);
+				});
+				this.setState({ ownedCompanies: list }, () => {
+					this.props.onCompanyChange(this.state.ownedCompanies.length > 0 ? this.state.ownedCompanies[0].key : null);
+				});
+			});
+
 		//* adding the companies which are NOT owned by the user
 		ref
 			.doc(user.id)
@@ -39,19 +60,11 @@ export default class CompanyLeftMenu extends Component {
 				});
 				this.setState({ companies: list });
 			});
-		//* adding the companies which are owned by the user
-		ref
-			.doc(user.id)
-			.collection("companies")
-			.where("is_founded_by_user", "==", true)
-			.onSnapshot(snapshot => {
-				const list = [];
-				snapshot.forEach(doc => {
-					list.push(doc.data());
-				});
-				this.setState({ ownedCompanies: list });
-			});
 	}
+
+	onAddClick = () => {
+		this.props.history.push("/company/create");
+	};
 
 	// componentDidUpdate(prevProps) {}
 
@@ -63,11 +76,7 @@ export default class CompanyLeftMenu extends Component {
 					<CompanySidebar variant="permanent" className="drawer" isOpen={context.isOpen}>
 						{ownedCompanies.length > 0 ? (
 							<Fragment>
-								<List>
-									{ownedCompanies.map(
-										(company, index) => <CompanyListItem isOpen={context.isOpen} key={index} company={company} />
-									)}
-								</List>
+								<List>{ownedCompanies.map((company, index) => <CompanyListItem isOpen={context.isOpen} key={index} company={company} />)}</List>
 								<Divider />
 							</Fragment>
 						) : (
@@ -75,11 +84,7 @@ export default class CompanyLeftMenu extends Component {
 						)}
 						{companies.length > 0 ? (
 							<Fragment>
-								<List>
-									{companies.map(
-										(company, index) => <CompanyListItem isOpen={context.isOpen} key={index} company={company} />
-									)}
-								</List>
+								<List>{companies.map((company, index) => <CompanyListItem isOpen={context.isOpen} key={index} company={company} />)}</List>
 								<Divider />
 							</Fragment>
 						) : (
@@ -87,7 +92,7 @@ export default class CompanyLeftMenu extends Component {
 						)}
 						<List>
 							<div className="company-list-item">
-								<Avatar className="material-button">
+								<Avatar className="material-button" onClick={this.onAddClick}>
 									<Add />
 								</Avatar>
 							</div>
@@ -98,3 +103,4 @@ export default class CompanyLeftMenu extends Component {
 		);
 	}
 }
+export default withRouter(CompanyLeftMenu);
