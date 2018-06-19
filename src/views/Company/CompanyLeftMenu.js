@@ -56,7 +56,10 @@ class CompanyLeftMenu extends Component {
 			.onSnapshot(snapshot => {
 				const list = [];
 				snapshot.forEach(doc => {
-					list.push(doc.data());
+					let tempObj = {};
+					tempObj = doc.data();
+					tempObj["key"] = doc.id;
+					list.push(tempObj);
 				});
 				this.setState({ companies: list });
 			});
@@ -69,6 +72,7 @@ class CompanyLeftMenu extends Component {
 	// componentDidUpdate(prevProps) {}
 
 	render() {
+		const { onCompanyChange } = this.props;
 		const { companies, ownedCompanies } = this.state;
 		return (
 			<DrawerContext>
@@ -76,7 +80,9 @@ class CompanyLeftMenu extends Component {
 					<CompanySidebar variant="permanent" className="drawer" isOpen={context.isOpen}>
 						{ownedCompanies.length > 0 ? (
 							<Fragment>
-								<List>{ownedCompanies.map((company, index) => <CompanyListItem isOpen={context.isOpen} key={index} company={company} />)}</List>
+								<List>
+									{ownedCompanies.map((company, index) => <CompanyListItem isOpen={context.isOpen} key={index} company={company} onCompanyChange={onCompanyChange} />)}
+								</List>
 								<Divider />
 							</Fragment>
 						) : (
@@ -84,7 +90,9 @@ class CompanyLeftMenu extends Component {
 						)}
 						{companies.length > 0 ? (
 							<Fragment>
-								<List>{companies.map((company, index) => <CompanyListItem isOpen={context.isOpen} key={index} company={company} />)}</List>
+								<List>
+									{companies.map((company, index) => <CompanyListItem isOpen={context.isOpen} key={index} company={company} onCompanyChange={onCompanyChange} />)}
+								</List>
 								<Divider />
 							</Fragment>
 						) : (

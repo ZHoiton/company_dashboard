@@ -109,7 +109,7 @@ export default class CompanyCreate extends Component {
 			.set({
 				avatar: null,
 				name: company.Name,
-				founded_by_user: true // eslint-disable-line
+				is_founded_by_user: true // eslint-disable-line
 			});
 	};
 
