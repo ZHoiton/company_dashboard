@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import List from "@material-ui/core/List";
 import PropTypes from "prop-types";
 import Divider from "@material-ui/core/Divider";
@@ -19,6 +19,7 @@ export default class CompanyLeftMenu extends Component {
 
 		this.state = {
 			ref: firestore().collection("users"),
+			ownedCompanies: [],
 			companies: []
 		};
 	}
@@ -26,9 +27,11 @@ export default class CompanyLeftMenu extends Component {
 	componentDidMount() {
 		const { user } = this.props;
 		const { ref } = this.state;
+		//* adding the companies which are NOT owned by the user
 		ref
 			.doc(user.id)
 			.collection("companies")
+			.where("is_founded_by_user", "==", false)
 			.onSnapshot(snapshot => {
 				const list = [];
 				snapshot.forEach(doc => {
@@ -36,24 +39,58 @@ export default class CompanyLeftMenu extends Component {
 				});
 				this.setState({ companies: list });
 			});
+		//* adding the companies which are owned by the user
+		ref
+			.doc(user.id)
+			.collection("companies")
+			.where("is_founded_by_user", "==", true)
+			.onSnapshot(snapshot => {
+				const list = [];
+				snapshot.forEach(doc => {
+					list.push(doc.data());
+				});
+				this.setState({ ownedCompanies: list });
+			});
 	}
 
 	// componentDidUpdate(prevProps) {}
 
 	render() {
-		const { companies } = this.state;
+		const { companies, ownedCompanies } = this.state;
 		return (
 			<DrawerContext>
 				{context => (
 					<CompanySidebar variant="permanent" className="drawer" isOpen={context.isOpen}>
-						<Divider />
-						<List>{companies.length > 0 ? companies.map((company, index) => <CompanyListItem isOpen={context.isOpen} key={index} company={company} />) : undefined}</List>
-						<Divider />
+						{ownedCompanies.length > 0 ? (
+							<Fragment>
+								<List>
+									{ownedCompanies.map(
+										(company, index) => <CompanyListItem isOpen={context.isOpen} key={index} company={company} />
+									)}
+								</List>
+								<Divider />
+							</Fragment>
+						) : (
+							undefined
+						)}
+						{companies.length > 0 ? (
+							<Fragment>
+								<List>
+									{companies.map(
+										(company, index) => <CompanyListItem isOpen={context.isOpen} key={index} company={company} />
+									)}
+								</List>
+								<Divider />
+							</Fragment>
+						) : (
+							undefined
+						)}
 						<List>
-							<Avatar>
-								<Add/>
-							</Avatar>
-							<button>dfasd</button>
+							<div className="company-list-item">
+								<Avatar className="material-button">
+									<Add />
+								</Avatar>
+							</div>
 						</List>
 					</CompanySidebar>
 				)}

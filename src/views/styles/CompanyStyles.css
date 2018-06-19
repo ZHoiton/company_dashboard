@@ -44,14 +44,14 @@
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	width: 13%;
+	width: 15%;
 	z-index: 2;
 	border-color: black;
 	transition: width 0.5s;
 }
 
 .sidebar.collapsed {
-	width: 60px;
+	width: 50px;
 }
 
 .company-list-item {
@@ -64,4 +64,18 @@
 	justify-content: center;
 	color: #555555;
 	align-items: center;
+}
+.material-button:hover {
+    -webkit-transition: box-shadow 0.2s ease; /* Safari */
+    -moz-transition: box-shadow 0.2s ease;
+    transition: box-shadow 0.2s ease;
+    /* background-color: #e04d08 !important; */
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
+}
+
+.material-button:active {
+    -webkit-transition: background-color 0.2s ease; /* Safari */
+    -moz-transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease;
+    background-color: #d8d8d8 !important;
 }
