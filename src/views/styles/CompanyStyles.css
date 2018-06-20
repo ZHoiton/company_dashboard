@@ -120,3 +120,19 @@
 	width: 100%;
 	/* height: 1px; */
 }
+.company-add-member-button {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+}
+
+.success {
+	background-color: green;
+}
+
+.message-snuckbar {
+	display: "flex";
+	align-items: "center";
+	width: 100%;
+	justify-content: space-around;
+}

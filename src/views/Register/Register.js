@@ -53,6 +53,7 @@ export default class Register extends Component {
 			.then(user => {
 				// Email sent.
 				this.state.users.doc(user.uid).set({
+					email: this.state.email,
 					firstName: this.state.firstName,
 					lastName: this.state.lastName,
 					photoURL: "https://firebasestorage.googleapis.com/v0/b/proep-project.appspot.com/o/images%2Fdefault.png?alt=media&token=7ddd0de1-27d2-4b6a-a88c-d7d77f8b7b60"

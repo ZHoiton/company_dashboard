@@ -6,6 +6,25 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
+import AddIcon from "@material-ui/icons/Add";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
+import TextField from "@material-ui/core/TextField";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Snackbar from "@material-ui/core/Snackbar";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
+import CloseIcon from "@material-ui/icons/Close";
+import IconButton from "@material-ui/core/IconButton";
+import { firestore } from "firebase";
+
+function Transition(props) {
+	return <Slide direction="up" {...props} />;
+}
 
 export default class CompanyMembers extends Component {
 	static propTypes = {
@@ -18,7 +37,11 @@ export default class CompanyMembers extends Component {
 		this.state = {
 			company: {},
 			list: {},
-			anchorElement: null
+			open: false,
+			emailError: false,
+			openDialogAddMember: false,
+			anchorElementDropDown: null,
+			addMemberFieldValue: ""
 		};
 	}
 	componentDidUpdate(prevProps) {
@@ -49,15 +72,69 @@ export default class CompanyMembers extends Component {
 		});
 	};
 
-	handleClick = event => {
+	handleDropDownClick = event => {
 		console.dir(event.currentTarget.getBoundingClientRect());
-		this.setState({ anchorElement: event.currentTarget });
+		this.setState({ anchorElementDropDown: event.currentTarget });
 	};
 
-	handleClose = () => {
-		this.setState({ anchorElement: null });
+	handleDropDownClose = () => {
+		this.setState({ anchorElementDropDown: null });
 	};
 
+	handleOpenDialogAddMember = () => {
+		this.setState({ openDialogAddMember: true });
+	};
+
+	handleCloseDialogAddMember = () => {
+		this.setState({ openDialogAddMember: false });
+	};
+
+	handleAddMemberFieldChange = name => event => {
+		this.setState({
+			[name]: event.target.value
+		});
+	};
+
+	addMemberToCompany = email => {
+		let userFound = null;
+		firestore()
+			.collection("users")
+			.where("email", "==", email)
+			.get()
+			.then(docs => {
+				docs.forEach(doc => {
+					userFound = doc.data();
+					console.log(doc.data());
+				});
+				if (userFound !== null) {
+					this.sendInvatation(email);
+					this.handleCloseDialogAddMember();
+					this.handleClick();
+					this.setState({ emailError: false });
+				} else {
+					this.setState({ emailError: true });
+				}
+			})
+			.catch(function(error) {
+				console.log("Error getting documents: ", error);
+			});
+	};
+
+	sendInvatation = email => {
+		console.log(email);
+	};
+
+	handleClick = () => {
+		this.setState({ open: true });
+	};
+
+	handleClose = (event, reason) => {
+		if (reason === "clickaway") {
+			return;
+		}
+
+		this.setState({ open: false });
+	};
 	isEmpty = obj => {
 		for (const key in obj) {
 			if (obj.hasOwnProperty(key)) return false;
@@ -66,60 +143,127 @@ export default class CompanyMembers extends Component {
 	};
 
 	render() {
-		const { list, anchorElement } = this.state;
+		const { list, anchorElementDropDown, emailError } = this.state;
 		return (
-			<div className="company-members">
-				{!this.isEmpty(list) ? (
-					<List className="list">
-						{Object.keys(list).map(group => {
-							return (
-								<div key={group}>
-									<div className="custom-devider">
-										<div className="text">{group}</div>
-										<div className="line" />
+			<Fragment>
+				<div className="company-members">
+					{!this.isEmpty(list) ? (
+						<List className="list">
+							{Object.keys(list).map(group => {
+								return (
+									<div key={group}>
+										<div className="custom-devider">
+											<div className="text">{group}</div>
+											<div className="line" />
+										</div>
+										{list[group].map(item => {
+											return (
+												<Fragment key={item.key}>
+													<ListItem button onClick={this.handleDropDownClick}>
+														<Avatar alt="Profile picture" src={item.avatar} />
+														<ListItemText
+															primary={item.firstName + " " + item.lastName}
+															secondary={item.Roles.map(role => {
+																return role + " ";
+															})}
+														/>
+													</ListItem>
+													<Menu
+														id="simple-menu"
+														anchorEl={anchorElementDropDown}
+														open={Boolean(anchorElementDropDown)}
+														onClose={this.handleDropDownClose}
+														anchorReference="anchorPosition"
+														anchorPosition={{
+															top: anchorElementDropDown ? anchorElementDropDown.getBoundingClientRect().top + 50 : 0,
+															left: anchorElementDropDown ? anchorElementDropDown.getBoundingClientRect().left + 40 : 0
+														}}
+														transformOrigin={{
+															vertical: "top",
+															horizontal: "right"
+														}}
+													>
+														<MenuItem onClick={this.handleDropDownClose}>Profile</MenuItem>
+														<MenuItem onClick={this.handleDropDownClose}>Message</MenuItem>
+														<MenuItem onClick={this.handleDropDownClose}>Remove</MenuItem>
+													</Menu>
+												</Fragment>
+											);
+										})}
 									</div>
-									{list[group].map(item => {
-										return (
-											<Fragment key={item.key}>
-												<ListItem button onClick={this.handleClick}>
-													<Avatar alt="Profile picture" src={item.avatar} />
-													<ListItemText
-														primary={item.firstName + " " + item.lastName}
-														secondary={item.Roles.map(role => {
-															return role + " ";
-														})}
-													/>
-												</ListItem>
-												<Menu
-													id="simple-menu"
-													anchorEl={anchorElement}
-													open={Boolean(anchorElement)}
-													onClose={this.handleClose}
-													anchorReference="anchorPosition"
-													anchorPosition={{
-														top: anchorElement ? anchorElement.getBoundingClientRect().top + 50 : 0,
-														left: anchorElement ? anchorElement.getBoundingClientRect().left + 40 : 0
-													}}
-													transformOrigin={{
-														vertical: "top",
-														horizontal: "right"
-													}}
-												>
-													<MenuItem onClick={this.handleClose}>Profile</MenuItem>
-													<MenuItem onClick={this.handleClose}>Message</MenuItem>
-													<MenuItem onClick={this.handleClose}>Remove</MenuItem>
-												</Menu>
-											</Fragment>
-										);
-									})}
-								</div>
-							);
-						})}
-					</List>
-				) : (
-					undefined
-				)}
-			</div>
+								);
+							})}
+						</List>
+					) : (
+						undefined
+					)}
+
+					<Button variant="fab" color="primary" aria-label="add" className="company-add-member-button" onClick={this.handleOpenDialogAddMember}>
+						<AddIcon />
+					</Button>
+				</div>
+				<Dialog
+					open={this.state.openDialogAddMember}
+					TransitionComponent={Transition}
+					keepMounted
+					onClose={this.handleCloseDialogAddMember}
+					aria-labelledby="alert-dialog-slide-title"
+					aria-describedby="alert-dialog-slide-description"
+				>
+					<DialogTitle id="alert-dialog-slide-title">{"Add User"}</DialogTitle>
+					<DialogContent>
+						<FormControl fullWidth={true}>
+							<TextField
+								id="addMemberFieldValue"
+								label="Email"
+								value={this.state.addMemberFieldValue}
+								onChange={this.handleAddMemberFieldChange("addMemberFieldValue")}
+								margin="normal"
+							/>
+
+							{emailError ? (
+								<FormHelperText className="error" id="email-error-text">
+									{"No such user"}
+								</FormHelperText>
+							) : (
+								undefined
+							)}
+						</FormControl>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={this.handleCloseDialogAddMember} color="primary">
+							Cancel
+						</Button>
+						<Button onClick={this.addMemberToCompany.bind(this, this.state.addMemberFieldValue)} variant="contained" color="primary">
+							Add
+						</Button>
+					</DialogActions>
+				</Dialog>
+				<Snackbar
+					anchorOrigin={{
+						vertical: "bottom",
+						horizontal: "left"
+					}}
+					open={this.state.open}
+					autoHideDuration={4000}
+					onClose={this.handleClose}
+				>
+					<SnackbarContent
+						className="success"
+						aria-describedby="client-snackbar"
+						message={
+							<span id="client-snackbar" className="message-snuckbar">
+								<div className="msg">Invitation send!</div>
+							</span>
+						}
+						action={[
+							<IconButton key="close" aria-label="Close" color="inherit" onClick={this.handleClose}>
+								<CloseIcon />
+							</IconButton>
+						]}
+					/>
+				</Snackbar>
+			</Fragment>
 		);
 	}
 }
