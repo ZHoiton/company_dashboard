@@ -2,7 +2,6 @@
     margin: auto;
     width: 50%;
     padding: 10px;
-
 }
 .lTabs{
     margin: auto;
@@ -15,7 +14,6 @@
 }
 .tabPersonal{
    padding-right: 40px;
- 
 }
 
 .btnSave{
@@ -23,4 +21,11 @@
 width: 40%;
 margin-left: 30%;
 margin-right: 30%
+}
+.passTextField{
+    margin-left: 60%;
+}
+.changePassButton
+{
+    margin-left: 75%;
 }

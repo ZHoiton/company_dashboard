@@ -41,7 +41,7 @@ class CenteredTabs extends Component {
 				<AppBar position="static" color="default">
 					<div className="lTabs">
 						<Tabs value={this.state.value} onChange={this.handleChange} indicatorColor="primary" textColor="primary" fullWidth>
-							<Tab className="tabPersonal" label="Personal Settings" />
+							<Tab className="tabPersonal" label="Personal Settings " />
 							<Tab className="tabCompany" label="Company Settings" />
 						</Tabs>
 					</div>
@@ -54,10 +54,9 @@ class CenteredTabs extends Component {
 								<Input
 									className="txtFieldWidth"
 									id="name-simple"
-									//	value={this.state.name}
-									//	onChange={this.handleChange}
 								/>
 							</FormControl>
+							<TextField    id="password-input"  label="New Password" className="passTextField" type="password" autoComplete="current-password" margin="normal"/>
 						</div>
 
 						<div className="settingsFields">
@@ -66,16 +65,14 @@ class CenteredTabs extends Component {
 								<Input
 									id="name-simple"
 									className="txtFieldWidth"
-									//	value={this.state.name}
-									//	onChange={this.handleChange}
 								/>
 							</FormControl>
+							<TextField id="password-input" label="Confirm Password" className="passTextField" type="password" autoComplete="current-password"margin="normal"/>
 						</div>
 						<div className="settingsFields">
 							<form className={classes.container} noValidate>
 								<TextField
 									id="date"
-									className="txtFieldWidth"
 									label="Date of birth"
 									type="date"
 									defaultValue="2017-05-24"
@@ -84,6 +81,7 @@ class CenteredTabs extends Component {
 									}}
 								/>
 							</form>
+							<Button size="large" variant="raised" color="primary" className="changePassButton">{`Change Password`}</Button>
 						</div>
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
@@ -124,7 +122,7 @@ class CenteredTabs extends Component {
 						<Button size="large" variant="raised" color="primary" className="btnSave">
 							{`Save`}
 						</Button>
-					</div>
+					</div>					
 				)}
 				{value === 1 && (
 					<div>
@@ -134,8 +132,6 @@ class CenteredTabs extends Component {
 								<Input
 									id="name-company"
 									className="txtFieldWidth"
-									//	value={this.state.name}
-									//	onChange={this.handleChange}
 									style={{ width: "100%" }}
 								/>
 							</FormControl>
@@ -147,7 +143,6 @@ class CenteredTabs extends Component {
 									id="date"
 									label="Founded"
 									type="date"
-									className="txtFieldWidth"
 									defaultValue="2017-05-24"
 									InputLabelProps={{
 										shrink: true
@@ -155,19 +150,15 @@ class CenteredTabs extends Component {
 								/>
 							</form>
 						</div>
-
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
 								<InputLabel htmlFor="name-simple">Location</InputLabel>
 								<Input
 									id="name-Location"
 									className="txtFieldWidth"
-									//	value={this.state.name}
-									//	onChange={this.handleChange}
 								/>
 							</FormControl>
 						</div>
-
 						<Button size="large" variant="raised" color="primary" className="btnSave">{`Save`}</Button>
 					</div>
 				)}
