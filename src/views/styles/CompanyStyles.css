@@ -5,12 +5,13 @@
 	width: 80%;
 	height: 500px;
 	justify-content: space-around;
-	flex-grow:2;
+	flex-grow: 2;
 }
 
 .company-container {
 	display: flex;
 	flex-direction: row;
+	height: 100%;
 }
 .create-company-card {
 	width: 75%;
@@ -46,7 +47,7 @@
 	position: relative;
 	width: 15%;
 	z-index: 2;
-	border-color: black;
+	border-right: 1px solid #e8e8e8;
 	transition: width 0.5s;
 }
 
@@ -59,23 +60,63 @@
 	flex-direction: row;
 	padding: 5px 0 5px 5px;
 }
-.company-list-item.text{
+.company-list-item.text {
 	display: flex;
 	justify-content: center;
 	color: #555555;
 	align-items: center;
 }
 .material-button:hover {
-    -webkit-transition: box-shadow 0.2s ease; /* Safari */
-    -moz-transition: box-shadow 0.2s ease;
-    transition: box-shadow 0.2s ease;
-    /* background-color: #e04d08 !important; */
-    box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
+	-webkit-transition: box-shadow 0.2s ease; /* Safari */
+	-moz-transition: box-shadow 0.2s ease;
+	transition: box-shadow 0.2s ease;
+	/* background-color: #e04d08 !important; */
+	box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }
 
 .material-button:active {
-    -webkit-transition: background-color 0.2s ease; /* Safari */
-    -moz-transition: background-color 0.2s ease;
-    transition: background-color 0.2s ease;
-    background-color: #d8d8d8 !important;
+	-webkit-transition: background-color 0.2s ease; /* Safari */
+	-moz-transition: background-color 0.2s ease;
+	transition: background-color 0.2s ease;
+	background-color: #d8d8d8 !important;
+}
+
+/* //* Company Overview */
+.company-wrapper {
+	display: flex;
+	width: 100%;
+	transition: width 0.5s;
+}
+.company-wrapper.open {
+	width: 85%;
+}
+.company-overview {
+	display: flex;
+	width: 85%;
+	background-color: #555555;
+}
+
+/*//* Company Members */
+.company-members {
+	display: flex;
+	background-color: lightgray;
+	width: 15%;
+}
+.company-members .list {
+	width: 100%;
+}
+
+.custom-devider {
+	display: flex;
+	align-items: center;
+	padding: 5px;
+	color: #555555;
+}
+.custom-devider .text {
+	display: inline-block;
+}
+.custom-devider .line {
+	border-top: 1px solid #555555;
+	width: 100%;
+	/* height: 1px; */
 }

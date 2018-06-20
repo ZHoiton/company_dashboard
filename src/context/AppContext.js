@@ -43,21 +43,29 @@ export default class AuthContextComponent extends Component {
 						.get()
 						.then(doc => {
 							if (doc.exists) {
-								user.firstName =  doc.data().firstName;
+								console.log(doc.data());
+								user.firstName = doc.data().firstName;
 								user.lastName = doc.data().lastName;
 								user.picture = doc.data().photoURL;
-								if (!user.picture) firebase
-									.storage()
-									.ref()
-									.child('images/default.png')
-									.getDownloadURL()
-									.then(url => {
-										user.picture = url;
-										this.setState({
-											userIsLoggedIn: true,
-											user,
+								if (!user.picture) {
+									firebase
+										.storage()
+										.ref()
+										.child("images/default.png")
+										.getDownloadURL()
+										.then(url => {
+											user.picture = url;
+											this.setState({
+												userIsLoggedIn: true,
+												user
+											});
 										});
+								} else {
+									this.setState({
+										userIsLoggedIn: true,
+										user
 									});
+								}
 							} else {
 								// doc.data() will be undefined in this case
 								// console.log("No such document!");
@@ -75,15 +83,8 @@ export default class AuthContextComponent extends Component {
 	};
 
 	render() {
-		return (
-			<AuthContext.Provider value={this.state}>
-				{this.props.children}
-			</AuthContext.Provider>
-		);
+		return <AuthContext.Provider value={this.state}>{this.props.children}</AuthContext.Provider>;
 	}
 }
 
-export {
-	AuthContext,
-	AuthContextComponent
-};
+export { AuthContext, AuthContextComponent };

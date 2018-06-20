@@ -75,35 +75,65 @@ export default class CompanyCreate extends Component {
 	};
 
 	onFinishClick = () => {
+		const { user } = this.props;
 		const { companies, company, steps, roleList, groupList } = this.state;
 		steps[steps.length - 1].completed = true;
 
 		const key = companies.doc().id;
 
+		//* adding the company to the DB
 		companies
 			.doc(key)
 			.set(company)
 			.then(() => {
 				this.props.history.push("/");
 			});
+
+		//* adding roles
 		roleList.map(role =>
 			companies
 				.doc(key)
 				.collection("Roles")
 				.add({ Name: role })
 		);
+		//* adding defult role "Owner"
+		companies
+			.doc(key)
+			.collection("Roles")
+			.add({ Name: "Owner" });
+
+
+		//* adding groups
 		groupList.map(group =>
 			companies
 				.doc(key)
 				.collection("Groups")
 				.add({ Name: group })
 		);
+		//* adding defult role "Management"
+		companies
+			.doc(key)
+			.collection("Groups")
+			.add({ Name: "Management" });
+
+		//* adding the members list
+		companies
+			.doc(key)
+			.collection("Members")
+			.doc(user.id)
+			.set({
+				firstName: user.firstName,
+				lastName: user.lastName,
+				avatar: user.photoURL,
+				Roles: ["Owner"],
+				Groups: ["Management"]
+			});
 
 		//* Adding the company to the user(owner)
 		firebase
 			.firestore()
 			.collection("users")
-			.doc(this.props.user.id)
+			.doc(user.id)
 			.collection("companies")
 			.doc(key)
 			.set({

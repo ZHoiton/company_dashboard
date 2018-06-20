@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { firestore } from "firebase";
+import CompanyMembers from "../Company/CompanyMembers";
+import { DrawerContext } from "../../context/DrawerContext";
 
 class CompanyOverview extends Component {
 	static propTypes = {
-		companyId: PropTypes.string
+		companyId: PropTypes.string,
+		user:PropTypes.object
 	};
 
 	constructor(props) {
@@ -24,6 +27,7 @@ class CompanyOverview extends Component {
 		if (this.state.company !== prevState.company) {
 			this.companyCollectionsListener("Groups");
 			this.companyCollectionsListener("Roles");
+			this.companyCollectionsListener("Members");
 			console.log(this.state.company);
 		}
 	}
@@ -56,7 +60,16 @@ class CompanyOverview extends Component {
 	};
 
 	render() {
-		return <div>asd</div>;
+		return (
+			<DrawerContext>
+				{context => (
+					<div className={context.isOpen ? "company-wrapper open" : "company-wrapper"}>
+						<div className="company-overview">asd</div>
+						<CompanyMembers company={this.state.company} user={this.props.user} />
+					</div>
+				)}
+			</DrawerContext>
+		);
 	}
 }
 

@@ -1,6 +1,12 @@
+.messenger-wrapper {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	height: 100%;
+}
 .messenger-container {
 	display: flex;
-	height: 700px;
+	min-height: 500px;
 	width: 80%;
 	margin: 0 auto;
 }
@@ -47,15 +53,15 @@
 .owner-message {
 	display: flex;
 	justify-content: flex-end;
-    min-height: 50px;
-    word-wrap: break-word;
+	min-height: 50px;
+	word-wrap: break-word;
 	margin: 10px 0;
 	/* align-items: center; */
 }
 .target-user-message {
 	display: flex;
 	justify-content: flex-start;
-    word-wrap: break-word;
+	word-wrap: break-word;
 	min-height: 50px;
 	margin: 10px 0;
 	/* align-items: center; */

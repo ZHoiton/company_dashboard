@@ -25,20 +25,22 @@ export default class Messenger extends Component {
 	render() {
 		const { targetUser } = this.state;
 		return (
-			<Card className="messenger-container">
-				<AuthContext>
-					{context => {
-						return context.userIsLoggedIn ? (
-							<Fragment>
-								<MessengerLeft user={context.user} onClick={this.onUserClick} />
-								<MessengerRight user={context.user} targetUser={targetUser} />
-							</Fragment>
-						) : (
-							undefined
-						);
-					}}
-				</AuthContext>
-			</Card>
+			<div className="messenger-wrapper">
+				<Card className="messenger-container">
+					<AuthContext>
+						{context => {
+							return context.userIsLoggedIn ? (
+								<Fragment>
+									<MessengerLeft user={context.user} onClick={this.onUserClick} />
+									<MessengerRight user={context.user} targetUser={targetUser} />
+								</Fragment>
+							) : (
+								undefined
+							);
+						}}
+					</AuthContext>
+				</Card>
+			</div>
 		);
 	}
 }

@@ -35,7 +35,7 @@ export default class Company extends Component {
 								<CompanyLeftMenu user={context.user} onCompanyChange={this.onCompanyChange} />
 
 								<Switch>
-									<Route exact path="/company" render={props => <CompanyOverview {...props} companyId={companyId} />} />
+									<Route exact path="/company" render={props => <CompanyOverview {...props} companyId={companyId} user={context.user}/>} />
 									<Route exact path="/company/create" render={props => <CompanyCreate {...props} company={companyId} user={context.user} />} />
 								</Switch>
 							</Fragment>
