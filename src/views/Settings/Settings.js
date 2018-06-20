@@ -56,7 +56,7 @@ class CenteredTabs extends Component {
 									id="name-simple"
 								/>
 							</FormControl>
-							<TextField    id="password-input"  label="New Password" className="passTextField" type="password" autoComplete="current-password" margin="normal"/>
+							<TextField id="password-input" label="New Password" className="passTextField" type="password" autoComplete="current-password" margin="normal" />
 						</div>
 
 						<div className="settingsFields">
@@ -67,7 +67,7 @@ class CenteredTabs extends Component {
 									className="txtFieldWidth"
 								/>
 							</FormControl>
-							<TextField id="password-input" label="Confirm Password" className="passTextField" type="password" autoComplete="current-password"margin="normal"/>
+							<TextField id="password-input" label="Confirm Password" className="passTextField" type="password" autoComplete="current-password" margin="normal" />
 						</div>
 						<div className="settingsFields">
 							<form className={classes.container} noValidate>
@@ -122,7 +122,7 @@ class CenteredTabs extends Component {
 						<Button size="large" variant="raised" color="primary" className="btnSave">
 							{`Save`}
 						</Button>
-					</div>					
+					</div>
 				)}
 				{value === 1 && (
 					<div>

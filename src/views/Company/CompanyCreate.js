@@ -124,7 +124,7 @@ export default class CompanyCreate extends Component {
 			.set({
 				firstName: user.firstName,
 				lastName: user.lastName,
-				avatar: user.photoURL,
+				avatar: user.picture,
 				Roles: ["Owner"],
 				Groups: ["Management"]
 			});

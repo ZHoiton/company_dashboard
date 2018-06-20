@@ -29,7 +29,6 @@ function Transition(props) {
 export default class CompanyMembers extends Component {
 	static propTypes = {
 		company: PropTypes.object,
-		user: PropTypes.object
 	};
 
 	constructor(props) {
