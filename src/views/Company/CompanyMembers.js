@@ -30,11 +30,11 @@ export default class CompanyMembers extends Component {
 	asd = () => {
 		const { company } = this.props;
 		const tempList = {};
-		company.Groups.map(group => {
+		company.Groups.forEach(group => {
 			tempList[group.Name] = [];
 		});
-		company.Members.map(member => {
-			member.Groups.map(group => {
+		company.Members.forEach(member => {
+			member.Groups.forEach(group => {
 				tempList[group].push(member);
 			});
 		});
