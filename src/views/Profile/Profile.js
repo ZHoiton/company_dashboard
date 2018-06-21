@@ -4,8 +4,38 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import '../styles/ProfileStyles.css';
+import { firestore } from "firebase";
+import PropTypes from "prop-types";
 
 export default class Profile extends Component {
+
+	static propTypes = {
+		user: PropTypes.object
+	};
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			ref: firestore().collection("users"),
+		};
+	}
+
+	retrieveUser()
+	{
+		const { user } = this.props;
+		const { ref } = this.state;
+
+		ref
+			.doc(user.id)
+			.get()
+			.then(info => {console.log(info.data());});
+	}
+
+	componentDidMount()
+	{
+		this.retrieveUser();
+	}
 
 	render() {
 		return (
