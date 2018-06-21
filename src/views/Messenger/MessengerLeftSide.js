@@ -11,7 +11,6 @@ import IconButton from "@material-ui/core/IconButton";
 
 export default class MessengerLeftSide extends Component {
 	static propTypes = {
-		history: PropTypes.object,
 		user: PropTypes.object,
 		onClick: PropTypes.func
 	};

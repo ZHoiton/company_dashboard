@@ -69,7 +69,7 @@ export default class CompanyMembers extends Component {
 		});
 
 		this.setState({ list: tempList, company: company }, () => {
-			console.log(this.state.list);
+			console.debug(this.state.list);
 		});
 	};
 
@@ -105,7 +105,7 @@ export default class CompanyMembers extends Component {
 				docs.forEach(doc => {
 					userFound = doc.data();
 					userFound["key"] = doc.id;
-					console.log(doc.data());
+					console.debug(doc.data());
 				});
 				if (userFound !== null) {
 					this.sendInvatation(userFound);
@@ -114,12 +114,12 @@ export default class CompanyMembers extends Component {
 				}
 			})
 			.catch(function(error) {
-				console.log("Error getting documents: ", error);
+				console.debug("Error getting documents: ", error);
 			});
 	};
 
 	sendInvatation = user => {
-		console.log(user);
+		console.debug(user);
 		if (user.key !== this.props.user.id) {
 			const invitesRef = firestore()
 				.collection("users")

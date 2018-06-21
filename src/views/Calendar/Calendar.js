@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import CalendarInformation from './CalendarInformaton';
 import CalendarGrid from './CalendarGrid';
-
+import '../styles/CalendarStyles.css';
 class Calendar extends Component {
 	constructor(props) {
 		super(props);
@@ -9,10 +9,10 @@ class Calendar extends Component {
 	}
 	render() {
 		return (
-			<Fragment>
+			<div className='calendar-container'>
 				<CalendarInformation/>
 				<CalendarGrid/>
-			</Fragment>
+			</div>
 		);
 	}
 }

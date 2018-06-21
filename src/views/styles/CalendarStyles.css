@@ -1,0 +1,34 @@
+.calendar-grid {
+    width: 80%;
+    height: 70%;
+}
+
+.outline {
+    border: solid 2px #3f51b5;
+}
+
+.calendar-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.calendar-information {
+    width: 20%;
+    height: 100%;
+}
+
+.calendar-information-container {
+    width: 80%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.calendar-information-button {
+    height: 100%;
+    width: 80px;
+}

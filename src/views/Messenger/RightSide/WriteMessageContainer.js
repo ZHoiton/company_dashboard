@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button";
 
 export default class WriteMessageContainer extends Component {
 	static propTypes = {
-		history: PropTypes.object,
 		user: PropTypes.object,
 		targetUser: PropTypes.object
 	};

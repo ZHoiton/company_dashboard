@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import PropTypes from "prop-types";
 import Card from "@material-ui/core/Card";
 import "../styles/MessengerStyles.css";
 import { AuthContext } from "../../context/AppContext";
@@ -7,10 +6,6 @@ import MessengerLeft from "./MessengerLeftSide.js";
 import MessengerRight from "./MessengerRightSide.js";
 
 export default class Messenger extends Component {
-	static propTypes = {
-		history: PropTypes.object
-	};
-
 	constructor(props) {
 		super(props);
 		this.state = {

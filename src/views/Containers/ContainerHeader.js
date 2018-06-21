@@ -21,7 +21,8 @@ import classNames from 'classnames';
 
 class ContainerHeader extends Component {
 	static propTypes = {
-		history: PropTypes.object
+		history: PropTypes.object,
+		location: PropTypes.object,
 	};
 	constructor(props) {
 		super(props);
@@ -69,18 +70,24 @@ class ContainerHeader extends Component {
 		this.props.history.push("/company");
 	}
 
+	onCalendarClick = () =>{
+		this.handleClick();
+		this.props.history.push("/calendar");
+	}
+
 	render() {
+		const { location } = this.props;
 		const { clicked } = this.state;
 		return (
 			<DrawerContext>
 				{context => (
 					<AppBar position="static" className={classNames(context.isOpen ? 'small' : 'big')}>
 						<Toolbar className="nav-bar">
-
-							<IconButton color="inherit" aria-label="Menu" onClick={context.onClickOpen}>
-								<MenuIcon />
-							</IconButton>
-
+							<div>
+								{location.pathname.includes('/company')?<IconButton color="inherit" aria-label="Menu" onClick={context.onClickOpen}>
+									<MenuIcon />
+								</IconButton>:undefined}
+							</div>
 							<Typography variant="title" color="inherit">
 						eZLink
 							</Typography>
@@ -126,7 +133,7 @@ class ContainerHeader extends Component {
 																<MenuItem onClick={this.handleClick}>Dashboard</MenuItem>
 																<MenuItem onClick={this.onProfileClick}>Profile</MenuItem>
 																<MenuItem onClick={this.onCompanyClick}>Company</MenuItem>
-																<MenuItem onClick={this.handleClick}>Calendar</MenuItem>
+																<MenuItem onClick={this.onCalendarClick}>Calendar</MenuItem>
 																<MenuItem onClick={this.onSettingsClick}>Settings</MenuItem>
 																<MenuItem onClick={this.handleClick}>Messages</MenuItem>
 																<MenuItem onClick={this.onSignOutClick}>Logout</MenuItem>

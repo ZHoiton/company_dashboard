@@ -7,7 +7,7 @@ class CalendarGrid extends Component {
 	}
 	render() {
 		return (
-			<div></div>
+			<div className='calendar-grid outline'></div>
 		);
 	}
 }
