@@ -135,8 +135,8 @@ export default class CompanyMembers extends Component {
 						this.setState({ emailErrorMessage: "Invitation already send!", emailError: true });
 					} else {
 						invitesRef.doc(this.state.company.key).set({
-							Avatar: this.state.company.Avatar,
-							Name: this.state.company.Name
+							avatar: this.state.company.Avatar,
+							name: this.state.company.Name
 						});
 						this.handleCloseDialogAddMember();
 						this.handleClickSnuckBar();

@@ -12,7 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import "../styles/SettingsStyles.css";
 import firebase from "firebase";
-import FormHelperText from '@material-ui/core/FormHelperText';
+import FormHelperText from "@material-ui/core/FormHelperText";
 class CenteredTabs extends Component {
 	static propTypes = {
 		classes: PropTypes.object.isRequired
@@ -22,8 +22,8 @@ class CenteredTabs extends Component {
 		super(props);
 		this.state = {
 			value: 0,
-			password1:"",
-			password2:"",
+			password1: "",
+			password2: "",
 			passwordError: false,
 			passwordErrorMessage: ""
 		};
@@ -42,12 +42,10 @@ class CenteredTabs extends Component {
 	};
 	onSubmit = () => {
 		const { password1, password2 } = this.state;
-		this.setState({passwordError: false,});
-		if(password1==password2)
-		{
-		firebase.auth().currentUser.updatePassword( password1);
-		}
-		else{
+		this.setState({ passwordError: false });
+		if (password1 === password2) {
+			firebase.auth().currentUser.updatePassword(password1);
+		} else {
 			this.setState({
 				passwordErrorMessage: "Passwords do not match",
 				passwordError: true
@@ -57,10 +55,10 @@ class CenteredTabs extends Component {
 	render() {
 		const { classes } = this.props;
 		const { value } = this.state;
-		const{password1}=this.state;
-		const{password2}=this.state;
-		const{passwordError}=this.state;
-		const{passwordErrorMessage}=this.state;
+		const { password1 } = this.state;
+		const { password2 } = this.state;
+		const { passwordError } = this.state;
+		const { passwordErrorMessage } = this.state;
 		return (
 			<div className={classes.root}>
 				<AppBar position="static" color="default">
@@ -76,29 +74,41 @@ class CenteredTabs extends Component {
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
 								<InputLabel htmlFor="name-first">First Name</InputLabel>
-								<Input
-									className="txtFieldWidth"
-									id="name-first"
-								/>
+								<Input className="txtFieldWidth" id="name-first" />
 							</FormControl>
-							<TextField id="password1" value={password1} label="New Password" onChange={this.onChange} className="passTextField" type="password" autoComplete="current-password" margin="normal" />
+							<TextField
+								id="password1"
+								value={password1}
+								label="New Password"
+								onChange={this.onChange}
+								className="passTextField"
+								type="password"
+								autoComplete="current-password"
+								margin="normal"
+							/>
 						</div>
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
 								<InputLabel htmlFor="name-last">Last Name</InputLabel>
-								<Input
-									id="name-simple"
-									className="txtFieldWidth"
-								/>
+								<Input id="name-simple" className="txtFieldWidth" />
 							</FormControl>
-							<TextField id="password2" value={password2} label="Confirm Password" onChange={this.onChange} className="passTextField" type="password" autoComplete="current-password" margin="normal" />
+							<TextField
+								id="password2"
+								value={password2}
+								label="Confirm Password"
+								onChange={this.onChange}
+								className="passTextField"
+								type="password"
+								autoComplete="current-password"
+								margin="normal"
+							/>
 							{passwordError ? (
-							<FormHelperText className="passErrorMessage" id="password-error-text">
-								{passwordErrorMessage}
-							</FormHelperText>
-						) : (
-							undefined
-						)}
+								<FormHelperText className="passErrorMessage" id="password-error-text">
+									{passwordErrorMessage}
+								</FormHelperText>
+							) : (
+								undefined
+							)}
 						</div>
 						<div className="settingsFields">
 							<form className={classes.container} noValidate>
@@ -112,7 +122,7 @@ class CenteredTabs extends Component {
 									}}
 								/>
 							</form>
-							<Button size="large" variant="raised" color="primary" onClick={this.onSubmit } className="changePassButton">{`Change Password`}</Button>
+							<Button size="large" variant="raised" color="primary" onClick={this.onSubmit} className="changePassButton">{`Change Password`}</Button>
 						</div>
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
@@ -160,11 +170,7 @@ class CenteredTabs extends Component {
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
 								<InputLabel htmlFor="name-simple">Company Name</InputLabel>
-								<Input
-									id="name-company"
-									className="txtFieldWidth"
-									style={{ width: "100%" }}
-								/>
+								<Input id="name-company" className="txtFieldWidth" style={{ width: "100%" }} />
 							</FormControl>
 						</div>
 
@@ -184,10 +190,7 @@ class CenteredTabs extends Component {
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
 								<InputLabel htmlFor="name-simple">Location</InputLabel>
-								<Input
-									id="name-Location"
-									className="txtFieldWidth"
-								/>
+								<Input id="name-Location" className="txtFieldWidth" />
 							</FormControl>
 						</div>
 						<Button size="large" variant="raised" color="primary" className="btnSave">{`Save`}</Button>

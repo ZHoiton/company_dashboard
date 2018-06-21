@@ -23,14 +23,15 @@ class CompanyLeftMenu extends Component {
 		this.state = {
 			ref: firestore().collection("users"),
 			ownedCompanies: [],
-			companies: []
+			companies: [],
+			invites: []
 		};
 	}
 
 	componentDidMount() {
 		const { user } = this.props;
 		const { ref } = this.state;
-		//* adding the companies which are owned by the user
+		//* getting the companies which are owned by the user
 		ref
 			.doc(user.id)
 			.collection("companies")
@@ -48,7 +49,7 @@ class CompanyLeftMenu extends Component {
 				});
 			});
 
-		//* adding the companies which are NOT owned by the user
+		//* getting the companies which are NOT owned by the user
 		ref
 			.doc(user.id)
 			.collection("companies")
@@ -63,6 +64,21 @@ class CompanyLeftMenu extends Component {
 				});
 				this.setState({ companies: list });
 			});
+
+		//* getting all the invites
+		ref
+			.doc(user.id)
+			.collection("invites")
+			.onSnapshot(snapshot => {
+				const list = [];
+				snapshot.forEach(doc => {
+					let tempObj = {};
+					tempObj = doc.data();
+					tempObj["key"] = doc.id;
+					list.push(tempObj);
+				});
+				this.setState({ invites: list });
+			});
 	}
 
 	onAddClick = () => {
@@ -73,7 +89,7 @@ class CompanyLeftMenu extends Component {
 
 	render() {
 		const { onCompanyChange } = this.props;
-		const { companies, ownedCompanies } = this.state;
+		const { companies, ownedCompanies, invites } = this.state;
 		return (
 			<DrawerContext>
 				{context => (
@@ -93,6 +109,14 @@ class CompanyLeftMenu extends Component {
 								<List>
 									{companies.map((company, index) => <CompanyListItem isOpen={context.isOpen} key={index} company={company} onCompanyChange={onCompanyChange} />)}
 								</List>
+								<Divider />
+							</Fragment>
+						) : (
+							undefined
+						)}
+						{invites.length > 0 ? (
+							<Fragment>
+								<List>{invites.map((invite, index) => <CompanyListItem isOpen={context.isOpen} key={index} company={invite} onCompanyChange={onCompanyChange} />)}</List>
 								<Divider />
 							</Fragment>
 						) : (
