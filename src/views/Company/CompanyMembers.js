@@ -29,6 +29,7 @@ function Transition(props) {
 export default class CompanyMembers extends Component {
 	static propTypes = {
 		company: PropTypes.object,
+		user: PropTypes.object
 	};
 
 	constructor(props) {
@@ -36,8 +37,9 @@ export default class CompanyMembers extends Component {
 		this.state = {
 			company: {},
 			list: {},
-			open: false,
+			isSnuckBarOpen: false,
 			emailError: false,
+			emailErrorMessage: "",
 			openDialogAddMember: false,
 			anchorElementDropDown: null,
 			addMemberFieldValue: ""
@@ -72,7 +74,6 @@ export default class CompanyMembers extends Component {
 	};
 
 	handleDropDownClick = event => {
-		console.dir(event.currentTarget.getBoundingClientRect());
 		this.setState({ anchorElementDropDown: event.currentTarget });
 	};
 
@@ -103,15 +104,13 @@ export default class CompanyMembers extends Component {
 			.then(docs => {
 				docs.forEach(doc => {
 					userFound = doc.data();
+					userFound["key"] = doc.id;
 					console.log(doc.data());
 				});
 				if (userFound !== null) {
-					this.sendInvatation(email);
-					this.handleCloseDialogAddMember();
-					this.handleClick();
-					this.setState({ emailError: false });
+					this.sendInvatation(userFound);
 				} else {
-					this.setState({ emailError: true });
+					this.setState({ emailErrorMessage: "No such user!", emailError: true });
 				}
 			})
 			.catch(function(error) {
@@ -119,20 +118,46 @@ export default class CompanyMembers extends Component {
 			});
 	};
 
-	sendInvatation = email => {
-		console.log(email);
+	sendInvatation = user => {
+		console.log(user);
+		if (user.key !== this.props.user.id) {
+			const invitesRef = firestore()
+				.collection("users")
+				.doc(user.key)
+				.collection("invites");
+
+			// .add({ Name: "Owner" });
+			invitesRef
+				.doc(this.state.company.key)
+				.get()
+				.then(doc => {
+					if (doc.exists) {
+						this.setState({ emailErrorMessage: "Invitation already send!", emailError: true });
+					} else {
+						invitesRef.doc(this.state.company.key).set({
+							Avatar: this.state.company.Avatar,
+							Name: this.state.company.Name
+						});
+						this.handleCloseDialogAddMember();
+						this.handleClickSnuckBar();
+						this.setState({ emailError: false });
+					}
+				});
+		} else {
+			this.setState({ emailErrorMessage: "Oops thats you!", emailError: true });
+		}
 	};
 
-	handleClick = () => {
-		this.setState({ open: true });
+	handleClickSnuckBar = () => {
+		this.setState({ isSnuckBarOpen: true });
 	};
 
-	handleClose = (event, reason) => {
+	handleCloseSnuckBar = (event, reason) => {
 		if (reason === "clickaway") {
 			return;
 		}
 
-		this.setState({ open: false });
+		this.setState({ isSnuckBarOpen: false });
 	};
 	isEmpty = obj => {
 		for (const key in obj) {
@@ -142,7 +167,7 @@ export default class CompanyMembers extends Component {
 	};
 
 	render() {
-		const { list, anchorElementDropDown, emailError } = this.state;
+		const { list, anchorElementDropDown, emailError, emailErrorMessage } = this.state;
 		return (
 			<Fragment>
 				<div className="company-members">
@@ -222,7 +247,7 @@ export default class CompanyMembers extends Component {
 
 							{emailError ? (
 								<FormHelperText className="error" id="email-error-text">
-									{"No such user"}
+									{emailErrorMessage}
 								</FormHelperText>
 							) : (
 								undefined
@@ -243,9 +268,9 @@ export default class CompanyMembers extends Component {
 						vertical: "bottom",
 						horizontal: "left"
 					}}
-					open={this.state.open}
+					open={this.state.isSnuckBarOpen}
 					autoHideDuration={4000}
-					onClose={this.handleClose}
+					onClose={this.handleCloseSnuckBar}
 				>
 					<SnackbarContent
 						className="success"
@@ -256,7 +281,7 @@ export default class CompanyMembers extends Component {
 							</span>
 						}
 						action={[
-							<IconButton key="close" aria-label="Close" color="inherit" onClick={this.handleClose}>
+							<IconButton key="close" aria-label="Close" color="inherit" onClick={this.handleCloseSnuckBar}>
 								<CloseIcon />
 							</IconButton>
 						]}
