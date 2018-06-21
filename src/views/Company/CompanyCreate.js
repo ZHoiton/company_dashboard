@@ -40,8 +40,7 @@ export default class CompanyCreate extends Component {
 			tempCompany.Location = location;
 			tempCompany.Founded = founded;
 			tempCompany.FoundedBy = this.props.user.id;
-			tempCompany.Avatar =
-				"https://firebasestorage.googleapis.com/v0/b/proep-project.appspot.com/o/images%2F20799359_1276469802463980_3729983683417056145_n.jpg?alt=media&token=b1eab01f-71d8-481f-8e4d-a0ab379ce00f";
+			tempCompany.Avatar = null;
 			this.setState({ company: tempCompany });
 			break;
 		case 1:

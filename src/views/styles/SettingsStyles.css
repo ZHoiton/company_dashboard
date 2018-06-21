@@ -5,12 +5,11 @@
 }
 .lTabs{
     margin: auto;
-    width: 20%;
-    size: 150;
+    width: 30%;
     padding: 10px;
 }
 .txtFieldWidth{
-    width: 300%
+    width: 220%
 }
 .tabPersonal{
    padding-right: 40px;
@@ -23,9 +22,13 @@ margin-left: 30%;
 margin-right: 30%
 }
 .passTextField{
-    margin-left: 60%;
+    margin-left: 45%;
 }
 .changePassButton
 {
-    margin-left: 75%;
+    margin-left: 60%;
+}
+.passErrorMessage{
+    margin-left: 70%;
+    color:red;
 }
