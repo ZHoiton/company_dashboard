@@ -15,7 +15,8 @@ class CompanyLeftMenu extends Component {
 	static propTypes = {
 		user: PropTypes.any,
 		history: PropTypes.object,
-		onCompanyChange: PropTypes.func
+		onCompanyChange: PropTypes.func,
+		openJoinCompany: PropTypes.func
 	};
 	constructor(props) {
 		super(props);
@@ -45,7 +46,7 @@ class CompanyLeftMenu extends Component {
 					list.push(tempObj);
 				});
 				this.setState({ ownedCompanies: list }, () => {
-					this.props.onCompanyChange(this.state.ownedCompanies.length > 0 ? this.state.ownedCompanies[0].key : null);
+					this.props.onCompanyChange(this.state.ownedCompanies.length > 0 ? this.state.ownedCompanies[0] : null);
 				});
 			});
 
@@ -75,6 +76,7 @@ class CompanyLeftMenu extends Component {
 					let tempObj = {};
 					tempObj = doc.data();
 					tempObj["key"] = doc.id;
+					tempObj["invite"] = true;
 					list.push(tempObj);
 				});
 				this.setState({ invites: list });
@@ -116,7 +118,17 @@ class CompanyLeftMenu extends Component {
 						)}
 						{invites.length > 0 ? (
 							<Fragment>
-								<List>{invites.map((invite, index) => <CompanyListItem isOpen={context.isOpen} key={index} company={invite} onCompanyChange={onCompanyChange} />)}</List>
+								<List>
+									{invites.map((invite, index) => (
+										<CompanyListItem
+											isOpen={context.isOpen}
+											key={index}
+											company={invite}
+											openJoinCompany={this.props.openJoinCompany}
+											onCompanyChange={onCompanyChange}
+										/>
+									))}
+								</List>
 								<Divider />
 							</Fragment>
 						) : (

@@ -11,28 +11,11 @@ import ContainerHeader from "./ContainerHeader";
 import "../styles/ContainerStyles.css";
 import { AuthContext } from "../../context/AppContext";
 
-
 export default class Container extends Component {
 	render() {
 		return (
 			<div className="root">
 				<ContainerHeader />
-
-				<AuthContext>
-					{context => {
-						return context.userIsLoggedIn ? (
-							<Fragment>
-								<Profile user={context.user} />
-
-								<Switch>
-									<Route exact path="/profile" render={props => <Profile {...props} user={context.user}/>} />
-								</Switch>
-							</Fragment>
-						) : (
-							undefined
-						);
-					}}
-				</AuthContext>
 
 				<Switch>
 					<Route exact path="/" component={Home} />
@@ -40,7 +23,18 @@ export default class Container extends Component {
 					<Route exact path="/settings" component={Settings} />
 					<Route exact path="/register" component={Register} />
 					<Route exact path="/calendar" component={LogIn} />
-					<Route path="/company" component={Company} />
+					<AuthContext>
+						{context => {
+							return context.userIsLoggedIn ? (
+								<Fragment>
+									<Route exact path="/profile" render={props => <Profile {...props} user={context.user} />} />
+									<Route exact path="/company" render={props => <Company {...props} user={context.user} />} />
+								</Fragment>
+							) : (
+								undefined
+							);
+						}}
+					</AuthContext>
 					{/* <Route path="/profile" component={Profile} /> */}
 					<Route path="/messenger" component={Messenger} />
 					{/* <Route

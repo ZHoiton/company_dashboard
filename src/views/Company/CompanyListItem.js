@@ -9,21 +9,25 @@ export default class CompanyListItem extends Component {
 	static propTypes = {
 		isOpen: PropTypes.bool,
 		company: PropTypes.object,
-		onCompanyChange: PropTypes.func
+		onCompanyChange: PropTypes.func,
+		openJoinCompany: PropTypes.func
 	};
 
 	constructor(props) {
 		super(props);
 
-		this.state = {
-		};
+		this.state = {};
 		console.log(this.props.company);
 	}
 
 	render() {
-		const { isOpen, company, onCompanyChange } = this.props;
+		const { isOpen, company, onCompanyChange, openJoinCompany } = this.props;
 		return (
-			<ListItem button={isOpen ? true : false} className="company-list-item" onClick={onCompanyChange.bind(this, company.key)}>
+			<ListItem
+				button={isOpen ? true : false}
+				className="company-list-item"
+				onClick={openJoinCompany ? openJoinCompany.bind(this, company) : onCompanyChange.bind(this, company)}
+			>
 				{company.avatar ? (
 					<Avatar className="material-button" src={company.avatar} />
 				) : (
