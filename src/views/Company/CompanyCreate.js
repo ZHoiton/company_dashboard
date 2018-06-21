@@ -35,25 +35,25 @@ export default class CompanyCreate extends Component {
 		const { company, name, location, founded, steps } = this.state;
 		const tempCompany = company;
 		switch (currentStep) {
-		case 0:
-			tempCompany.Name = name;
-			tempCompany.Location = location;
-			tempCompany.Founded = founded;
-			tempCompany.FoundedBy = this.props.user.id;
-			tempCompany.Avatar = null;
-			this.setState({ company: tempCompany });
-			break;
-		case 1:
-			this.setState({ roleList: steps[currentStep].data });
-			break;
-		case 2:
-			this.setState({ groupList: steps[currentStep].data });
-			break;
-		case 3:
-			this.onFinishClick();
-			break;
-		default:
-			break;
+			case 0:
+				tempCompany.Name = name;
+				tempCompany.Location = location;
+				tempCompany.Founded = founded;
+				tempCompany.FoundedBy = this.props.user.id;
+				tempCompany.Avatar = null;
+				this.setState({ company: tempCompany });
+				break;
+			case 1:
+				this.setState({ roleList: steps[currentStep].data });
+				break;
+			case 2:
+				this.setState({ groupList: steps[currentStep].data });
+				break;
+			case 3:
+				this.onFinishClick();
+				break;
+			default:
+				break;
 		}
 	};
 
@@ -102,6 +102,10 @@ export default class CompanyCreate extends Component {
 			.doc(key)
 			.collection("Roles")
 			.add({ Name: "Owner" });
+		companies
+			.doc(key)
+			.collection("Roles")
+			.add({ Name: "Member" });
 
 		//* adding groups
 		groupList.map(group =>
@@ -115,6 +119,11 @@ export default class CompanyCreate extends Component {
 			.doc(key)
 			.collection("Groups")
 			.add({ Name: "Management" });
+
+		companies
+			.doc(key)
+			.collection("Groups")
+			.add({ Name: "Members" });
 
 		//* adding the members list
 		companies

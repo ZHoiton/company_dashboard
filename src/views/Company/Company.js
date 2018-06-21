@@ -44,17 +44,41 @@ export default class Company extends Component {
 		firestore()
 			.collection("users")
 			.doc(this.props.user.id)
-			.get()
-			.then(doc => {
-				console.log(doc.data());
-				// if (userFound !== null) {
-				// 	this.sendInvatation(userFound);
-				// } else {
-				// 	this.setState({ emailErrorMessage: "No such user!", emailError: true });
-				// }
+			.collection("invites")
+			.doc(company.key)
+			.delete()
+			.then(() => {
+				console.log("Deleted!");
 			})
 			.catch(function(error) {
-				console.log("Error getting documents: ", error);
+				console.log("Error deletting documents: ", error);
+			});
+
+		firestore()
+			.collection("users")
+			.doc(this.props.user.id)
+			.collection("companies")
+			.doc(company.key)
+			.set({
+				avatar: company.avatar,
+				is_founded_by_user: false, // eslint-disable-line
+				name: company.name
+			});
+
+		firestore()
+			.collection("companies")
+			.doc(company.key)
+			.collection("Members")
+			.doc(this.props.user.id)
+			.set({
+				Groups: ["Members"],
+				Roles: ["Member"],
+				avatar: company.avatar,
+				firstName: this.props.user.firstName,
+				lastName: this.props.user.lastName
+			})
+			.then(() => {
+				this.handleCloseJoinCompany();
 			});
 	};
 
