@@ -29,7 +29,9 @@ class Settings extends Component {
 			passwordErrorMessage: "",
 			firstName: "",
 			lastName: "",
-			phoneNumber: ""
+			phoneNumber: "",
+			birthDay:"",
+			description:"",
 		};
 	}
 
@@ -57,14 +59,16 @@ class Settings extends Component {
 		}
 	};
 	onSaveClick = () => {
-		const { firstName, lastName, phoneNumber } = this.state;
+		const { firstName, lastName, phoneNumber,birthDay,description } = this.state;
 		firestore()
 			.collection("users")
 			.doc(firebase.auth().currentUser.uid)
 			.update({
 				firstName: firstName,
 				lastName: lastName,
-				phoneNumber: phoneNumber
+				phoneNumber: phoneNumber,
+				birthDay:birthDay,
+				personalDescription:description,
 			});
 	};
 	loadPersonalData = () => {
@@ -79,6 +83,8 @@ class Settings extends Component {
 					firstName: doc.data().firstName,
 					lastName:doc.data().lastName,
 					phoneNumber:doc.data().phoneNumber,
+					birthDay:doc.data().birthDay,
+					description:doc.data().personalDescription,
 				});
 			}
 			})
@@ -105,6 +111,9 @@ class Settings extends Component {
 		const { firstName } = this.state;
 		const { lastName } = this.state;
 		const { phoneNumber } = this.state;
+		const { birthDay } = this.state;
+		const { description }=this.state;
+
 		return (
 			<div className={classes.root}>
 				<AppBar position="static" color="default">
@@ -157,10 +166,11 @@ class Settings extends Component {
 						<div className="settingsFields">
 							<form className={classes.container} noValidate>
 								<TextField
-									id="date"
+									id="birthDay"
 									label="Date of birth"
 									type="date"
-									defaultValue="2017-05-24"
+									value={birthDay}
+									onChange={this.onChange}
 									InputLabelProps={{
 										shrink: true
 									}}
@@ -206,9 +216,9 @@ class Settings extends Component {
 							</FormControl>
 						</div>
 						<div className="settingsFields">
-							<TextField id="multiline-description" label="Description" fullWidth multiline rowsMax="4" margin="normal" />
+							<TextField id="description"label="Description" value={description}  onChange={this.onChange} fullWidth multiline rowsMax="4" margin="normal" />
 						</div>
-						<Button size="large" variant="raised" onClick={this.onSaveClick} color="primary" className="btnSave">
+						<Button size="large" variant="raised"  onClick={this.onSaveClick} color="primary" className="btnSave">
 							{`Save`}
 						</Button>
 					</div>
