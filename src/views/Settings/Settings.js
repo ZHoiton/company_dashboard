@@ -28,7 +28,8 @@ class Settings extends Component {
       passwordError: false,
       passwordErrorMessage: '',
       firstName: '',
-      lastName: ''
+	  lastName: '',
+	  phoneNumber: ''
     }
   }
 
@@ -56,15 +57,34 @@ class Settings extends Component {
     }
   }
   onSaveClick = () => {
-    const { firstName, lastName } = this.state
+    const { firstName, lastName,phoneNumber } = this.state
     firestore()
       .collection('users')
       .doc(firebase.auth().currentUser.uid)
       .update({
         firstName: firstName,
-        lastName: lastName
+		lastName: lastName,
+		phoneNumber:phoneNumber
       })
   }
+  onCompanySaveClick= () => {
+
+    // firestore()
+    //   .collection('users')
+	//   .doc(firebase.auth().currentUser.uid)
+	//   .collection("companies")
+	//   .doc()
+    //   .update({
+     
+    //   })
+  }
+  componentDidMount() {
+	const {  firstName } = this.state
+
+
+
+};
+
   render () {
     const { classes } = this.props
     const { value } = this.state
@@ -73,7 +93,8 @@ class Settings extends Component {
     const { passwordError } = this.state
     const { passwordErrorMessage } = this.state
     const { firstName } = this.state
-    const { lastName } = this.state
+	const { lastName } = this.state
+	const { phoneNumber } = this.state
     return (
       <div className={classes.root}>
         <AppBar position='static' color='default'>
@@ -201,7 +222,19 @@ class Settings extends Component {
                 </NativeSelect>
               </FormControl>
             </div>
-
+			<div className='settingsFields'>
+              <FormControl className={classes.formControl}>
+                <TextField
+                  id='phoneNumber'
+				  label='Phone Number'
+				  type="number"
+                  className='txtFieldWidth'
+                  value={phoneNumber}
+                  onChange={this.onChange}
+                  margin='normal'
+                />
+              </FormControl>
+			  </div>
             <div className='settingsFields'>
               <TextField
                 id='multiline-description'
@@ -257,7 +290,8 @@ class Settings extends Component {
             <Button
               size='large'
               variant='raised'
-              color='primary'
+			  color='primary'
+			  onClick={this.onCompanySaveClick}
               className='btnSave'
             >{`Save`}</Button>
           </div>}
