@@ -67,6 +67,34 @@ class Settings extends Component {
 				phoneNumber: phoneNumber
 			});
 	};
+	loadPersonalData = () => {
+		firestore().collection('users').doc(firebase.auth().currentUser.uid)
+		.get()
+		.then(doc => {
+			if (!doc.exists) {
+				console.log('No such document!');
+			} else {
+				console.log('Document data:', doc.data(), doc.data().firstName);
+				this.setState({ 
+					firstName: doc.data().firstName,
+					lastName:doc.data().lastName,
+					phoneNumber:doc.data().phoneNumber,
+				});
+			}
+			})
+			.catch(err => {
+			console.log('Error getting document', err);
+		});
+	};
+	componentDidMount() {
+		firebase.auth().onAuthStateChanged(user=> {
+			if (user) {
+				this.loadPersonalData();
+			} else {
+			  // No user is signed in.
+			}
+		  });
+	};
 	render() {
 		const { classes } = this.props;
 		const { value } = this.state;
