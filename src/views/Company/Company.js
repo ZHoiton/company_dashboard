@@ -40,7 +40,7 @@ export default class Company extends Component {
 	};
 
 	joinCompany = company => {
-		console.log(company);
+		console.debug(company);
 		firestore()
 			.collection("users")
 			.doc(this.props.user.id)
@@ -48,10 +48,10 @@ export default class Company extends Component {
 			.doc(company.key)
 			.delete()
 			.then(() => {
-				console.log("Deleted!");
+				console.debug("Deleted!");
 			})
 			.catch(function(error) {
-				console.log("Error deletting documents: ", error);
+				console.debug("Error deletting documents: ", error);
 			});
 
 		firestore()

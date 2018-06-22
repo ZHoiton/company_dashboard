@@ -43,7 +43,6 @@ export default class AuthContextComponent extends Component {
 						.get()
 						.then(doc => {
 							if (doc.exists) {
-								console.log(doc.data());
 								user.firstName = doc.data().firstName;
 								user.lastName = doc.data().lastName;
 								user.picture = doc.data().photoURL;

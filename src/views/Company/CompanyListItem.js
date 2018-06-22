@@ -17,7 +17,7 @@ export default class CompanyListItem extends Component {
 		super(props);
 
 		this.state = {};
-		console.log(this.props.company);
+		console.debug(this.props.company);
 	}
 
 	render() {

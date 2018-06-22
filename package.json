@@ -44,7 +44,7 @@
     "start-offline": "react-scripts start --offline",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "lint": "eslint src",
+    "lint": "eslint src --fix",
     "eject": "react-scripts eject"
   },
   "husky": {

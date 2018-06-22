@@ -28,7 +28,6 @@ class CompanyOverview extends Component {
 			this.companyCollectionsListener("Groups");
 			this.companyCollectionsListener("Roles");
 			this.companyCollectionsListener("Members");
-			console.log(this.state.company);
 		}
 	}
 

@@ -7,7 +7,6 @@ import Paper from "@material-ui/core/Paper";
 
 export default class MessagesContainer extends Component {
 	static propTypes = {
-		history: PropTypes.object,
 		user: PropTypes.object,
 		targetUser: PropTypes.object
 	};
@@ -43,7 +42,7 @@ export default class MessagesContainer extends Component {
 				tempObj["data"] = doc.data();
 				tempList.push(tempObj);
 			});
-			console.log(tempList);
+			console.debug(tempList);
 			this.setState({ conversationArray: tempList });
 		});
 	};

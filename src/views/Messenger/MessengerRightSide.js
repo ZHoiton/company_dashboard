@@ -7,7 +7,6 @@ import WriteMessageContainer from "./RightSide/WriteMessageContainer.js";
 
 export default class MessengerRightSide extends Component {
 	static propTypes = {
-		history: PropTypes.object,
 		user: PropTypes.object,
 		targetUser: PropTypes.object
 	};

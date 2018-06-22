@@ -29,7 +29,7 @@ export default class Profile extends Component {
 		ref
 			.doc(user.id)
 			.get()
-			.then(info => {console.log(info.data());});
+			.then(info => {console.debug(info.data());});
 	}
 
 	componentDidMount()
