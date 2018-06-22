@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import Profile from "../Profile/Profile";
 import Messenger from "../Messenger/Messenger";
 import LogIn from "../LogIn/LogIn";
-import Calendar from '../Calendar/Calendar';
+import Calendar from "../Calendar/Calendar";
 import Register from "../Register/Register";
 import Company from "../Company/Company";
 import Home from "../Home/Home";
@@ -40,10 +40,7 @@ export default class Container extends Component {
 					</AuthContext>
 					{/* <Route path="/profile" component={Profile} /> */}
 					<Route path="/messenger" component={Messenger} />
-					<Route
-						path='*'
-						component={Home}
-					/>
+					<Route path="*" component={Home} />
 				</Switch>
 			</div>
 		);
