@@ -18,6 +18,9 @@ export default class Profile extends Component {
 
 		this.state = {
 			ref: firestore().collection("users"),
+			first: "",
+			last: "",
+			image: ""
 		};
 	}
 
@@ -29,7 +32,13 @@ export default class Profile extends Component {
 		ref
 			.doc(user.id)
 			.get()
-			.then(info => {console.debug(info.data());});
+			.then(info =>
+			{
+				const firstName = info.data().firstName;
+				const lastName = info.data().lastName;
+				const image = info.data().photoURL;
+				this.setState({ first: firstName, last: lastName, image: image });
+			});
 	}
 
 	componentDidMount()
@@ -38,12 +47,13 @@ export default class Profile extends Component {
 	}
 
 	render() {
+		const { first, last, image} = this.state;
 		return (
 			<Card className='profile-page'>
-				<CardHeader title='Nikolay Pelov'/>
+				<CardHeader title= {first+ " " + last}/>
 				<CardContent >
 					<div className='profile-info-box'>
-						<Avatar alt="Remy Sharp" src="http://www.techexclusive.net/wp-content/uploads/2018/01/Royalty-Free-Images.jpg" className='profile-picture'/>
+						<Avatar alt="Remy Sharp" src= {image} className='profile-picture'/>
 						<Card className='profile-info'>
 							<p>Height: 135 cm</p>
 							<p>Weight: 43 kg</p>
