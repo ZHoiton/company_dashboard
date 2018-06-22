@@ -26,7 +26,7 @@ export default class Container extends Component {
 						{context => {
 							return context.userIsLoggedIn ? (
 								<Fragment>
-									<Route exact path="/profile" render={props => <Profile {...props} user={context.user} />} />
+									<Route exact path="/profile/:userId" render={props => <Profile {...props} currentUser={context.user} />} />
 									<Route exact path="/company" render={props => <Company {...props} user={context.user} />} />
 									<Route exact path="/login" render={props => <Profile {...props} user={context.user} />} />
 								</Fragment>

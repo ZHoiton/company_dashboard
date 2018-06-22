@@ -21,15 +21,17 @@ import SnackbarContent from "@material-ui/core/SnackbarContent";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import { firestore } from "firebase";
+import { withRouter } from "react-router-dom";
 
 function Transition(props) {
 	return <Slide direction="up" {...props} />;
 }
 
-export default class CompanyMembers extends Component {
+class CompanyMembers extends Component {
 	static propTypes = {
 		company: PropTypes.object,
-		user: PropTypes.object
+		user: PropTypes.object,
+		history: PropTypes.object,
 	};
 
 	constructor(props) {
@@ -148,6 +150,11 @@ export default class CompanyMembers extends Component {
 		}
 	};
 
+	onClickProfile = (id) => {
+		const { history } = this.props;
+		history.push('/profile/'+ id);
+	}
+
 	handleClickSnuckBar = () => {
 		this.setState({ isSnuckBarOpen: true });
 	};
@@ -207,7 +214,7 @@ export default class CompanyMembers extends Component {
 															horizontal: "right"
 														}}
 													>
-														<MenuItem onClick={this.handleDropDownClose}>Profile</MenuItem>
+														<MenuItem onClick={this.onClickProfile.bind(this,item.key)}>Profile</MenuItem>
 														<MenuItem onClick={this.handleDropDownClose}>Message</MenuItem>
 														<MenuItem onClick={this.handleDropDownClose}>Remove</MenuItem>
 													</Menu>
@@ -291,3 +298,5 @@ export default class CompanyMembers extends Component {
 		);
 	}
 }
+
+export default withRouter(CompanyMembers);

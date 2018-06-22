@@ -12,7 +12,8 @@ import Button from "@material-ui/core/Button";
 
 export default class Profile extends Component {
 	static propTypes = {
-		user: PropTypes.object
+		currentUser: PropTypes.object,
+		match: PropTypes.object,
 	};
 
 	constructor(props) {
@@ -27,12 +28,12 @@ export default class Profile extends Component {
 		};
 	}
 
-	retrieveUser() {
-		const { user } = this.props;
+	getUser(userId) {
+		const { currentUser } = this.props;
 		const { ref } = this.state;
 
 		ref
-			.doc(user.id)
+			.doc(userId?userId: currentUser.id)
 			.get()
 			.then(info => {
 				const firstName = info.data().firstName;
@@ -42,8 +43,8 @@ export default class Profile extends Component {
 			});
 	}
 
-	getCompanies = () => {
-		const companies = this.state.ref.doc(this.props.user.id).collection("companies");
+	getCompanies = (userId) => {
+		const companies = this.state.ref.doc(userId).collection("companies");
 		companies.onSnapshot(snapshot => {
 			const list = [];
 			snapshot.forEach(doc => {
@@ -58,8 +59,8 @@ export default class Profile extends Component {
 	};
 
 	componentDidMount() {
-		this.retrieveUser();
-		this.getCompanies();
+		this.getUser(this.props.match.params.userId);
+		this.getCompanies(this.props.match.params.userId);
 	}
 
 	render() {

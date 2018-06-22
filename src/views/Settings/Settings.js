@@ -68,33 +68,35 @@ class Settings extends Component {
 			});
 	};
 	loadPersonalData = () => {
-		firestore().collection('users').doc(firebase.auth().currentUser.uid)
-		.get()
-		.then(doc => {
-			if (!doc.exists) {
-				console.log('No such document!');
-			} else {
-				console.log('Document data:', doc.data(), doc.data().firstName);
-				this.setState({ 
-					firstName: doc.data().firstName,
-					lastName:doc.data().lastName,
-					phoneNumber:doc.data().phoneNumber,
-				});
-			}
+		firestore()
+			.collection("users")
+			.doc(firebase.auth().currentUser.uid)
+			.get()
+			.then(doc => {
+				if (!doc.exists) {
+					console.log("No such document!");
+				} else {
+					console.log("Document data:", doc.data(), doc.data().firstName);
+					this.setState({
+						firstName: doc.data().firstName,
+						lastName: doc.data().lastName,
+						phoneNumber: doc.data().phoneNumber
+					});
+				}
 			})
 			.catch(err => {
-			console.log('Error getting document', err);
-		});
+				console.log("Error getting document", err);
+			});
 	};
 	componentDidMount() {
-		firebase.auth().onAuthStateChanged(user=> {
+		firebase.auth().onAuthStateChanged(user => {
 			if (user) {
 				this.loadPersonalData();
 			} else {
-			  // No user is signed in.
+				// No user is signed in.
 			}
-		  });
-	};
+		});
+	}
 	render() {
 		const { classes } = this.props;
 		const { value } = this.state;
@@ -109,7 +111,13 @@ class Settings extends Component {
 			<div className={classes.root}>
 				<AppBar position="static" color="default">
 					<div className="lTabs">
-						<Tabs value={this.state.value} onChange={this.handleChange} indicatorColor="primary" textColor="primary" fullWidth>
+						<Tabs
+							value={this.state.value}
+							onChange={this.handleChange}
+							indicatorColor="primary"
+							textColor="primary"
+							fullWidth
+						>
 							<Tab className="tabPersonal" label="Personal Settings " />
 							<Tab className="tabCompany" label="Company Settings" />
 						</Tabs>
@@ -119,7 +127,14 @@ class Settings extends Component {
 					<div>
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
-								<TextField id="firstName" label="First Name" className="txtFieldWidth" value={firstName} onChange={this.onChange} margin="normal" />
+								<TextField
+									id="firstName"
+									label="First Name"
+									className="txtFieldWidth"
+									value={firstName}
+									onChange={this.onChange}
+									margin="normal"
+								/>
 							</FormControl>
 							<TextField
 								id="password1"
@@ -134,7 +149,14 @@ class Settings extends Component {
 						</div>
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
-								<TextField id="lastName" label="Last Name" className="txtFieldWidth" value={lastName} onChange={this.onChange} margin="normal" />
+								<TextField
+									id="lastName"
+									label="Last Name"
+									className="txtFieldWidth"
+									value={lastName}
+									onChange={this.onChange}
+									margin="normal"
+								/>
 							</FormControl>
 							<TextField
 								id="password2"
@@ -147,7 +169,10 @@ class Settings extends Component {
 								margin="normal"
 							/>
 							{passwordError ? (
-								<FormHelperText className="passErrorMessage" id="password-error-text">
+								<FormHelperText
+									className="passErrorMessage"
+									id="password-error-text"
+								>
 									{passwordErrorMessage}
 								</FormHelperText>
 							) : (
@@ -166,12 +191,21 @@ class Settings extends Component {
 									}}
 								/>
 							</form>
-							<Button size="large" variant="raised" color="primary" onClick={this.onSubmit} className="changePassButton">{`Change Password`}</Button>
+							<Button
+								size="large"
+								variant="raised"
+								color="primary"
+								onClick={this.onSubmit}
+								className="changePassButton"
+							>{`Change Password`}</Button>
 						</div>
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
 								<InputLabel htmlFor="uncontrolled-native">Gender</InputLabel>
-								<NativeSelect className="txtFieldWidth" input={<Input id="uncontrolled-native" />}>
+								<NativeSelect
+									className="txtFieldWidth"
+									input={<Input id="uncontrolled-native" />}
+								>
 									<option value={"Male"}>Male</option>
 									<option value={"Female"}>Female</option>
 									<option value={"Alien"}>Alien</option>
@@ -181,7 +215,9 @@ class Settings extends Component {
 
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
-								<InputLabel htmlFor="uncontrolled-native">Department</InputLabel>
+								<InputLabel htmlFor="uncontrolled-native">
+									Department
+								</InputLabel>
 								<NativeSelect input={<Input id="uncontrolled-native" />}>
 									<option value={"Software"}>Software</option>
 									<option value={"HR"}>Human Resources</option>
@@ -202,13 +238,34 @@ class Settings extends Component {
 						</div>
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
-								<TextField id="phoneNumber" label="Phone Number" type="number" className="txtFieldWidth" value={phoneNumber} onChange={this.onChange} margin="normal" />
+								<TextField
+									id="phoneNumber"
+									label="Phone Number"
+									type="number"
+									className="txtFieldWidth"
+									value={phoneNumber}
+									onChange={this.onChange}
+									margin="normal"
+								/>
 							</FormControl>
 						</div>
 						<div className="settingsFields">
-							<TextField id="multiline-description" label="Description" fullWidth multiline rowsMax="4" margin="normal" />
+							<TextField
+								id="multiline-description"
+								label="Description"
+								fullWidth
+								multiline
+								rowsMax="4"
+								margin="normal"
+							/>
 						</div>
-						<Button size="large" variant="raised" onClick={this.onSaveClick} color="primary" className="btnSave">
+						<Button
+							size="large"
+							variant="raised"
+							onClick={this.onSaveClick}
+							color="primary"
+							className="btnSave"
+						>
 							{`Save`}
 						</Button>
 					</div>
@@ -218,7 +275,11 @@ class Settings extends Component {
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
 								<InputLabel htmlFor="name-simple">Company Name</InputLabel>
-								<Input id="name-company" className="txtFieldWidth" style={{ width: "100%" }} />
+								<Input
+									id="name-company"
+									className="txtFieldWidth"
+									style={{ width: "100%" }}
+								/>
 							</FormControl>
 						</div>
 
@@ -241,7 +302,12 @@ class Settings extends Component {
 								<Input id="name-Location" className="txtFieldWidth" />
 							</FormControl>
 						</div>
-						<Button size="large" variant="raised" color="primary" className="btnSave">{`Save`}</Button>
+						<Button
+							size="large"
+							variant="raised"
+							color="primary"
+							className="btnSave"
+						>{`Save`}</Button>
 					</div>
 				)}
 			</div>
