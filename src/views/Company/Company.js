@@ -87,7 +87,9 @@ export default class Company extends Component {
 	};
 
 	onCompanyChange = company => {
-		this.setState({ companyId: company.key });
+		if (company) {
+			this.setState({ companyId: company.key });
+		}
 	};
 
 	render() {
