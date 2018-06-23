@@ -18,9 +18,7 @@ export default class MessagesContainer extends Component {
 				.firestore()
 				.collection("users")
 				.doc(props.user.id)
-				.collection("conversations")
-				.doc(props.targetUser.key)
-				.collection("messages"),
+				.collection("conversations"),
 			conversationArray: []
 		};
 	}
@@ -35,20 +33,20 @@ export default class MessagesContainer extends Component {
 	}
 
 	updateConversation = () => {
-		this.state.conversationRef.orderBy("send_time", "desc").onSnapshot(data => {
-			const tempList = [];
-			this.setState({ conversationArray: [] });
-			// console.log(data.docs);
-			data.forEach(doc => {
-				// doc.data()["key"] = doc.id;
-				const tempObj = {};
-				tempObj["key"] = doc.id;
-				tempObj["data"] = doc.data();
-				tempList.push(tempObj);
+		this.state.conversationRef
+			.doc(this.props.targetUser.key)
+			.collection("messages")
+			.orderBy("send_time", "desc")
+			.onSnapshot(data => {
+				const tempList = [];
+				data.forEach(doc => {
+					const tempObj = {};
+					tempObj["key"] = doc.id;
+					tempObj["data"] = doc.data();
+					tempList.push(tempObj);
+				});
+				this.setState({ conversationArray: tempList });
 			});
-			console.debug(tempList);
-			this.setState({ conversationArray: tempList });
-		});
 	};
 
 	render() {

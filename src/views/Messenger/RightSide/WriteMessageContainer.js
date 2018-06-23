@@ -97,7 +97,7 @@ export default class WriteMessageContainer extends Component {
 
 					batch.set(owner_messages, {
 						content: text,
-						is_from_owner: true, // eslint-disable-line
+						is_from_owner: false, // eslint-disable-line
 						is_read: false, // eslint-disable-line
 						send_time: firebase.firestore.FieldValue.serverTimestamp() // eslint-disable-line
 					});
@@ -121,7 +121,7 @@ export default class WriteMessageContainer extends Component {
 					});
 					batch.set(tar_messages, {
 						content: text,
-						is_from_owner: true, // eslint-disable-line
+						is_from_owner: false, // eslint-disable-line
 						is_read: false, // eslint-disable-line
 						send_time: firebase.firestore.FieldValue.serverTimestamp() // eslint-disable-line
 					});
