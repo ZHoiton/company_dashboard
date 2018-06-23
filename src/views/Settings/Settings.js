@@ -29,6 +29,9 @@ class Settings extends Component {
 			passwordErrorMessage: "",
 			firstName: "",
 			lastName: "",
+			gender:"",
+			position:"",
+			department:"",
 			phoneNumber: "",
 			birthDay: "",
 			description: ""
@@ -38,10 +41,15 @@ class Settings extends Component {
 	handleChange = (event, value) => {
 		this.setState({ value });
 	};
+
+	 handleSelectChange = gender => event => {
+	 	this.setState({ [gender]: event.target.value });
+	   };
 	onChange = event => {
 		const state = {};
 		state[event.target.id] = event.target.value;
 		this.setState(state);
+	
 	};
 	handleChangeIndex = index => {
 		this.setState({ value: index });
@@ -64,6 +72,9 @@ class Settings extends Component {
 			lastName,
 			phoneNumber,
 			birthDay,
+			gender,
+			position,
+			department,
 			description
 		} = this.state;
 		firestore()
@@ -74,8 +85,13 @@ class Settings extends Component {
 				lastName: lastName,
 				phoneNumber: phoneNumber,
 				birthDay: birthDay,
-				personalDescription: description
+				gender:gender,
+				personalDescription: description,
+				department:department,
+				position:position,
 			});
+
+			console.log(gender,position,department);
 	};
 	loadPersonalData = () => {
 		firestore()
@@ -92,7 +108,11 @@ class Settings extends Component {
 						lastName: doc.data().lastName,
 						phoneNumber: doc.data().phoneNumber,
 						birthDay: doc.data().birthDay,
-						description: doc.data().personalDescription
+						description: doc.data().personalDescription,
+						gender:doc.data().gender,
+						position:doc.data().position,
+						department:doc.data().department,
+
 					});
 				}
 			})
@@ -121,6 +141,9 @@ class Settings extends Component {
 		const { phoneNumber } = this.state;
 		const { birthDay } = this.state;
 		const { description } = this.state;
+		const { gender } = this.state;
+		const { position } = this.state;
+		const { department } = this.state;
 
 		return (
 			<div className={classes.root}>
@@ -217,35 +240,45 @@ class Settings extends Component {
 						</div>
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
-								<InputLabel htmlFor="uncontrolled-native">Gender</InputLabel>
+							<InputLabel htmlFor="uncontrolled-native">Gender</InputLabel>
 								<NativeSelect
 									className="txtFieldWidth"
 									input={<Input id="uncontrolled-native" />}
+									value={gender}
+									onChange={this.handleSelectChange('gender')}
+									name="gender"
+									defaultValue={gender}
 								>
-									<option value={"Male"}>Male</option>
-									<option value={"Female"}>Female</option>
-									<option value={"Alien"}>Alien</option>
+									<option value="Male">Male</option>
+									<option value="Female">Female</option>
+									<option value="Other">Other</option>
 								</NativeSelect>
 							</FormControl>
 						</div>
 
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
-								<InputLabel htmlFor="uncontrolled-native">
-									Department
-								</InputLabel>
-								<NativeSelect input={<Input id="uncontrolled-native" />}>
-									<option value={"Software"}>Software</option>
-									<option value={"HR"}>Human Resources</option>
-									<option value={"Finance"}>Finance</option>
+							<InputLabel htmlFor="uncontrolled-native">Department</InputLabel>
+								<NativeSelect defaultValue={department} input={<Input id="uncontrolled-native" />}
+									value={department}
+									onChange={this.handleSelectChange('department')}
+									name="department"
+								>
+									<option value="Software">Software</option>
+									<option value="HR">HR</option>
+									<option value="Finance">Finance</option>
 								</NativeSelect>
 							</FormControl>
 						</div>
 
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
-								<InputLabel htmlFor="uncontrolled-native">Position</InputLabel>
-								<NativeSelect input={<Input id="uncontrolled-native" />}>
+							<InputLabel htmlFor="uncontrolled-native">Position</InputLabel>
+								<NativeSelect defaultValue={position} input={<Input id="uncontrolled-native" />}
+									value={position}
+									onChange={this.handleSelectChange('position')}
+									name="position"
+									>
 									<option value={"CEO"}>CEO</option>
 									<option value={"Junior Developer"}>Junior Developer</option>
 									<option value={"Senior Developer"}>Senior Developer</option>
