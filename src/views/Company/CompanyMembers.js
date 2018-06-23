@@ -20,9 +20,17 @@ import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Person from "@material-ui/icons/Person";
+import Message from "@material-ui/icons/Message";
+import Close from "@material-ui/icons/Close";
 import { firestore } from "firebase";
 import { withRouter } from "react-router-dom";
 
+/**
+ * used for the Dialog's animation
+ * @param {PropTypes} props
+ */
 function Transition(props) {
 	return <Slide direction="up" {...props} />;
 }
@@ -38,47 +46,64 @@ class CompanyMembers extends Component {
 		super(props);
 		this.state = {
 			company: {},
-			list: {},
+			memberList: {},
 			isSnuckBarOpen: false,
 			emailError: false,
 			emailErrorMessage: "",
 			openDialogAddMember: false,
 			anchorElementDropDown: null,
-			addMemberFieldValue: ""
+			addMemberFieldValue: "",
+			selectedMemberKey: ""
 		};
 	}
+
 	componentDidUpdate(prevProps) {
 		if (this.props.company) {
 			if (this.state.company !== prevProps.company) {
 				if (this.props.company.Members) {
-					// if (this.isEmpty(this.state.list) || ) {
+					//* filling the member list only when there is a company
+					//* object and it has Members key
 					this.fillMembersList();
-					// }
 				}
 			}
 		}
 	}
 
+	/**
+	 * filling the list used in the render function for displaying the users in the company
+	 */
 	fillMembersList = () => {
 		const { company } = this.props;
+
+		//* creating and populating a temporaty object which will be assigned the the memberList variable later
 		const tempList = {};
+
+		//* adding the groups
 		company.Groups.forEach(group => {
 			tempList[group.Name] = [];
 		});
+
+		//* adding members to the groups
 		company.Members.forEach(member => {
 			member.Groups.forEach(group => {
 				tempList[group].push(member);
 			});
 		});
 
-		this.setState({ list: tempList, company: company }, () => {
-			console.log(this.state.list);
-			console.log(this.state.company);
+		//* setting the list and the company var
+		this.setState({ memberList: tempList, company: company }, () => {
+			// console.log(this.state.list);
+			// console.log(this.state.company);
 		});
 	};
 
 	handleDropDownClick = event => {
-		this.setState({ anchorElementDropDown: event.currentTarget });
+		this.setState({
+			//* setting the element for which the drop down will be attached to
+			anchorElementDropDown: event.currentTarget,
+			//* passing the selected member key got from the target element attributes
+			selectedMemberKey: event.currentTarget.attributes.currentmember.value
+		});
 	};
 
 	handleDropDownClose = () => {
@@ -93,24 +118,36 @@ class CompanyMembers extends Component {
 		this.setState({ openDialogAddMember: false });
 	};
 
+	/**
+	 * used to update the value for the @param name variable in the state
+	 */
 	handleAddMemberFieldChange = name => event => {
 		this.setState({
 			[name]: event.target.value
 		});
 	};
 
+	/**
+	 * adding a memebr to a company in firebase
+	 * @param email string
+	 */
 	addMemberToCompany = email => {
+		//* user object used for validation and store data if found
 		let userFound = null;
+
+		//* serach for the user
 		firestore()
 			.collection("users")
 			.where("email", "==", email)
 			.get()
 			.then(docs => {
 				docs.forEach(doc => {
+					//* assign user data to var
 					userFound = doc.data();
 					userFound["key"] = doc.id;
-					console.debug(doc.data());
 				});
+
+				//* if user was found e.g. not null send invite else display error
 				if (userFound !== null) {
 					this.sendInvatation(userFound);
 				} else {
@@ -122,27 +159,36 @@ class CompanyMembers extends Component {
 			});
 	};
 
+	/**
+	 * @param user Object
+	 */
 	sendInvatation = user => {
-		console.debug(user);
+		//* check if the user is the current user, if it is display error message
 		if (user.key !== this.props.user.id) {
+			//* getting firestore refference
 			const invitesRef = firestore()
 				.collection("users")
 				.doc(user.key)
 				.collection("invites");
 
-			// .add({ Name: "Owner" });
+			//* checking if there is already an invite
 			invitesRef
 				.doc(this.state.company.key)
 				.get()
 				.then(doc => {
+					//* if an invite already exists display error, if not send an invite
 					if (doc.exists) {
 						this.setState({ emailErrorMessage: "Invitation already send!", emailError: true });
 					} else {
+						//* sending the invite
 						invitesRef.doc(this.state.company.key).set({
 							avatar: this.state.company.Avatar,
 							name: this.state.company.Name
 						});
+
+						//* closing the dialog
 						this.handleCloseDialogAddMember();
+						//* showing the snuckbar
 						this.handleClickSnuckBar();
 						this.setState({ emailError: false });
 					}
@@ -152,6 +198,10 @@ class CompanyMembers extends Component {
 		}
 	};
 
+	/**
+	 * used to pass the id to the profile page
+	 * @param id String
+	 */
 	onClickProfile = id => {
 		const { history } = this.props;
 		history.push("/profile/" + id);
@@ -183,64 +233,93 @@ class CompanyMembers extends Component {
 		if (reason === "clickaway") {
 			return;
 		}
-
 		this.setState({ isSnuckBarOpen: false });
 	};
-	isEmpty = obj => {
-		for (const key in obj) {
-			if (obj.hasOwnProperty(key)) return false;
+
+	/**
+	 * Check if an object is empty
+	 * @param object Object
+	 */
+	isEmpty = object => {
+		for (const key in object) {
+			if (object.hasOwnProperty(key)) return false;
 		}
 		return true;
 	};
 
 	render() {
-		const { list, anchorElementDropDown, emailError, emailErrorMessage, company } = this.state;
+		const { memberList, anchorElementDropDown, emailError, emailErrorMessage, company, selectedMemberKey } = this.state;
 		return (
 			<Fragment>
 				<div className="company-members">
-					{!this.isEmpty(list) ? (
+					{!this.isEmpty(memberList) ? (
 						<List className="list">
-							{Object.keys(list).map(group => {
+							{Object.keys(memberList).map(group => {
 								return (
 									<div key={group}>
 										<div className="custom-devider">
 											<div className="text">{group}</div>
 											<div className="line" />
 										</div>
-										{list[group].map(item => {
+										{memberList[group].map(member => {
 											return (
-												<Fragment key={item.key}>
-													<ListItem button onClick={this.handleDropDownClick}>
-														<Avatar alt="Profile picture" src={item.avatar} />
+												<Fragment key={member.key}>
+													<ListItem button currentmember={member.key} onClick={this.handleDropDownClick}>
+														<Avatar alt="Profile picture" src={member.avatar} />
 														<ListItemText
-															primary={item.firstName + " " + item.lastName}
-															secondary={item.Roles.map(role => {
+															primary={member.firstName + " " + member.lastName}
+															secondary={member.Roles.map(role => {
 																return role + " ";
 															})}
 														/>
 													</ListItem>
-													<Menu
-														id="simple-menu"
-														anchorEl={anchorElementDropDown}
-														open={Boolean(anchorElementDropDown)}
-														onClose={this.handleDropDownClose}
-														anchorReference="anchorPosition"
-														anchorPosition={{
-															top: anchorElementDropDown ? anchorElementDropDown.getBoundingClientRect().top + 50 : 0,
-															left: anchorElementDropDown ? anchorElementDropDown.getBoundingClientRect().left + 40 : 0
-														}}
-														transformOrigin={{
-															vertical: "top",
-															horizontal: "right"
-														}}
-													>
-														<MenuItem onClick={this.onClickProfile.bind(this, item.key)}>Profile</MenuItem>
-														<MenuItem onClick={this.handleDropDownClose}>Message</MenuItem>
-														{company.FoundedBy === this.props.user.id ? <MenuItem onClick={this.removeUser.bind(this, item.key)}>Remove</MenuItem> : undefined}
-													</Menu>
 												</Fragment>
 											);
 										})}
+										<Menu
+											id="simple-menu"
+											anchorEl={anchorElementDropDown}
+											open={Boolean(anchorElementDropDown)}
+											onClose={this.handleDropDownClose}
+											anchorReference="anchorPosition"
+											anchorPosition={{
+												top: anchorElementDropDown ? anchorElementDropDown.getBoundingClientRect().top + 50 : 0,
+												left: anchorElementDropDown ? anchorElementDropDown.getBoundingClientRect().left + 40 : 0
+											}}
+											transformOrigin={{
+												vertical: "top",
+												horizontal: "right"
+											}}
+										>
+											<MenuItem onClick={this.onClickProfile.bind(this, selectedMemberKey)}>
+												<ListItemIcon>
+													<Person />
+												</ListItemIcon>
+												<ListItemText primary="Profile" />
+											</MenuItem>
+
+											{this.props.user.id !== selectedMemberKey ? (
+												<MenuItem onClick={this.handleDropDownClose}>
+													<ListItemIcon>
+														<Message />
+													</ListItemIcon>
+													<ListItemText primary="Message" />
+												</MenuItem>
+											) : (
+												undefined
+											)}
+
+											{company.FoundedBy === this.props.user.id && this.props.user.id !== selectedMemberKey ? (
+												<MenuItem onClick={this.removeUser.bind(this, selectedMemberKey)}>
+													<ListItemIcon>
+														<Close />
+													</ListItemIcon>
+													<ListItemText primary="Remove" />
+												</MenuItem>
+											) : (
+												undefined
+											)}
+										</Menu>
 									</div>
 								);
 							})}
