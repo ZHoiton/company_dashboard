@@ -25,7 +25,7 @@ export default class Register extends Component {
 			lastName: "",
 			password: "",
 			passwordConfirmMatch: false
-			
+
 		};
 	}
 

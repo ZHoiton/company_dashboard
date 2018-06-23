@@ -31,7 +31,6 @@ class CalendarGrid extends Component {
 		const numberOfDays = new Date(year,month + 1,0).getDate();
 		let firstDayOfMonth = new Date(year,month,1).getDay() - 1;
 		if (firstDayOfMonth === -1) firstDayOfMonth= 6;
-		console.log(numberOfDays,firstDayOfMonth);
 		switch (firstDayOfMonth) {
 		case 0:
 			calendarArray.fill(0,numberOfDays);
@@ -69,13 +68,11 @@ class CalendarGrid extends Component {
 			}
 		});
 		for (let i = 0; i < firstDayOfMonth; i++) {
-			console.log(-firstDayOfMonth+1+i);
 			calendarArray[i] = new Date(year,month,-firstDayOfMonth+1+i).getDate();
 		}
 		for (let i = 0; i < 35-(numberOfDays+firstDayOfMonth); i++) {
 			calendarArray[(numberOfDays+firstDayOfMonth)+i] = new Date(year,month,i + 1).getDate();
 		}
-		console.log(calendarArray);
 		this.setState({days: calendarArray});
 	}
 
