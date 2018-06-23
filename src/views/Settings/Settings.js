@@ -35,7 +35,13 @@ class Settings extends Component {
 			phoneNumber: "",
 			birthDay: "",
 			description: "",
-			country: ""
+			country: "",
+			tabSwitcher: true,
+			avaliableCompanies: [],
+			selectedCompany: "",
+			companyName: "",
+			companyFoundedDate: "",
+			companyLocation: ""
 		};
 	}
 	handleChange = (event, value) => {
@@ -83,10 +89,10 @@ class Settings extends Component {
 
 		console.log(gender, position, department);
 	};
-	loadPersonalData = () => {
+	loadPersonalData = user => {
 		firestore()
 			.collection("users")
-			.doc(firebase.auth().currentUser.uid)
+			.doc(user.uid)
 			.get()
 			.then(doc => {
 				if (!doc.exists) {
@@ -110,10 +116,61 @@ class Settings extends Component {
 				console.log("Error getting document", err);
 			});
 	};
+	loadCompanyData = user => {
+		firestore()
+			.collection("users")
+			.doc(user.uid)
+			.collection("companies")
+			.where("is_founded_by_user", "==", true)
+			.onSnapshot(snapshot => {
+				const list = [];
+
+				snapshot.forEach(doc => {
+					let tempObj = {};
+					tempObj = doc.data();
+					console.log(doc.data());
+					tempObj["key"] = doc.id;
+					list.push(tempObj);
+				});
+				if (list != null) {
+					this.setState({ tabSwitcher: false, avaliableCompanies: list });
+				}
+			});
+	};
+	onCompanySelected = e => {
+		const { avaliableCompanies } = this.state;
+		this.setState({ selectedCompany: e.target.value });
+		console.log(e.target.key);
+		avaliableCompanies.forEach(element => {
+			console.log(element.key);
+			if (element.key == e.target.value) {
+				console.log(element.name);
+				this.setState({
+					companyName: element.name,
+					companyFoundedDate: element.Founded,
+					companyLocation: element.Location
+				});
+			}
+		});
+	};
+	onSaveCompany = () => {
+		const { companyName, companyFoundedDate, companyLocation, selectedCompany } = this.state;
+		firestore()
+			.collection("users")
+			.doc(firebase.auth().currentUser.uid)
+			.collection("companies")
+			.doc(selectedCompany)
+			.update({
+				name: companyName,
+				Location: companyLocation,
+				Founded: companyFoundedDate
+			});
+	};
 	componentDidMount() {
 		firebase.auth().onAuthStateChanged(user => {
 			if (user) {
-				this.loadPersonalData();
+				this.loadCompanyData(user);
+				this.loadPersonalData(user);
 			} else {
 				// No user is signed in.
 			}
@@ -135,14 +192,20 @@ class Settings extends Component {
 		const { position } = this.state;
 		const { department } = this.state;
 		const { country } = this.state;
-
+		const { tabSwitcher } = this.state;
+		const { avaliableCompanies } = this.state;
+		const { selectedCompany } = this.state;
+		const { companyName } = this.state;
+		const { companyFoundedDate } = this.state;
+		const { companyLocation } = this.state;
+		// let optionItems = avaliableCompanies.map(planet => <option key={planet.name}>{planet.name}</option>);
 		return (
 			<div className={classes.root}>
 				<AppBar position="static" color="default">
 					<div className="lTabs">
 						<Tabs value={this.state.value} onChange={this.handleChange} indicatorColor="primary" textColor="primary" fullWidth>
 							<Tab className="tabPersonal" label="Personal Settings " />
-							<Tab className="tabCompany" label="Company Settings" />
+							<Tab className="tabCompany" label="Company Settings" disabled={tabSwitcher} />
 						</Tabs>
 					</div>
 				</AppBar>
@@ -203,7 +266,7 @@ class Settings extends Component {
 						</div>
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
-								<InputLabel htmlFor="uncontrolled2-native">Gender</InputLabel>
+								<InputLabel htmlFor="gender">Gender</InputLabel>
 								<NativeSelect
 									className="txtFieldWidth"
 									input={<Input id="uncontrolled2-native" />}
@@ -273,19 +336,30 @@ class Settings extends Component {
 				{value === 1 && (
 					<div>
 						<div className="settingsFields">
+							<InputLabel htmlFor="uncontrolled-native">Select company</InputLabel>
+							<select value={selectedCompany} onChange={this.onCompanySelected}>
+								{avaliableCompanies.map(planet => (
+									<option value={planet.key} key={planet.key}>
+										{planet.name}
+									</option>
+								))}
+							</select>
+						</div>
+						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
-								<InputLabel htmlFor="name-simple">Company Name</InputLabel>
-								<Input id="name-company" className="txtFieldWidth" style={{ width: "100%" }} />
+								<InputLabel htmlFor="companyName">Company Name</InputLabel>
+								<Input id="companyName" value={companyName} onChange={this.onChange} className="txtFieldWidth" style={{ width: "100%" }} />
 							</FormControl>
 						</div>
 
 						<div className="settingsFields">
 							<form className={classes.container} noValidate>
 								<TextField
-									id="date"
+									id="companyFoundedDate"
 									label="Founded"
 									type="date"
-									defaultValue="2017-05-24"
+									onChange={this.onChange}
+									value={companyFoundedDate}
 									InputLabelProps={{
 										shrink: true
 									}}
@@ -294,11 +368,11 @@ class Settings extends Component {
 						</div>
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
-								<InputLabel htmlFor="name-simple">Location</InputLabel>
-								<Input id="name-Location" className="txtFieldWidth" />
+								<InputLabel htmlFor="companyLocation">Location</InputLabel>
+								<Input id="companyLocation" value={companyLocation} onChange={this.onChange} className="txtFieldWidth" />
 							</FormControl>
 						</div>
-						<Button size="large" variant="raised" color="primary" className="btnSave">{`Save`}</Button>
+						<Button size="large" variant="raised" color="primary" onClick={this.onSaveCompany} className="btnSave">{`Save`}</Button>
 					</div>
 				)}
 			</div>
