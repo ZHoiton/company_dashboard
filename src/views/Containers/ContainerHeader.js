@@ -60,9 +60,9 @@ class ContainerHeader extends Component {
 		this.props.history.push("/settings");
 	}
 
-	onProfileClick = () =>{
+	onProfileClick = (userId) =>{
 		this.handleClick();
-		this.props.history.push("/profile");
+		this.props.history.push("/profile/" + userId);
 	}
 
 	onCompanyClick = () =>{
@@ -131,7 +131,7 @@ class ContainerHeader extends Component {
 														<Paper>
 															<MenuList role="menu">
 																<MenuItem onClick={this.handleClick}>Dashboard</MenuItem>
-																<MenuItem onClick={this.onProfileClick}>Profile</MenuItem>
+																<MenuItem onClick={this.onProfileClick.bind(this,context.user.id)}>Profile</MenuItem>
 																<MenuItem onClick={this.onCompanyClick}>Company</MenuItem>
 																<MenuItem onClick={this.onCalendarClick}>Calendar</MenuItem>
 																<MenuItem onClick={this.onSettingsClick}>Settings</MenuItem>

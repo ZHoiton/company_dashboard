@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Grow from '@material-ui/core/Grow';
@@ -23,10 +25,16 @@ class CalendarInformation extends Component {
 
 	render() {
 		const { showTimeframe } = this.state;
+		const date = new Date(),
+			day = date.getDate(),
+			locale = "en-us",
+			month = date.toLocaleString(locale, { month: "long" });
 		return (
 			<div className='calendar-information-container outline'>
 				<div className='calendar-information outline'>
-					<p>June 22</p>
+					<KeyboardArrowLeft/>
+					<p>{`${month} ${day}`}</p>
+					<KeyboardArrowRight/>
 				</div>
 				<div ref={this.userName}>
 					<Button  onClick={this.onClickTimeframe} className='calendar-information-button' variant="contained" color="secondary">
