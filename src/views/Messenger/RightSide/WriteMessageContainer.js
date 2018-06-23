@@ -40,7 +40,9 @@ export default class WriteMessageContainer extends Component {
 					const batch = firebase.firestore().batch();
 
 					batch.update(newMessageOwner, {
-						last_message: text // eslint-disable-line
+						last_message: text, // eslint-disable-line
+						last_message_time_stamp: firebase.firestore.FieldValue.serverTimestamp(), // eslint-disable-line
+						is_message_read: false // eslint-disable-line
 					});
 
 					const owner_messages = newMessageOwner.collection("messages").doc(); // eslint-disable-line
@@ -60,12 +62,14 @@ export default class WriteMessageContainer extends Component {
 						.doc(targetUser.key);
 					batch.set(owner_user, {
 						last_message: text, // eslint-disable-line
+						last_message_time_stamp: firebase.firestore.FieldValue.serverTimestamp(), // eslint-disable-line
+						is_message_read:false,// eslint-disable-line
 						notify: true,
 						owner_user_color: "", // eslint-disable-line
 						target_user_color: "", // eslint-disable-line
 						target_user_first_name: targetUser.data.target_user_first_name, // eslint-disable-line
 						target_user_photo_URL: targetUser.data.target_user_photo_URL, // eslint-disable-line
-						target_user_second_name: targetUser.data.target_user_second_name // eslint-disable-line
+						target_user_last_name: targetUser.data.target_user_second_name // eslint-disable-line
 					});
 
 					const owner_messages = owner_user.collection("messages").doc(); // eslint-disable-line
@@ -90,7 +94,9 @@ export default class WriteMessageContainer extends Component {
 					const batch = firebase.firestore().batch();
 
 					batch.update(newMessageTarget, {
-						last_message: text // eslint-disable-line
+						last_message: text, // eslint-disable-line
+						last_message_time_stamp: firebase.firestore.FieldValue.serverTimestamp(), // eslint-disable-line
+						is_message_read: false // eslint-disable-line
 					});
 
 					const owner_messages = newMessageTarget.collection("messages").doc(); // eslint-disable-line
@@ -112,12 +118,14 @@ export default class WriteMessageContainer extends Component {
 					const tar_messages = tar_user.collection("messages").doc(); // eslint-disable-line
 					batch.set(tar_user, {
 						last_message: text, // eslint-disable-line
+						last_message_time_stamp: firebase.firestore.FieldValue.serverTimestamp(), // eslint-disable-line
+						is_message_read:false,// eslint-disable-line
 						notify: true,
 						owner_user_color: "", // eslint-disable-line
 						target_user_color: "", // eslint-disable-line
 						target_user_first_name: user.firstName, // eslint-disable-line
 						target_user_photo_URL: user.picture, // eslint-disable-line
-						target_user_second_name: user.lastName // eslint-disable-line
+						target_user_last_name: user.lastName // eslint-disable-line
 					});
 					batch.set(tar_messages, {
 						content: text,

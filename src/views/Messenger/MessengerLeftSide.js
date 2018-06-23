@@ -40,7 +40,7 @@ export default class MessengerLeftSide extends Component {
 	}
 
 	updateConversations = () => {
-		this.state.conversationsRef.onSnapshot(data => {
+		this.state.conversationsRef.orderBy("last_message_time_stamp", "desc").onSnapshot(data => {
 			const tempList = [];
 			// this.setState({ conversationsArray: [] });
 			data.forEach(doc => {
@@ -69,7 +69,8 @@ export default class MessengerLeftSide extends Component {
 								<ListItem button key={targetUser.key} onClick={onClick.bind(this, targetUser)}>
 									<Avatar alt="Profile picture" src={targetUser.data.target_user_photo_URL} />
 									<ListItemText
-										primary={targetUser.data.target_user_first_name + " " + targetUser.data.target_user_second_name}
+										className={!targetUser.data.is_message_read ? "message-not-read" : undefined}
+										primary={targetUser.data.target_user_first_name + " " + targetUser.data.target_user_last_name}
 										secondary={targetUser.data.last_message.length > 10 ? targetUser.data.last_message.slice(0, 10) + "..." : targetUser.data.last_message}
 									/>
 									<ListItemSecondaryAction>

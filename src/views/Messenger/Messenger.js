@@ -37,21 +37,55 @@ export default class Messenger extends Component {
 					.doc(this.props.user.id)
 					.collection("conversations")
 					.doc(targetUserId)
-					.set({
-						last_message: "", // eslint-disable-line
-						notify: true,
-						owner_user_color: "", // eslint-disable-line
-						target_user_color: "", // eslint-disable-line
-						target_user_first_name: targetUserDoc.data().firstName, // eslint-disable-line
-						target_user_photo_URL: targetUserDoc.data().photoURL, // eslint-disable-line
-						target_user_last_name: targetUserDoc.data().lastName // eslint-disable-line
+					.get()
+					.then(doc => {
+						if (!doc.exists) {
+							firestore()
+								.collection("users")
+								.doc(this.props.user.id)
+								.collection("conversations")
+								.doc(targetUserId)
+								.set({
+									last_message: "", // eslint-disable-line
+									last_message_time_stamp: firestore.FieldValue.serverTimestamp(), // eslint-disable-line
+									is_message_read: true, // eslint-disable-line
+									last_message: "", // eslint-disable-line
+									notify: true,
+									owner_user_color: "", // eslint-disable-line
+									target_user_color: "", // eslint-disable-line
+									target_user_first_name: targetUserDoc.data().firstName, // eslint-disable-line
+									target_user_photo_URL: targetUserDoc.data().photoURL, // eslint-disable-line
+									target_user_last_name: targetUserDoc.data().lastName // eslint-disable-line
+								});
+						} else {
+							firestore()
+								.collection("users")
+								.doc(this.props.user.id)
+								.collection("conversations")
+								.doc(targetUserId)
+								.get()
+								.then(doc => {
+									const tempObj = {};
+									tempObj["data"] = doc.data();
+									tempObj["key"] = doc.id;
+									console.log(tempObj);
+									this.setState({ targetUser: tempObj });
+								});
+						}
 					});
 			});
 	};
 
-	onUserClick = key => {
-		console.log(key);
-		this.setState({ targetUser: key });
+	onUserClick = userObject => {
+		//* setting the last message as read
+		firestore()
+			.collection("users")
+			.doc(this.props.user.id)
+			.collection("conversations")
+			.doc(userObject.key)
+			.set({ is_message_read: true }, { merge: true }); // eslint-disable-line
+
+		this.setState({ targetUser: userObject });
 	};
 
 	render() {

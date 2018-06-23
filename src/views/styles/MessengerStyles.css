@@ -15,7 +15,7 @@
 	overflow: auto;
 	border-right: 1px solid #e5e5e5;
 }
-.messenger-right-side-container {    
+.messenger-right-side-container {
 	max-height: 500px;
 	width: 70%;
 	background-color: #e5e5e5;
@@ -74,4 +74,10 @@
 	padding: 20px;
 	margin: 0 10px;
 	max-width: 60%;
+}
+.message-not-read p {
+	font-weight: bold;
+}
+.message-not-read span {
+	font-weight: bold;
 }

@@ -45,6 +45,14 @@ export default class MessagesContainer extends Component {
 					tempObj["data"] = doc.data();
 					tempList.push(tempObj);
 				});
+				//* setting the last message as read
+				firebase
+					.firestore()
+					.collection("users")
+					.doc(this.props.user.id)
+					.collection("conversations")
+					.doc(this.props.targetUser.key)
+					.set({ is_message_read: true },{merge:true}); // eslint-disable-line
 				this.setState({ conversationArray: tempList });
 			});
 	};
