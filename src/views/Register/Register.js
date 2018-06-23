@@ -63,6 +63,7 @@ export default class Register extends Component {
 					position:"",
 					birthDay: "2018-05-25",
 					personalDescription: "",
+					country:"",
 					photoURL: "https://firebasestorage.googleapis.com/v0/b/proep-project.appspot.com/o/images%2Fdefault.png?alt=media&token=7ddd0de1-27d2-4b6a-a88c-d7d77f8b7b60"
 				});
 				this.props.history.push("/login");

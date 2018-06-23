@@ -29,6 +29,8 @@ export default class Container extends Component {
 									<Route exact path="/profile/:userId" render={props => <Profile {...props} currentUser={context.user} />} />
 									<Route path="/company" render={props => <Company {...props} user={context.user} />} />
 									<Route exact path="/login" render={props => <Profile {...props} user={context.user} />} />
+									<Route path="/messenger/:targetUserId" render={props => <Messenger {...props} user={context.user} />} />
+									<Route path="/messenger" render={props => <Messenger {...props} user={context.user} />} />
 								</Fragment>
 							) : (
 								<Fragment>
@@ -38,8 +40,6 @@ export default class Container extends Component {
 							);
 						}}
 					</AuthContext>
-					{/* <Route path="/profile" component={Profile} /> */}
-					<Route path="/messenger" component={Messenger} />
 					<Route path="*" component={Home} />
 				</Switch>
 			</div>

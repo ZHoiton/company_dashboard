@@ -21,7 +21,8 @@ function Transition(props) {
 export default class Company extends Component {
 	static propTypes = {
 		history: PropTypes.object,
-		user: PropTypes.object
+		user: PropTypes.object,
+		location: PropTypes.object
 	};
 
 	constructor(props) {
@@ -86,9 +87,21 @@ export default class Company extends Component {
 		this.setState({ openDialogJoinCompany: false });
 	};
 
+	/**
+	 * When clicking on an item in the left side menu
+	 * @param company Object
+	 */
 	onCompanyChange = company => {
 		if (company) {
+			//* setting the new id
 			this.setState({ companyId: company.key });
+
+			//* getting the current path
+			const path = this.props.location.pathname;
+			//* if in "create" redirect to the company overview
+			if (path.indexOf("create") > -1) {
+				this.props.history.push("/company");
+			}
 		}
 	};
 

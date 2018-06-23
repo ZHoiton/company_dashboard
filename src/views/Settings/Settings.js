@@ -29,14 +29,20 @@ class Settings extends Component {
 			passwordErrorMessage: "",
 			firstName: "",
 			lastName: "",
+			gender: "",
+			position: "",
+			department: "",
 			phoneNumber: "",
 			birthDay: "",
-			description: ""
+			description: "",
+			country: ""
 		};
 	}
-
 	handleChange = (event, value) => {
 		this.setState({ value });
+	};
+	handleSelectChange = gender => event => {
+		this.setState({ [gender]: event.target.value });
 	};
 	onChange = event => {
 		const state = {};
@@ -59,13 +65,7 @@ class Settings extends Component {
 		}
 	};
 	onSaveClick = () => {
-		const {
-			firstName,
-			lastName,
-			phoneNumber,
-			birthDay,
-			description
-		} = this.state;
+		const { firstName, lastName, phoneNumber, birthDay, gender, position, department, description, country } = this.state;
 		firestore()
 			.collection("users")
 			.doc(firebase.auth().currentUser.uid)
@@ -74,8 +74,14 @@ class Settings extends Component {
 				lastName: lastName,
 				phoneNumber: phoneNumber,
 				birthDay: birthDay,
-				personalDescription: description
+				gender: gender,
+				personalDescription: description,
+				department: department,
+				position: position,
+				country: country
 			});
+
+		console.log(gender, position, department);
 	};
 	loadPersonalData = () => {
 		firestore()
@@ -92,7 +98,11 @@ class Settings extends Component {
 						lastName: doc.data().lastName,
 						phoneNumber: doc.data().phoneNumber,
 						birthDay: doc.data().birthDay,
-						description: doc.data().personalDescription
+						description: doc.data().personalDescription,
+						gender: doc.data().gender,
+						position: doc.data().position,
+						department: doc.data().department,
+						country: doc.data().country
 					});
 				}
 			})
@@ -121,18 +131,16 @@ class Settings extends Component {
 		const { phoneNumber } = this.state;
 		const { birthDay } = this.state;
 		const { description } = this.state;
+		const { gender } = this.state;
+		const { position } = this.state;
+		const { department } = this.state;
+		const { country } = this.state;
 
 		return (
 			<div className={classes.root}>
 				<AppBar position="static" color="default">
 					<div className="lTabs">
-						<Tabs
-							value={this.state.value}
-							onChange={this.handleChange}
-							indicatorColor="primary"
-							textColor="primary"
-							fullWidth
-						>
+						<Tabs value={this.state.value} onChange={this.handleChange} indicatorColor="primary" textColor="primary" fullWidth>
 							<Tab className="tabPersonal" label="Personal Settings " />
 							<Tab className="tabCompany" label="Company Settings" />
 						</Tabs>
@@ -142,14 +150,7 @@ class Settings extends Component {
 					<div>
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
-								<TextField
-									id="firstName"
-									label="First Name"
-									className="txtFieldWidth"
-									value={firstName}
-									onChange={this.onChange}
-									margin="normal"
-								/>
+								<TextField id="firstName" label="First Name" className="txtFieldWidth" value={firstName} onChange={this.onChange} margin="normal" />
 							</FormControl>
 							<TextField
 								id="password1"
@@ -164,14 +165,7 @@ class Settings extends Component {
 						</div>
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
-								<TextField
-									id="lastName"
-									label="Last Name"
-									className="txtFieldWidth"
-									value={lastName}
-									onChange={this.onChange}
-									margin="normal"
-								/>
+								<TextField id="lastName" label="Last Name" className="txtFieldWidth" value={lastName} onChange={this.onChange} margin="normal" />
 							</FormControl>
 							<TextField
 								id="password2"
@@ -184,16 +178,14 @@ class Settings extends Component {
 								margin="normal"
 							/>
 							{passwordError ? (
-								<FormHelperText
-									className="passErrorMessage"
-									id="password-error-text"
-								>
+								<FormHelperText className="passErrorMessage" id="password-error-text">
 									{passwordErrorMessage}
 								</FormHelperText>
 							) : (
 								undefined
 							)}
 						</div>
+
 						<div className="settingsFields">
 							<form className={classes.container} noValidate>
 								<TextField
@@ -207,37 +199,39 @@ class Settings extends Component {
 									}}
 								/>
 							</form>
-							<Button
-								size="large"
-								variant="raised"
-								color="primary"
-								onClick={this.onSubmit}
-								className="changePassButton"
-							>{`Change Password`}</Button>
+							<Button size="large" variant="raised" color="primary" onClick={this.onSubmit} className="changePassButton">{`Change Password`}</Button>
 						</div>
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
-								<InputLabel htmlFor="uncontrolled-native">Gender</InputLabel>
+								<InputLabel htmlFor="uncontrolled2-native">Gender</InputLabel>
 								<NativeSelect
 									className="txtFieldWidth"
-									input={<Input id="uncontrolled-native" />}
+									input={<Input id="uncontrolled2-native" />}
+									value={gender}
+									onChange={this.handleSelectChange("gender")}
+									name="gender"
+									defaultValue={gender}
 								>
-									<option value={"Male"}>Male</option>
-									<option value={"Female"}>Female</option>
-									<option value={"Alien"}>Alien</option>
+									<option value="Male">Male</option>
+									<option value="Female">Female</option>
+									<option value="Other">Other</option>
 								</NativeSelect>
 							</FormControl>
 						</div>
 
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
-								<InputLabel htmlFor="uncontrolled-native">
-									Department
-								</InputLabel>
-								<NativeSelect input={<Input id="uncontrolled-native" />}>
-									<option value={"Software"}>Software</option>
-									<option value={"HR"}>Human Resources</option>
-									<option value={"Finance"}>Finance</option>
+								<InputLabel htmlFor="uncontrolled1-native">Department</InputLabel>
+								<NativeSelect
+									defaultValue={department}
+									input={<Input id="uncontrolled1-native" />}
+									value={department}
+									onChange={this.handleSelectChange("department")}
+									name="department"
+								>
+									<option value="Software">Software</option>
+									<option value="HR">HR</option>
+									<option value="Finance">Finance</option>
 								</NativeSelect>
 							</FormControl>
 						</div>
@@ -245,7 +239,13 @@ class Settings extends Component {
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
 								<InputLabel htmlFor="uncontrolled-native">Position</InputLabel>
-								<NativeSelect input={<Input id="uncontrolled-native" />}>
+								<NativeSelect
+									defaultValue={position}
+									input={<Input id="uncontrolled-native" />}
+									value={position}
+									onChange={this.handleSelectChange("position")}
+									name="position"
+								>
 									<option value={"CEO"}>CEO</option>
 									<option value={"Junior Developer"}>Junior Developer</option>
 									<option value={"Senior Developer"}>Senior Developer</option>
@@ -254,36 +254,18 @@ class Settings extends Component {
 						</div>
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
-								<TextField
-									id="phoneNumber"
-									label="Phone Number"
-									type="number"
-									className="txtFieldWidth"
-									value={phoneNumber}
-									onChange={this.onChange}
-									margin="normal"
-								/>
+								<TextField id="phoneNumber" label="Phone Number" type="number" className="txtFieldWidth" value={phoneNumber} onChange={this.onChange} margin="normal" />
 							</FormControl>
 						</div>
 						<div className="settingsFields">
-							<TextField
-								id="description"
-								label="Description"
-								value={description}
-								onChange={this.onChange}
-								fullWidth
-								multiline
-								rowsMax="4"
-								margin="normal"
-							/>
+							<FormControl className={classes.formControl}>
+								<TextField id="country" label="Country" type="name" className="txtFieldWidth" value={country} onChange={this.onChange} margin="normal" />
+							</FormControl>
 						</div>
-						<Button
-							size="large"
-							variant="raised"
-							onClick={this.onSaveClick}
-							color="primary"
-							className="btnSave"
-						>
+						<div className="settingsFields">
+							<TextField id="description" label="Description" value={description} onChange={this.onChange} fullWidth multiline rowsMax="4" margin="normal" />
+						</div>
+						<Button size="large" variant="raised" onClick={this.onSaveClick} color="primary" className="btnSave">
 							{`Save`}
 						</Button>
 					</div>
@@ -293,11 +275,7 @@ class Settings extends Component {
 						<div className="settingsFields">
 							<FormControl className={classes.formControl}>
 								<InputLabel htmlFor="name-simple">Company Name</InputLabel>
-								<Input
-									id="name-company"
-									className="txtFieldWidth"
-									style={{ width: "100%" }}
-								/>
+								<Input id="name-company" className="txtFieldWidth" style={{ width: "100%" }} />
 							</FormControl>
 						</div>
 
@@ -320,12 +298,7 @@ class Settings extends Component {
 								<Input id="name-Location" className="txtFieldWidth" />
 							</FormControl>
 						</div>
-						<Button
-							size="large"
-							variant="raised"
-							color="primary"
-							className="btnSave"
-						>{`Save`}</Button>
+						<Button size="large" variant="raised" color="primary" className="btnSave">{`Save`}</Button>
 					</div>
 				)}
 			</div>
