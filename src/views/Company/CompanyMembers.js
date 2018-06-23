@@ -207,6 +207,15 @@ class CompanyMembers extends Component {
 		history.push("/profile/" + id);
 	};
 
+	/**
+	 * used to pass the id to the message component
+	 * @param targetUserId String
+	 */
+	onClickMessage = targetUserId =>{
+		const { history } = this.props;
+		history.push("/messenger/" + targetUserId);
+	}
+
 	removeUser = userKey => {
 		//* Removing the company from the user
 		firestore()
@@ -299,7 +308,7 @@ class CompanyMembers extends Component {
 											</MenuItem>
 
 											{this.props.user.id !== selectedMemberKey ? (
-												<MenuItem onClick={this.handleDropDownClose}>
+												<MenuItem onClick={this.onClickMessage.bind(this,selectedMemberKey)}>
 													<ListItemIcon>
 														<Message />
 													</ListItemIcon>

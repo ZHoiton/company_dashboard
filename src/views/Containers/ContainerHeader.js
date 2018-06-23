@@ -64,6 +64,10 @@ class ContainerHeader extends Component {
 		this.handleClick();
 		this.props.history.push("/profile/" + userId);
 	}
+	onMessageClick =() =>{
+		this.handleClick();
+		this.props.history.push("/messenger");
+	}
 
 	onCompanyClick = () =>{
 		this.handleClick();
@@ -135,7 +139,7 @@ class ContainerHeader extends Component {
 																<MenuItem onClick={this.onCompanyClick}>Company</MenuItem>
 																<MenuItem onClick={this.onCalendarClick}>Calendar</MenuItem>
 																<MenuItem onClick={this.onSettingsClick}>Settings</MenuItem>
-																<MenuItem onClick={this.handleClick}>Messages</MenuItem>
+																<MenuItem onClick={this.onMessageClick}>Messages</MenuItem>
 																<MenuItem onClick={this.onSignOutClick}>Logout</MenuItem>
 															</MenuList>
 														</Paper>

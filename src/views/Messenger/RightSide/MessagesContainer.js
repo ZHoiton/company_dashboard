@@ -28,7 +28,11 @@ export default class MessagesContainer extends Component {
 	componentDidMount() {
 		this.updateConversation();
 	}
-	componentDidUpdate() {}
+	componentDidUpdate(prevProps) {
+		if (prevProps.targetUser !== this.props.targetUser) {
+			this.updateConversation();
+		}
+	}
 
 	updateConversation = () => {
 		this.state.conversationRef.orderBy("send_time", "desc").onSnapshot(data => {
