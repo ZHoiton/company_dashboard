@@ -131,44 +131,33 @@ class Settings extends Component {
 					tempObj["key"] = doc.id;
 					list.push(tempObj);
 				});
-				if (list != null) {
+				if (list.size > 0) {
 					this.setState({ tabSwitcher: false, avaliableCompanies: list });
 				}
 			});
 	};
 	onCompanySelected = e => {
-		this.setState({ selectedCompany: e.target.value });
-		firestore()
-			.collection("companies")
-			.doc(e.target.value)
-			.get()
-			.then(doc => {
-				if (!doc.exists) {
-					console.log("No such document!");
-				} else {
-					this.setState({
-						companyName: doc.data().Name,
-						companyFoundedDate: doc.data().Founded,
-						companyLocation: doc.data().Location
-					});
-				}
-			})
-			.catch(err => {
-				console.log("Error getting document", err);
-			});
-
-		// console.log(e.target.key);
-		// avaliableCompanies.forEach(element => {
-		// 	console.log(element.key);
-		// 	if (element.key == e.target.value) {
-		// 		console.log(element.name);
-		// 		this.setState({
-		// 			companyName: element.name,
-		// 			companyFoundedDate: element.Founded,
-		// 			companyLocation: element.Location
-		// 		});
-		// 	}
-		// });
+		if (e.target.value != null) {
+			this.setState({ selectedCompany: e.target.value });
+			firestore()
+				.collection("companies")
+				.doc(e.target.value)
+				.get()
+				.then(doc => {
+					if (!doc.exists) {
+						console.log("No such document!");
+					} else {
+						this.setState({
+							companyName: doc.data().Name,
+							companyFoundedDate: doc.data().Founded,
+							companyLocation: doc.data().Location
+						});
+					}
+				})
+				.catch(err => {
+					console.log("Error getting document", err);
+				});
+		}
 	};
 	onSaveCompany = () => {
 		const { companyName, companyFoundedDate, companyLocation, selectedCompany } = this.state;
@@ -290,6 +279,7 @@ class Settings extends Component {
 									name="gender"
 									defaultValue={gender}
 								>
+									<option />
 									<option value="Male">Male</option>
 									<option value="Female">Female</option>
 									<option value="Other">Other</option>
@@ -307,6 +297,7 @@ class Settings extends Component {
 									onChange={this.handleSelectChange("department")}
 									name="department"
 								>
+									<option />
 									<option value="Software">Software</option>
 									<option value="HR">HR</option>
 									<option value="Finance">Finance</option>
@@ -324,6 +315,7 @@ class Settings extends Component {
 									onChange={this.handleSelectChange("position")}
 									name="position"
 								>
+									<option />
 									<option value={"CEO"}>CEO</option>
 									<option value={"Junior Developer"}>Junior Developer</option>
 									<option value={"Senior Developer"}>Senior Developer</option>
@@ -353,6 +345,7 @@ class Settings extends Component {
 						<div className="settingsFields">
 							<InputLabel htmlFor="uncontrolled-native">Select company</InputLabel>
 							<select value={selectedCompany} onChange={this.onCompanySelected}>
+								<option />
 								{avaliableCompanies.map(planet => (
 									<option value={planet.key} key={planet.key}>
 										{planet.name}
