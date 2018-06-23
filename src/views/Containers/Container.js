@@ -30,7 +30,7 @@ export default class Container extends Component {
 									<Route path="/company" render={props => <Company {...props} user={context.user} />} />
 									<Route exact path="/login" render={props => <Profile {...props} user={context.user} />} />
 									<Route path="/messenger/:targetUserId" render={props => <Messenger {...props} user={context.user} />} />
-									<Route path="/messenger" render={props => <Messenger {...props} user={context.user} />} />
+									<Route exact path="/messenger" render={props => <Messenger {...props} user={context.user} />} />
 								</Fragment>
 							) : (
 								<Fragment>
