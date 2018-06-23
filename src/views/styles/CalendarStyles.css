@@ -1,6 +1,11 @@
 .calendar-grid {
     width: 80%;
     height: 70%;
+    min-width: 1040px;
+    max-width: 1150px;
+    display: flex;
+    flex-wrap:wrap;
+    flex-direction: row;
 }
 
 .outline {
@@ -18,15 +23,19 @@
 
 .calendar-information {
     width: 10%;
+    min-width: 150px;
     height: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
 }
 
 .calendar-information-container {
     width: 80%;
     height: 50px;
+    min-width: 1040px;
+    max-width: 1150px;
     display: flex;
     justify-content: space-between;
 }
@@ -34,4 +43,28 @@
 .calendar-information-button {
     height: 100%;
     width: 80px;
+}
+
+.calendar-arrow-backwards {
+    margin: 0px 5px;
+    border-radius: 5px;
+}
+
+.calendar-arrow-backwards:hover {
+    background-color: #d8d8d8;
+    cursor: pointer;
+}
+
+.calendar-arrow-forwards {
+    margin: 0px 5px;
+    border-radius: 5px;
+}
+
+.calendar-arrow-forwards:hover {
+    background-color: #d8d8d8;
+    cursor: pointer;
+}
+
+.calendar-item {
+    width: 13.9%;
 }
