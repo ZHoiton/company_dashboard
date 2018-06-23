@@ -31,7 +31,7 @@ class CompanyMembers extends Component {
 	static propTypes = {
 		company: PropTypes.object,
 		user: PropTypes.object,
-		history: PropTypes.object,
+		history: PropTypes.object
 	};
 
 	constructor(props) {
@@ -58,6 +58,7 @@ class CompanyMembers extends Component {
 			}
 		}
 	}
+
 	fillMembersList = () => {
 		const { company } = this.props;
 		const tempList = {};
@@ -71,7 +72,8 @@ class CompanyMembers extends Component {
 		});
 
 		this.setState({ list: tempList, company: company }, () => {
-			console.debug(this.state.list);
+			console.log(this.state.list);
+			console.log(this.state.company);
 		});
 	};
 
@@ -150,10 +152,28 @@ class CompanyMembers extends Component {
 		}
 	};
 
-	onClickProfile = (id) => {
+	onClickProfile = id => {
 		const { history } = this.props;
-		history.push('/profile/'+ id);
-	}
+		history.push("/profile/" + id);
+	};
+
+	removeUser = userKey => {
+		//* Removing the company from the user
+		firestore()
+			.collection("users")
+			.doc(userKey)
+			.collection("companies")
+			.doc(this.state.company.key)
+			.delete();
+
+		//* Removing the user from the company
+		firestore()
+			.collection("companies")
+			.doc(this.state.company.key)
+			.collection("Members")
+			.doc(userKey)
+			.delete();
+	};
 
 	handleClickSnuckBar = () => {
 		this.setState({ isSnuckBarOpen: true });
@@ -174,7 +194,7 @@ class CompanyMembers extends Component {
 	};
 
 	render() {
-		const { list, anchorElementDropDown, emailError, emailErrorMessage } = this.state;
+		const { list, anchorElementDropDown, emailError, emailErrorMessage, company } = this.state;
 		return (
 			<Fragment>
 				<div className="company-members">
@@ -214,9 +234,9 @@ class CompanyMembers extends Component {
 															horizontal: "right"
 														}}
 													>
-														<MenuItem onClick={this.onClickProfile.bind(this,item.key)}>Profile</MenuItem>
+														<MenuItem onClick={this.onClickProfile.bind(this, item.key)}>Profile</MenuItem>
 														<MenuItem onClick={this.handleDropDownClose}>Message</MenuItem>
-														<MenuItem onClick={this.handleDropDownClose}>Remove</MenuItem>
+														{company.FoundedBy === this.props.user.id ? <MenuItem onClick={this.removeUser.bind(this, item.key)}>Remove</MenuItem> : undefined}
 													</Menu>
 												</Fragment>
 											);
