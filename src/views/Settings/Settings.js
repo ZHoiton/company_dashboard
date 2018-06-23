@@ -98,7 +98,6 @@ class Settings extends Component {
 				if (!doc.exists) {
 					console.log("No such document!");
 				} else {
-					console.log("Document data:", doc.data(), doc.data().firstName);
 					this.setState({
 						firstName: doc.data().firstName,
 						lastName: doc.data().lastName,
@@ -138,20 +137,38 @@ class Settings extends Component {
 			});
 	};
 	onCompanySelected = e => {
-		const { avaliableCompanies } = this.state;
 		this.setState({ selectedCompany: e.target.value });
-		console.log(e.target.key);
-		avaliableCompanies.forEach(element => {
-			console.log(element.key);
-			if (element.key == e.target.value) {
-				console.log(element.name);
-				this.setState({
-					companyName: element.name,
-					companyFoundedDate: element.Founded,
-					companyLocation: element.Location
-				});
-			}
-		});
+		firestore()
+			.collection("companies")
+			.doc(e.target.value)
+			.get()
+			.then(doc => {
+				if (!doc.exists) {
+					console.log("No such document!");
+				} else {
+					this.setState({
+						companyName: doc.data().Name,
+						companyFoundedDate: doc.data().Founded,
+						companyLocation: doc.data().Location
+					});
+				}
+			})
+			.catch(err => {
+				console.log("Error getting document", err);
+			});
+
+		// console.log(e.target.key);
+		// avaliableCompanies.forEach(element => {
+		// 	console.log(element.key);
+		// 	if (element.key == e.target.value) {
+		// 		console.log(element.name);
+		// 		this.setState({
+		// 			companyName: element.name,
+		// 			companyFoundedDate: element.Founded,
+		// 			companyLocation: element.Location
+		// 		});
+		// 	}
+		// });
 	};
 	onSaveCompany = () => {
 		const { companyName, companyFoundedDate, companyLocation, selectedCompany } = this.state;
@@ -159,7 +176,7 @@ class Settings extends Component {
 			.collection("companies")
 			.doc(selectedCompany)
 			.update({
-				name: companyName,
+				Name: companyName,
 				Location: companyLocation,
 				Founded: companyFoundedDate
 			});
