@@ -156,8 +156,6 @@ class Settings extends Component {
 	onSaveCompany = () => {
 		const { companyName, companyFoundedDate, companyLocation, selectedCompany } = this.state;
 		firestore()
-			.collection("users")
-			.doc(firebase.auth().currentUser.uid)
 			.collection("companies")
 			.doc(selectedCompany)
 			.update({
