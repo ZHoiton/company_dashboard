@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CalendarItem from './CalendarItem';
+import withRouter from 'react-router-dom/withRouter';
 
 class CalendarGrid extends Component {
 	static propTypes = {
 		month: PropTypes.number,
-		year: PropTypes.number
+		year: PropTypes.number,
+		match: PropTypes.object,
 	};
 
 	constructor(props) {
@@ -77,13 +79,14 @@ class CalendarGrid extends Component {
 	}
 
 	render() {
+		const { match } = this.props;
 		const { days } = this.state;
 		return (
 			<div className='calendar-grid outline'>
-				{days.map((item,index)=> <CalendarItem key={index} day={item}/>)}
+				{days.map((item,index)=> <CalendarItem key={index} userId={match.params.userId} day={item}/>)}
 			</div>
 		);
 	}
 }
 
-export default CalendarGrid;
+export default withRouter(CalendarGrid);

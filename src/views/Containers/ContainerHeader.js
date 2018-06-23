@@ -74,9 +74,9 @@ class ContainerHeader extends Component {
 		this.props.history.push("/company");
 	}
 
-	onCalendarClick = () =>{
+	onCalendarClick = (userId) =>{
 		this.handleClick();
-		this.props.history.push("/calendar");
+		this.props.history.push("/calendar/" + userId);
 	}
 
 	render() {
@@ -137,7 +137,7 @@ class ContainerHeader extends Component {
 																<MenuItem onClick={this.handleClick}>Dashboard</MenuItem>
 																<MenuItem onClick={this.onProfileClick.bind(this,context.user.id)}>Profile</MenuItem>
 																<MenuItem onClick={this.onCompanyClick}>Company</MenuItem>
-																<MenuItem onClick={this.onCalendarClick}>Calendar</MenuItem>
+																<MenuItem onClick={this.onCalendarClick.bind(this,context.user.id)}>Calendar</MenuItem>
 																<MenuItem onClick={this.onSettingsClick}>Settings</MenuItem>
 																<MenuItem onClick={this.onMessageClick}>Messages</MenuItem>
 																<MenuItem onClick={this.onSignOutClick}>Logout</MenuItem>
