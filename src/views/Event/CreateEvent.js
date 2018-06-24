@@ -199,13 +199,13 @@ class CreateEvent extends Component {
 							margin="normal"
 						/>
 					</FormControl>
+					{usersList.map((user,index)=> {
+						return (
+							<Chip key={index} label={user} className="chip" />
+						);
+					})}
 					{!isMeeting && !companyId?
 						<Fragment>
-							{usersList.map((user,index)=> {
-								return (
-									<Chip key={index} label={user} className="chip" />
-								);
-							})}
 							<FormControl fullWidth={true}>
 								<TextField
 									id="email"
