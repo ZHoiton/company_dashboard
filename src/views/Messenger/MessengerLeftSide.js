@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import firebase from "firebase";
 import List from "@material-ui/core/List";
@@ -6,6 +6,7 @@ import ListItem from "@material-ui/core/ListItem";
 import MoreVert from "@material-ui/icons/MoreVert";
 import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 
@@ -58,7 +59,7 @@ export default class MessengerLeftSide extends Component {
 		const { conversationsArray } = this.state;
 		return (
 			<div className="messenger-left-side-container">
-				<List>
+				<List className="messenger-left-side-list">
 					{conversationsArray.length < 1 ? (
 						<ListItem>
 							<ListItemText primary="no conversations started yet" />
@@ -66,19 +67,22 @@ export default class MessengerLeftSide extends Component {
 					) : (
 						conversationsArray.map(targetUser => {
 							return (
-								<ListItem button key={targetUser.key} onClick={onClick.bind(this, targetUser)}>
-									<Avatar alt="Profile picture" src={targetUser.data.target_user_photo_URL} />
-									<ListItemText
-										className={!targetUser.data.is_message_read ? "message-not-read" : undefined}
-										primary={targetUser.data.target_user_first_name + " " + targetUser.data.target_user_last_name}
-										secondary={targetUser.data.last_message.length > 10 ? targetUser.data.last_message.slice(0, 10) + "..." : targetUser.data.last_message}
-									/>
-									<ListItemSecondaryAction>
-										<IconButton aria-label="Settings">
-											<MoreVert />
-										</IconButton>
-									</ListItemSecondaryAction>
-								</ListItem>
+								<Fragment key={targetUser.key}>
+									<ListItem button onClick={onClick.bind(this, targetUser)}>
+										<Avatar alt="Profile picture" src={targetUser.data.target_user_photo_URL} />
+										<ListItemText
+											className={!targetUser.data.is_message_read ? "message-not-read" : undefined}
+											primary={targetUser.data.target_user_first_name + " " + targetUser.data.target_user_last_name}
+											secondary={targetUser.data.last_message.length > 10 ? targetUser.data.last_message.slice(0, 10) + "..." : targetUser.data.last_message}
+										/>
+										<ListItemSecondaryAction>
+											<IconButton aria-label="Settings">
+												<MoreVert />
+											</IconButton>
+										</ListItemSecondaryAction>
+									</ListItem>
+									<Divider />
+								</Fragment>
 							);
 						})
 					)}

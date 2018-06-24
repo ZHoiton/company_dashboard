@@ -16,15 +16,14 @@ export default class Container extends Component {
 	render() {
 		return (
 			<div className="root">
-				<ContainerHeader />
-
+				<AuthContext>{context => <ContainerHeader user={context.user} isUserLoggedIn={context.userIsLoggedIn}/>}</AuthContext>
 				<Switch>
 					<Route exact path="/" component={Home} />
-					<Route exact path="/settings" component={Settings} />
 					<AuthContext>
 						{context => {
 							return context.userIsLoggedIn ? (
 								<Fragment>
+									<Route exact path="/settings" render={props => <Settings {...props} currentUser={context.user} />} />
 									<Route exact path="/calendar/:userId" component={Calendar} />
 									<Route exact path="/profile/:userId" render={props => <Profile {...props} currentUser={context.user} />} />
 									<Route path="/company" render={props => <Company {...props} user={context.user} />} />
