@@ -8,6 +8,8 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
+import AccessTime from "@material-ui/icons/AccessTime";
+import AddCircleOutline from "@material-ui/icons/AddCircleOutline";
 import { DrawerContext } from "../../context/DrawerContext";
 
 class CompanyOverview extends Component {
@@ -102,9 +104,11 @@ class CompanyOverview extends Component {
 						{company ? (
 							<Fragment>
 								<div className="company-overview">
-									<div className="company-cover" style={{backgroundImage:company.Cover ? "url("+company.Cover+")" : undefined,backgroundSize:"Cover"}}>
-										{/* <img src={company.Cover ? company.Cover : undefined} alt={"Company Cover"} /> */}
-										<Avatar className="company-avatar" src={company.Avatar ? company.Avatar : undefined} />
+									<div className="company-cover-wrapper">
+										<div className="company-cover" style={{ backgroundImage: company.Cover ? "url(" + company.Cover + ")" : undefined, backgroundSize: "Cover" }}>
+											{/* <img src={company.Cover ? company.Cover : undefined} alt={"Company Cover"} /> */}
+											<Avatar className="company-avatar" src={company.Avatar ? company.Avatar : undefined} />
+										</div>
 									</div>
 									<div className="company-overview-content">
 										<div className="company-title">{company.Name ? company.Name : undefined}</div>
@@ -112,6 +116,22 @@ class CompanyOverview extends Component {
 										<div className="company-title">events</div>
 										<div className="company-events-container">
 											<div className="event-list">
+												<Card className="event">
+													<div className="event-add-icon">
+														<AddCircleOutline className="add-icon"/>
+													</div>
+													<CardMedia title={"Add Event"} image="none" />
+													<CardContent>
+														<Typography gutterBottom variant="headline" component="h2">
+															{"Add Event"}
+														</Typography>
+														<Typography component="p" className="event-desc">{"add new event for the whole company, a group or member"}</Typography>
+													</CardContent>
+													<CardActions className="event-actions">
+														<Typography component="p" className="event-date">
+														</Typography>
+													</CardActions>
+												</Card>
 												{events.length > 0
 													? events.map((event, index) => {
 														return (
@@ -122,9 +142,14 @@ class CompanyOverview extends Component {
 																	<Typography gutterBottom variant="headline" component="h2">
 																		{event.title}
 																	</Typography>
-																	<Typography component="p">{event.description}</Typography>
+																	<Typography component="p" className="event-desc">{event.description}</Typography>
 																</CardContent>
-																<CardActions>date</CardActions>
+																<CardActions className="event-actions">
+																	<Typography component="p" className="event-date">
+																		<AccessTime />
+																		{event.startTime.toDate().toDateString()}
+																	</Typography>
+																</CardActions>
 															</Card>
 														);
 													}): undefined}

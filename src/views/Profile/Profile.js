@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 
+
 export default class Profile extends Component {
 	static propTypes = {
 		currentUser: PropTypes.object,
@@ -24,9 +25,16 @@ export default class Profile extends Component {
 			companies: [],
 			first: "",
 			last: "",
-			image: ""
+			image: "",
+			height: "",
+			weight: "",
+			country: "",
+			position: "",
 		};
+
+		this.heightChange = this.heightChange.bind(this);
 	}
+
 
 	getUser(userId) {
 		const { currentUser } = this.props;
@@ -39,7 +47,13 @@ export default class Profile extends Component {
 				const firstName = info.data().firstName;
 				const lastName = info.data().lastName;
 				const image = info.data().photoURL;
-				this.setState({ first: firstName, last: lastName, image: image });
+				const 	Height = info.data().height;
+				console.log(Height);
+				this.setState({height: Height});
+				const 	Weight = info.data().weight;
+				const 	Country = info.data().country;
+				const 	Position= info.data().position;
+				this.setState({ first: firstName, last: lastName, image: image, height : Height, weight:Weight, country : Country, position : Position });
 			});
 	}
 
@@ -58,13 +72,83 @@ export default class Profile extends Component {
 		});
 	};
 
-	componentDidMount() {
+	getHeight() {
+		const Height = this.state.height;
+		if(Height === undefined){
+			return(false);
+		}
+		else{
+			return(true);
+		}
+	}
+
+	getWeight() {
+		if(this.state.weight == "" || this.state.weight === undefined){
+			return("Unknown");
+		}
+		else{
+			return("${this.state.weight} +  kg");
+		}
+	}
+
+	getCountry() {
+		if(this.state.country == "" || this.state.country=== undefined){
+			return("Unknown");
+		}
+		else{
+			return("${this.state.country}");
+		}
+	}
+
+	getPosition() {
+		if(this.state.position == "" || this.state.position === undefined){
+			return("Unknown");
+		}
+		else{
+			return("${this.state.weight}");
+		}
+	}
+	componentDidMount(){
 		this.getUser(this.props.match.params.userId);
 		this.getCompanies(this.props.match.params.userId);
 	}
 
+	heightChange = (event)=>{
+		event.preventDefault();
+		this.setState({height : event.target.value});
+		console.log(this.state.height);
+		const h = this.state.height;
+		if(h !== "" || h !== undefined){
+			this.state.ref.doc(this.props.match.params.userId).update(
+				{height:h}
+			);
+		}
+	}
+	weightChange = (event)=>{
+		event.preventDefault();
+		this.setState({weight : event.target.value});
+		console.log(this.state.weight);
+		const w = this.state.weight;
+		if(w !== "" || w !== undefined){
+			this.state.ref.doc(this.props.match.params.userId).update(
+				{weight:w}
+			);
+		}
+	}
+
+	countryChange = (event)=>{
+		event.preventDefault();
+		this.setState({country : event.target.value});
+		console.log(this.state.country);
+		const h = this.state.height;
+		if(h !== "" || h !== undefined){
+			this.state.ref.doc(this.props.match.params.userId).update(
+				{height:h}
+			);
+		}
+	}
 	render() {
-		const { first, last, image, companies } = this.state;
+		const { first, last, image, companies , height} = this.state;
 		return (
 			<Card className="profile-page">
 				<CardHeader title={first + " " + last} />
@@ -72,11 +156,22 @@ export default class Profile extends Component {
 					<div className="profile-info-box">
 						<Avatar alt="Remy Sharp" src={image} className="profile-picture" />
 						<Card className="profile-info">
-							<p>Height: 135 cm</p>
-							<p>Weight: 43 kg</p>
-							<p>Country: Netherlands</p>
-							<p>Position: CEO</p>
-							<p>Company: Fontys</p>
+							<form>
+								<label>
+									Height
+									<input type="text" name="height" defaultValue={ height } onChange={(event) => this.heightChange(event)} />
+									: cm
+								</label>
+								<br/>
+								<label>
+									Weight:
+									<input type="text" name="weight" defaultValue={this.getWeight()} onChange={(event) => this.weightChange(event)} />
+									: kg
+								</label>
+								<br/>
+							</form>
+							<p>Position: {this.getPosition()}</p>
+							<p>Company:</p>
 						</Card>
 					</div>
 					{companies.length > 0
