@@ -14,8 +14,8 @@ import withRouter from 'react-router-dom/withRouter';
 
 class CreateEvent extends Component {
 	static propTypes = {
-		isMeeting: PropTypes.bool,
-		isCompany: PropTypes.bool,
+		isMeeting: PropTypes.string,
+		companyId: PropTypes.string,
 		isOpen: PropTypes.bool,
 		onClose: PropTypes.func,
 		defaultDate: PropTypes.object,
@@ -38,15 +38,33 @@ class CreateEvent extends Component {
 	}
 
 	componentDidMount() {
-		const defaultDate = new Date();
-		let defaultStart = "";
-		let defaultEnd = "";
-		if (defaultDate){
-			defaultStart = `${defaultDate.getFullYear()}-0${defaultDate.getMonth()}-${defaultDate.getDate()}T12:30`;
-			defaultEnd = `${defaultDate.getFullYear()}-0${defaultDate.getMonth()}-${defaultDate.getDate()}T14:30`;
+		const { companyId, isMeeting } = this.props;
+		const tempArray = this.state.usersList.slice();
+		if (companyId){
+			firestore()
+				.collection('companies')
+				.doc(this.props.companyId)
+				.collection('Members')
+				.get((snapshot)=> {
+					snapshot.forEach((doc)=> {
+						tempArray.push(`${doc.data().firstName} ${doc.data().lastName}`);
+						const tempUser = doc.data();
+						tempUser.id = doc.id;
+						this.users.push(tempUser);
+						this.setState({usersList: tempArray});
+					});
+				});
 		}
 
-		this.setState({startTime:defaultStart,endTime:defaultEnd});
+		if (isMeeting) {
+			firestore().collection("users").doc(isMeeting).get().then((doc)=> {
+				tempArray.push(`${doc.data().firstName} ${doc.data().lastName}`);
+				const tempUser = doc.data();
+				tempUser.id = doc.id;
+				this.users.push(tempUser);
+				this.setState({usersList: tempArray});
+			});
+		}
 	}
 
 	onChange = event => {
@@ -125,7 +143,7 @@ class CreateEvent extends Component {
 	}
 
 	render() {
-		const {isOpen, defaultDate, isMeeting, isCompany} = this.props;
+		const {isOpen, defaultDate, isMeeting, companyId} = this.props;
 		const { description, title, email, emailError, emailErrorMessage, usersList, startTime, endTime } = this.state;
 		let defaultStart = "";
 		let defaultEnd = "";
@@ -181,7 +199,7 @@ class CreateEvent extends Component {
 							margin="normal"
 						/>
 					</FormControl>
-					{!isMeeting && !isCompany?
+					{!isMeeting && !companyId?
 						<Fragment>
 							{usersList.map((user,index)=> {
 								return (
