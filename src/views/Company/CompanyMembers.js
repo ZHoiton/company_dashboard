@@ -211,10 +211,10 @@ class CompanyMembers extends Component {
 	 * used to pass the id to the message component
 	 * @param targetUserId String
 	 */
-	onClickMessage = targetUserId =>{
+	onClickMessage = targetUserId => {
 		const { history } = this.props;
 		history.push("/messenger/" + targetUserId);
-	}
+	};
 
 	removeUser = userKey => {
 		//* Removing the company from the user
@@ -308,7 +308,7 @@ class CompanyMembers extends Component {
 											</MenuItem>
 
 											{this.props.user.id !== selectedMemberKey ? (
-												<MenuItem onClick={this.onClickMessage.bind(this,selectedMemberKey)}>
+												<MenuItem onClick={this.onClickMessage.bind(this, selectedMemberKey)}>
 													<ListItemIcon>
 														<Message />
 													</ListItemIcon>
