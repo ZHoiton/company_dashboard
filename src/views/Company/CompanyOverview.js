@@ -19,8 +19,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import AccessTime from "@material-ui/icons/AccessTime";
 import AddCircleOutline from "@material-ui/icons/AddCircleOutline";
-// import CreateEvent from "../Event/CreateEvent";
 import { DrawerContext } from "../../context/DrawerContext";
+import CreateEvent from "../Event/CreateEvent";
 
 /**
  * used for the Dialog's animation
@@ -81,7 +81,6 @@ class CompanyOverview extends Component {
 			.onSnapshot(snapshot => {
 				const tempList = [];
 				snapshot.forEach(doc => {
-					console.log(doc.data());
 					let tempObj = {};
 					tempObj = doc.data();
 					tempList.push(tempObj);
@@ -96,7 +95,6 @@ class CompanyOverview extends Component {
 			tempObj = doc.data();
 			tempObj["key"] = doc.id;
 			this.setState({ company: tempObj }, () => {
-				console.log(this.state.company);
 			});
 		});
 	};
@@ -116,7 +114,6 @@ class CompanyOverview extends Component {
 				});
 				tempCompany[collectionName] = tempList;
 				this.setState({ company: tempCompany }, () => {
-					console.log(this.state.company);
 				});
 			});
 	};
@@ -158,6 +155,7 @@ class CompanyOverview extends Component {
 	render() {
 		const { user } = this.props;
 		const { events, company, error, errorMessage, clickedCard } = this.state;
+
 		return (
 			<DrawerContext>
 				{context => (
@@ -386,6 +384,7 @@ class CompanyOverview extends Component {
 									</div>
 								</div>
 								<CompanyMembers company={this.state.company} user={this.props.user} />
+								<CreateEvent isOpen={this.state.openCreateEvent} onClose={this.handleCloseCreateEventDialog} defaultDate={new Date()} currentUser={this.props.user} companyId={company.key}/>
 							</Fragment>
 						) : (
 							undefined

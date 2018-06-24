@@ -6,12 +6,10 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
 import "../styles/ProfileStyles.css";
-import { firestore } from "firebase";
+import { firestore,storage } from "firebase";
 import PropTypes from "prop-types";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-import fire from "../../Firebase";
-
 
 export default class Profile extends Component {
 	static propTypes = {
@@ -96,6 +94,7 @@ export default class Profile extends Component {
 	}
 
 	getCountry() {
+		if (!this.state.country) return false;
 		if(this.state.country.trim() === "" ){
 			return(false);
 		}
@@ -143,7 +142,7 @@ export default class Profile extends Component {
 		data.append('file', event.target.files[0]);
 		data.append('filename', event.target.files[0]);
 		const filename = event.target.files[0].name;
- 		fire.storage().ref('/images/').child(filename).put(event.target.files[0]).then((snapshot)=> {
+ 		storage().ref('/images/').child(filename).put(event.target.files[0]).then((snapshot)=> {
  			this.setState({image : snapshot.downloadURL});
 			this.state.ref.doc(this.props.match.params.userId).update(
 				{photoURL: snapshot.downloadURL}
