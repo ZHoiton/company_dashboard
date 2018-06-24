@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 
+
 export default class Profile extends Component {
 	static propTypes = {
 		currentUser: PropTypes.object,
@@ -24,9 +25,16 @@ export default class Profile extends Component {
 			companies: [],
 			first: "",
 			last: "",
-			image: ""
+			image: "",
+			height: "",
+			weight: "",
+			country: "",
+			position: "",
 		};
+
+		this.heightChange = this.heightChange.bind(this);
 	}
+
 
 	getUser(userId) {
 		const { currentUser } = this.props;
@@ -39,7 +47,12 @@ export default class Profile extends Component {
 				const firstName = info.data().firstName;
 				const lastName = info.data().lastName;
 				const image = info.data().photoURL;
-				this.setState({ first: firstName, last: lastName, image: image });
+				const 	Height = info.data().height;
+				this.setState({height: Height});
+				const 	Weight = info.data().weight;
+				const 	Country = info.data().country;
+				const 	Position= info.data().position;
+				this.setState({ first: firstName, last: lastName, image: image, height : Height, weight:Weight, country : Country, position : Position });
 			});
 	}
 
@@ -58,13 +71,80 @@ export default class Profile extends Component {
 		});
 	};
 
-	componentDidMount() {
+	getHeight() {
+		const Height = this.state.height;
+		if(Height === undefined){
+			return(false);
+		}
+		else{
+			return(true);
+		}
+	}
+
+	getWeight() {
+		if(this.state.weight === undefined){
+			return(false);
+		}
+		else{
+			return(true);
+		}
+	}
+
+	getCountry() {
+		if(this.state.country.trim() === "" ){
+			return(false);
+		}
+		else{
+			return(true);
+		}
+	}
+
+	getPosition() {
+		if(this.state.position === undefined  || this.state.position.trim() === "" )  {
+			return(false);
+		}
+		else{
+			return(true);
+		}
+	}
+	componentDidMount(){
 		this.getUser(this.props.match.params.userId);
 		this.getCompanies(this.props.match.params.userId);
 	}
 
+	heightChange = (event)=>{
+		event.preventDefault();
+		this.setState({height : event.target.value});
+		const h = this.state.height;
+		if(h !== "" || h !== undefined){
+			this.state.ref.doc(this.props.match.params.userId).update(
+				{height:h}
+			);
+		}
+	}
+	weightChange = (event)=>{
+		event.preventDefault();
+		this.setState({weight : event.target.value});
+		const w = this.state.weight;
+		if(w !== undefined){
+			this.state.ref.doc(this.props.match.params.userId).update(
+				{weight:w}
+			);
+		}
+	}
+
+	countryChange = (event)=>{
+		event.preventDefault();
+		this.setState({country : event.target.value});
+		const c = this.state.country;
+		if(c !== undefined){
+			this.state.ref.doc(this.props.match.params.userId).update(
+				{country: c}
+			);
+		}
+	}
 	render() {
-		const { first, last, image, companies } = this.state;
+		const { first, last, image, companies , height,weight,country,position} = this.state;
 		return (
 			<Card className="profile-page">
 				<CardHeader title={first + " " + last} />
@@ -72,11 +152,25 @@ export default class Profile extends Component {
 					<div className="profile-info-box">
 						<Avatar alt="Remy Sharp" src={image} className="profile-picture" />
 						<Card className="profile-info">
-							<p>Height: 135 cm</p>
-							<p>Weight: 43 kg</p>
-							<p>Country: Netherlands</p>
-							<p>Position: CEO</p>
-							<p>Company: Fontys</p>
+							<form>
+								<label>
+									Height:
+									<input type="text"  key={Math.floor((Math.random()*10))} name="height" defaultValue={this.getHeight() ? height : "Unknown" } onChange={(event) => this.heightChange(event)} />
+									: cm
+								</label>
+								<br/>
+								<label>
+									Weight:
+									<input type="text" key={Math.floor((Math.random()*10))} name="weight" defaultValue={this.getWeight() ? weight : "Unknown"} onChange={(event) => this.weightChange(event)} />
+									: kg
+								</label>
+								<br/>
+								<label>
+									Country:
+									<input type="text" key={Math.floor((Math.random()*10))} name="country" defaultValue={this.getCountry() ? country : "Unknown"} onChange={(event)=>this.countryChange(event)}/>
+								</label>
+							</form>
+							<p>Position: {this.getPosition() ? position : "Not Yet Assigned" }</p>
 						</Card>
 					</div>
 					{companies.length > 0
@@ -84,7 +178,7 @@ export default class Profile extends Component {
 							return (
 								<Card key={index}>
 									<CardMedia src={company.avatar} title={company.title} />
-									<CardContent>asd</CardContent>
+									<CardContent>Company Name: {company.name}</CardContent>
 									<CardActions>
 										<Button size="small" color="primary">
 											Share
@@ -96,7 +190,7 @@ export default class Profile extends Component {
 								</Card>
 							);
 						})
-						: undefined}
+						: "No Company"}
 					<Card className="profile-activity">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget iaculis leo. Donec ut quam tempus quam sagittis rhoncus eu sit amet eros. Fusce
 						ullamcorper velit tellus, id cursus diam suscipit ac. Praesent a erat dignissim, rhoncus nunc volutpat, euismod justo. Maecenas et facilisis tortor, ut
