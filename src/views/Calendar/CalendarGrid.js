@@ -65,15 +65,15 @@ class CalendarGrid extends Component {
 		let tempNumber = 1;
 		calendarArray.forEach((day, index)=> {
 			if (day !== 0) {
-				calendarArray[index] = new Date(year,month,tempNumber).getDate();
+				calendarArray[index] = new Date(year,month,tempNumber);
 				tempNumber++;
 			}
 		});
 		for (let i = 0; i < firstDayOfMonth; i++) {
-			calendarArray[i] = new Date(year,month,-firstDayOfMonth+1+i).getDate();
+			calendarArray[i] = new Date(year,month,-firstDayOfMonth+1+i);
 		}
 		for (let i = 0; i < 35-(numberOfDays+firstDayOfMonth); i++) {
-			calendarArray[(numberOfDays+firstDayOfMonth)+i] = new Date(year,month,i + 1).getDate();
+			calendarArray[(numberOfDays+firstDayOfMonth)+i] = new Date(year,month,i + 1);
 		}
 		this.setState({days: calendarArray});
 	}
