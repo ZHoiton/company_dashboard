@@ -95,7 +95,7 @@ class CalendarItem extends Component {
 				{events.map((event,index)=> {
 					return (
 						<Fragment key={index}>
-							<div className="outline" onClick={this.onSelectEvent.bind(this,event.id)}>
+							<div className="event-outline" onClick={this.onSelectEvent.bind(this,event.id)}>
 								{event.data().title}
 							</div>
 							{selectedEvent?
