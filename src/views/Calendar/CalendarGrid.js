@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CalendarItem from './CalendarItem';
 import withRouter from 'react-router-dom/withRouter';
+import CreateEvent from '../Event/CreateEvent';
 
 class CalendarGrid extends Component {
 	static propTypes = {
@@ -14,6 +15,7 @@ class CalendarGrid extends Component {
 		super(props);
 		this.state = {
 			days: [],
+			createEvent: false,
 		};
 	}
 
@@ -78,13 +80,24 @@ class CalendarGrid extends Component {
 		this.setState({days: calendarArray});
 	}
 
+	onClickDate = day => {
+		console.log(day);
+		this.setState({createEvent:true,clickedDate: day});
+	}
+
+	onCloseCreate = () => {
+		this.setState({createEvent: false});
+	}
+
 	render() {
 		const { match } = this.props;
-		const { days } = this.state;
+		const { days, createEvent, clickedDate } = this.state;
 		return (
 			<div className='calendar-grid'>
-				{days.map((item,index)=> <CalendarItem key={index} userId={match.params.userId} day={item}/>)}
+				{days.map((day,index)=> <CalendarItem onClick={this.onClickDate.bind(this,day)} key={index} userId={match.params.userId} day={day}/>)}
+				<CreateEvent isOpen={createEvent} onClose={this.onCloseCreate} defaultDate={clickedDate}/>
 			</div>
+
 		);
 	}
 }
