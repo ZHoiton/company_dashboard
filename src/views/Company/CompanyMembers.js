@@ -24,6 +24,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Person from "@material-ui/icons/Person";
 import Message from "@material-ui/icons/Message";
 import Close from "@material-ui/icons/Close";
+import ExitToApp from "@material-ui/icons/ExitToApp";
 import { firestore } from "firebase";
 import { withRouter } from "react-router-dom";
 
@@ -92,7 +93,7 @@ class CompanyMembers extends Component {
 
 		//* setting the list and the company var
 		this.setState({ memberList: tempList, company: company }, () => {
-			// console.log(this.state.list);
+			// console.log(this.state.memberList);
 			// console.log(this.state.company);
 		});
 	};
@@ -232,6 +233,9 @@ class CompanyMembers extends Component {
 			.collection("Members")
 			.doc(userKey)
 			.delete();
+		if (this.props.user.id === userKey) {
+			this.props.history.push("/company");
+		}
 	};
 
 	handleClickSnuckBar = () => {
@@ -324,6 +328,17 @@ class CompanyMembers extends Component {
 														<Close />
 													</ListItemIcon>
 													<ListItemText primary="Remove" />
+												</MenuItem>
+											) : (
+												undefined
+											)}
+
+											{company.FoundedBy !== this.props.user.id && this.props.user.id === selectedMemberKey ? (
+												<MenuItem onClick={this.removeUser.bind(this, selectedMemberKey)}>
+													<ListItemIcon>
+														<ExitToApp />
+													</ListItemIcon>
+													<ListItemText primary="Leave" />
 												</MenuItem>
 											) : (
 												undefined
