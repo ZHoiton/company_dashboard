@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { Component } from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -9,6 +10,7 @@ import { firestore } from "firebase";
 import PropTypes from "prop-types";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
+import fire from "../../Firebase";
 
 
 export default class Profile extends Component {
@@ -30,12 +32,13 @@ export default class Profile extends Component {
 			weight: "",
 			country: "",
 			position: "",
+			experience:"",
+			education: ""
 		};
 
 		this.heightChange = this.heightChange.bind(this);
+		this.handleUploadImage= this.handleUploadImage.bind(this);
 	}
-
-
 	getUser(userId) {
 		const { currentUser } = this.props;
 		const { ref } = this.state;
@@ -52,7 +55,9 @@ export default class Profile extends Component {
 				const 	Weight = info.data().weight;
 				const 	Country = info.data().country;
 				const 	Position= info.data().position;
-				this.setState({ first: firstName, last: lastName, image: image, height : Height, weight:Weight, country : Country, position : Position });
+				const Education = info.data().education;
+				const Experience = info.data().experience;
+				this.setState({ first: firstName, last: lastName, image: image, height : Height, weight:Weight, country : Country, position : Position, experience : Experience, education: Education });
 			});
 	}
 
@@ -132,6 +137,19 @@ export default class Profile extends Component {
 			);
 		}
 	}
+	handleUploadImage(event) {
+		event.preventDefault();
+		const data = new FormData();
+		data.append('file', event.target.files[0]);
+		data.append('filename', event.target.files[0]);
+		const filename = event.target.files[0].name;
+ 		fire.storage().ref('/images/').child(filename).put(event.target.files[0]).then((snapshot)=> {
+ 			this.setState({image : snapshot.downloadURL});
+			this.state.ref.doc(this.props.match.params.userId).update(
+				{photoURL: snapshot.downloadURL}
+			);
+		});
+	}
 
 	countryChange = (event)=>{
 		event.preventDefault();
@@ -143,14 +161,27 @@ export default class Profile extends Component {
 			);
 		}
 	}
+
+	educationChange = (event)=>{
+		event.preventDefault();
+		this.setState({education : event.target.value});
+		const e = this.state.education;
+		if(e.toString().length > 0){
+			this.state.ref.doc(this.props.match.params.userId).update(
+				{education: e}
+			);
+		}
+	}
 	render() {
-		const { first, last, image, companies , height,weight,country,position} = this.state;
+		const { first, last, image, companies , height,weight,country,position, education} = this.state;
 		return (
 			<Card className="profile-page">
 				<CardHeader title={first + " " + last} />
 				<CardContent>
 					<div className="profile-info-box">
-						<Avatar alt="Remy Sharp" src={image} className="profile-picture" />
+						<Avatar alt="Remy Sharp" src={image} className="profile-picture"/>
+						<br/>
+						<input type="file" ref={(ref) => { this.uploadInput = ref; }} onChange={this.handleUploadImage} />
 						<Card className="profile-info">
 							<form>
 								<label>
@@ -192,28 +223,8 @@ export default class Profile extends Component {
 						})
 						: "No Company"}
 					<Card className="profile-activity">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget iaculis leo. Donec ut quam tempus quam sagittis rhoncus eu sit amet eros. Fusce
-						ullamcorper velit tellus, id cursus diam suscipit ac. Praesent a erat dignissim, rhoncus nunc volutpat, euismod justo. Maecenas et facilisis tortor, ut
-						vulputate quam. Suspendisse enim massa, condimentum quis mauris sed, fermentum ullamcorper enim. Aliquam mollis dapibus dignissim. Vestibulum vel pharetra
-						metus. Vestibulum interdum efficitur felis nec commodo. Ut facilisis felis vel augue lobortis volutpat.
-					</Card>
-					<Card className="profile-activity">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget iaculis leo. Donec ut quam tempus quam sagittis rhoncus eu sit amet eros. Fusce
-						ullamcorper velit tellus, id cursus diam suscipit ac. Praesent a erat dignissim, rhoncus nunc volutpat, euismod justo. Maecenas et facilisis tortor, ut
-						vulputate quam. Suspendisse enim massa, condimentum quis mauris sed, fermentum ullamcorper enim. Aliquam mollis dapibus dignissim. Vestibulum vel pharetra
-						metus. Vestibulum interdum efficitur felis nec commodo. Ut facilisis felis vel augue lobortis volutpat.
-					</Card>
-					<Card className="profile-activity">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget iaculis leo. Donec ut quam tempus quam sagittis rhoncus eu sit amet eros. Fusce
-						ullamcorper velit tellus, id cursus diam suscipit ac. Praesent a erat dignissim, rhoncus nunc volutpat, euismod justo. Maecenas et facilisis tortor, ut
-						vulputate quam. Suspendisse enim massa, condimentum quis mauris sed, fermentum ullamcorper enim. Aliquam mollis dapibus dignissim. Vestibulum vel pharetra
-						metus. Vestibulum interdum efficitur felis nec commodo. Ut facilisis felis vel augue lobortis volutpat.
-					</Card>
-					<Card className="profile-activity">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget iaculis leo. Donec ut quam tempus quam sagittis rhoncus eu sit amet eros. Fusce
-						ullamcorper velit tellus, id cursus diam suscipit ac. Praesent a erat dignissim, rhoncus nunc volutpat, euismod justo. Maecenas et facilisis tortor, ut
-						vulputate quam. Suspendisse enim massa, condimentum quis mauris sed, fermentum ullamcorper enim. Aliquam mollis dapibus dignissim. Vestibulum vel pharetra
-						metus. Vestibulum interdum efficitur felis nec commodo. Ut facilisis felis vel augue lobortis volutpat.
+						Education :
+						<input type="text"  key={Math.floor((Math.random()*10))} name="education" defaultValue={education !== null ||education.toString().length > 0 ? education : "Unknown" } onChange={(event) => this.educationChange(event)} />
 					</Card>
 				</CardContent>
 			</Card>
