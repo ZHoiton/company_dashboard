@@ -12,7 +12,7 @@
 	display: flex;
 	flex-direction: row;
 	height: 100%;
-    min-height: 100%;
+	min-height: 100%;
 }
 .create-company-card {
 	width: 75%;
@@ -95,10 +95,15 @@
 	display: flex;
 	flex-direction: column;
 	width: 85%;
+	overflow: auto;
 	background-color: white;
+}
+.company-cover-wrapper{
+	position: relative;
 }
 .company-cover {
 	height: 200px;
+	min-height: 200px;
 	background-color: aqua;
 	margin-bottom: 80px;
 }
@@ -124,17 +129,42 @@
 	display: flex;
 	flex-direction: row;
 }
-.event-list{
+.event:hover {
+	-webkit-transition: box-shadow 0.2s ease; /* Safari */
+	-moz-transition: box-shadow 0.2s ease;
+	transition: box-shadow 0.2s ease;
+	/* background-color: #e04d08 !important; */
+	box-shadow: 3px 7px 5px 3px rgba(0, 0, 0, 0.3);
+}
+.event-list {
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 }
-.event-image{
+.event-image {
 	width: 250px;
-	height: 200px;
+	height: 200px !important;
+	border-bottom: 1px solid #e8e8e8;
 }
 .event-list .event {
 	max-width: 300px;
 	margin: 10px;
+}
+.event-actions {
+	display: flex;
+	flex-direction: row-reverse;
+	font-size: 12px;
+}
+.event-desc{
+	height: 40px;
+	width: 200px;
+	overflow: hidden;
+}
+.event-date {
+	display: flex;
+	align-items: center;
+	font-size: 12px;
+	color: #555555;
 }
 
 /*//* Company Members */
@@ -176,4 +206,7 @@
 	align-items: "center";
 	width: 100%;
 	justify-content: space-around;
+}
+.root{
+	overflow: hidden;
 }
