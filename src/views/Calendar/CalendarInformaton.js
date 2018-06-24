@@ -41,7 +41,7 @@ class CalendarInformation extends Component {
 		const monthName = this.monthNames[month];
 
 		return (
-			<div className='calendar-information-container outline'>
+			<div className='calendar-information-container'>
 				<div className='calendar-information outline'>
 					<KeyboardArrowLeft onClick={onClickChangeMonth.bind(this,'back')} className="calendar-arrow-backwards outline"/>
 					<p>{monthName}</p>

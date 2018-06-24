@@ -82,7 +82,7 @@ class CalendarGrid extends Component {
 		const { match } = this.props;
 		const { days } = this.state;
 		return (
-			<div className='calendar-grid outline'>
+			<div className='calendar-grid'>
 				{days.map((item,index)=> <CalendarItem key={index} userId={match.params.userId} day={item}/>)}
 			</div>
 		);

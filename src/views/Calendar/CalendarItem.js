@@ -57,7 +57,7 @@ class CalendarItem extends Component {
 				{day.getDate()}
 				{events.map((event,index)=> {
 					return (
-						<div key={index} className="outline">
+						<div key={index} className="event-outline">
 							{event.title}
 						</div>
 					);
