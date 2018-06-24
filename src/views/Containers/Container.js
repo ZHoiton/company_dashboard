@@ -3,6 +3,7 @@ import Profile from "../Profile/Profile";
 import Messenger from "../Messenger/Messenger";
 import LogIn from "../LogIn/LogIn";
 import Calendar from "../Calendar/Calendar";
+import TaskHolder from "../Tasks/TaskHolder";
 import Register from "../Register/Register";
 import Company from "../Company/Company";
 import Home from "../Home/Home";
@@ -27,6 +28,7 @@ export default class Container extends Component {
 									<Route exact path="/calendar/:userId" component={Calendar} />
 									<Route exact path="/profile/:userId" render={props => <Profile {...props} currentUser={context.user} />} />
 									<Route path="/company" render={props => <Company {...props} user={context.user} />} />
+									<Route path="/tasks/:userId" component={TaskHolder} />
 									<Route exact path="/login" render={props => <Profile {...props} user={context.user} />} />
 									<Route path="/messenger/:targetUserId" render={props => <Messenger {...props} user={context.user} />} />
 									<Route exact path="/messenger" render={props => <Messenger {...props} user={context.user} />} />
