@@ -16,7 +16,8 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import { firestore } from "firebase";
 class Settings extends Component {
 	static propTypes = {
-		classes: PropTypes.object.isRequired
+		classes: PropTypes.object.isRequired,
+		currentUser: PropTypes.object
 	};
 
 	constructor(props) {
@@ -74,18 +75,21 @@ class Settings extends Component {
 		const { firstName, lastName, phoneNumber, birthDay, gender, position, department, description, country } = this.state;
 		firestore()
 			.collection("users")
-			.doc(firebase.auth().currentUser.uid)
-			.update({
-				firstName: firstName,
-				lastName: lastName,
-				phoneNumber: phoneNumber,
-				birthDay: birthDay,
-				gender: gender,
-				personalDescription: description,
-				department: department,
-				position: position,
-				country: country
-			});
+			.doc(this.props.currentUser.id)
+			.set(
+				{
+					firstName: firstName,
+					lastName: lastName,
+					phoneNumber: phoneNumber ? phoneNumber : null,
+					birthDay: birthDay ? birthDay : null,
+					gender: gender ? gender : null,
+					personalDescription: description ? description : null,
+					department: department ? department : null,
+					position: position ? position : null,
+					country: country ? country : null
+				},
+				{ merge: true }
+			);
 
 		console.log(gender, position, department);
 	};

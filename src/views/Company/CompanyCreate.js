@@ -35,25 +35,25 @@ export default class CompanyCreate extends Component {
 		const { company, name, location, founded, steps } = this.state;
 		const tempCompany = company;
 		switch (currentStep) {
-		case 0:
-			tempCompany.Name = name;
-			tempCompany.Location = location;
-			tempCompany.Founded = founded;
-			tempCompany.FoundedBy = this.props.user.id;
-			tempCompany.Avatar = null;
-			this.setState({ company: tempCompany });
-			break;
-		case 1:
-			this.setState({ roleList: steps[currentStep].data });
-			break;
-		case 2:
-			this.setState({ groupList: steps[currentStep].data });
-			break;
-		case 3:
-			this.onFinishClick();
-			break;
-		default:
-			break;
+			case 0:
+				tempCompany.Name = name;
+				tempCompany.Location = location;
+				tempCompany.Founded = founded;
+				tempCompany.FoundedBy = this.props.user.id;
+				tempCompany.Avatar = null;
+				this.setState({ company: tempCompany });
+				break;
+			case 1:
+				this.setState({ roleList: steps[currentStep].data });
+				break;
+			case 2:
+				this.setState({ groupList: steps[currentStep].data });
+				break;
+			case 3:
+				this.onFinishClick();
+				break;
+			default:
+				break;
 		}
 	};
 
@@ -95,35 +95,53 @@ export default class CompanyCreate extends Component {
 			companies
 				.doc(key)
 				.collection("Roles")
-				.add({ Name: role })
+				.add({
+					Name: role,
+					Weight: 1
+				})
 		);
 		//* adding defult role "Owner"
 		companies
 			.doc(key)
 			.collection("Roles")
-			.add({ Name: "Owner" });
+			.add({
+				Name: "Owner",
+				Weight: 10
+			});
 		companies
 			.doc(key)
 			.collection("Roles")
-			.add({ Name: "Member" });
+			.add({
+				Name: "Member",
+				Weight: 1
+			});
 
 		//* adding groups
 		groupList.map(group =>
 			companies
 				.doc(key)
 				.collection("Groups")
-				.add({ Name: group })
+				.add({
+					Name: group,
+					Weight: 1
+				})
 		);
 		//* adding defult role "Management"
 		companies
 			.doc(key)
 			.collection("Groups")
-			.add({ Name: "Management" });
+			.add({
+				Name: "Management",
+				Weight: 10
+			});
 
 		companies
 			.doc(key)
 			.collection("Groups")
-			.add({ Name: "Members" });
+			.add({
+				Name: "Members",
+				Weight: 1
+			});
 
 		//* adding the members list
 		companies

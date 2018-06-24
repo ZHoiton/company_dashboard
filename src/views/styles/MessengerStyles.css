@@ -15,6 +15,9 @@
 	overflow: auto;
 	border-right: 1px solid #e5e5e5;
 }
+.messenger-left-side-list {
+	padding: 0;
+}
 .messenger-right-side-container {
 	max-height: 500px;
 	width: 70%;

@@ -7,7 +7,7 @@ import { DrawerContext } from "../../context/DrawerContext";
 class CompanyOverview extends Component {
 	static propTypes = {
 		companyId: PropTypes.string,
-		user:PropTypes.object
+		user: PropTypes.object
 	};
 
 	constructor(props) {
@@ -18,7 +18,16 @@ class CompanyOverview extends Component {
 		};
 	}
 
-	componentDidMount() {}
+	componentDidMount() {
+		if (this.props.companyId !== null) {
+			this.getCompanyDetails();
+			if (this.state.company !== null) {
+				this.companyCollectionsListener("Groups");
+				this.companyCollectionsListener("Roles");
+				this.companyCollectionsListener("Members");
+			}
+		}
+	}
 
 	componentDidUpdate(prevProps, prevState) {
 		if (this.props.companyId !== prevProps.companyId) {

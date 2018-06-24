@@ -23,22 +23,37 @@ import Business from "@material-ui/icons/Business";
 import DateRange from "@material-ui/icons/DateRange";
 import Settings from "@material-ui/icons/Settings";
 import Message from "@material-ui/icons/Message";
+import Badge from "@material-ui/core/Badge";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 import { AuthContext } from "../../context/AppContext";
 import { DrawerContext } from "../../context/DrawerContext";
+import { firestore } from "firebase";
 import classNames from "classnames";
 
 class ContainerHeader extends Component {
 	static propTypes = {
 		history: PropTypes.object,
-		location: PropTypes.object
+		location: PropTypes.object,
+		user: PropTypes.object,
+		isUserLoggedIn: PropTypes.bool
 	};
 	constructor(props) {
 		super(props);
 		this.state = {
-			clicked: false
+			clicked: false,
+			unReadMessages: 0,
+			companyInvites: 0
 		};
 		this.userName = React.createRef();
+	}
+
+	componentDidUpdate(prevPorps) {
+		if (prevPorps.user !== this.props.user) {
+			if (this.props.isUserLoggedIn) {
+				this.unReadMessagesListener(this.props.user.id);
+				this.companyInvitesListener(this.props.user.id);
+			}
+		}
 	}
 
 	onLoginClick = () => {
@@ -88,9 +103,38 @@ class ContainerHeader extends Component {
 		this.props.history.push("/calendar/" + userId);
 	};
 
+	unReadMessagesListener = userId => {
+		firestore()
+			.collection("users")
+			.doc(userId)
+			.collection("conversations")
+			.where("is_message_read", "==", false)
+			.onSnapshot(snapshot => {
+				let count = 0;
+				snapshot.forEach(() => {
+					count++;
+				});
+				this.setState({ unReadMessages: count });
+			});
+	};
+
+	companyInvitesListener = userId => {
+		firestore()
+			.collection("users")
+			.doc(userId)
+			.collection("invites")
+			.onSnapshot(snapshot => {
+				let count = 0;
+				snapshot.forEach(() => {
+					count++;
+				});
+				this.setState({ companyInvites: count });
+			});
+	};
+
 	render() {
 		const { location } = this.props;
-		const { clicked } = this.state;
+		const { clicked, unReadMessages, companyInvites } = this.state;
 		return (
 			<DrawerContext>
 				{context => (
@@ -119,7 +163,7 @@ class ContainerHeader extends Component {
 									) : (
 										<div className="nav-bar-buttons" ref={this.userName}>
 											<Button onClick={this.handleClick} color="inherit">
-												<Avatar alt="Remy Sharp" onClick={this.handleClick} src={context.user.picture} className="nav-bar-avatar"/>
+												<Avatar alt="Remy Sharp" onClick={this.handleClick} src={context.user.picture} className="nav-bar-avatar" />
 												{context.user.firstName}
 											</Button>
 											<Popover
@@ -153,7 +197,13 @@ class ContainerHeader extends Component {
 																</MenuItem>
 																<MenuItem onClick={this.onCompanyClick}>
 																	<ListItemIcon>
-																		<Business />
+																		{companyInvites > 0 ? (
+																			<Badge badgeContent={companyInvites} color="primary">
+																				<Business />
+																			</Badge>
+																		) : (
+																			<Business />
+																		)}
 																	</ListItemIcon>
 																	<ListItemText primary="Companies" />
 																</MenuItem>
@@ -171,7 +221,13 @@ class ContainerHeader extends Component {
 																</MenuItem>
 																<MenuItem onClick={this.onMessageClick}>
 																	<ListItemIcon>
-																		<Message />
+																		{unReadMessages > 0 ? (
+																			<Badge badgeContent={unReadMessages} color="primary">
+																				<Message />
+																			</Badge>
+																		) : (
+																			<Message />
+																		)}
 																	</ListItemIcon>
 																	<ListItemText primary="Messages" />
 																</MenuItem>
