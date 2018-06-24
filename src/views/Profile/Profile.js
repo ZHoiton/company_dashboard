@@ -94,6 +94,7 @@ export default class Profile extends Component {
 	}
 
 	getCountry() {
+		if (!this.state.country) return false;
 		if(this.state.country.trim() === "" ){
 			return(false);
 		}

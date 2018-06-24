@@ -27,7 +27,7 @@ import Close from "@material-ui/icons/Close";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 import { firestore } from "firebase";
 import { withRouter } from "react-router-dom";
-
+import CreateEvent from '../Event/CreateEvent';
 /**
  * used for the Dialog's animation
  * @param {PropTypes} props
@@ -78,7 +78,6 @@ class CompanyMembers extends Component {
 
 		//* creating and populating a temporaty object which will be assigned the the memberList variable later
 		const tempList = {};
-		console.log(company);
 		//* adding the groups
 		if (company.Groups) {
 			company.Groups.forEach(group => {
@@ -221,6 +220,14 @@ class CompanyMembers extends Component {
 		history.push("/messenger/" + targetUserId);
 	};
 
+	onClickMeeting = () => {
+		this.setState({openCreateEvent: true});
+	}
+
+	onCloseCreateEvent = () => {
+		this.setState({openCreateEvent: false});
+	}
+
 	removeUser = userKey => {
 		//* Removing the company from the user
 		firestore()
@@ -316,12 +323,20 @@ class CompanyMembers extends Component {
 											</MenuItem>
 
 											{this.props.user.id !== selectedMemberKey ? (
-												<MenuItem onClick={this.onClickMessage.bind(this, selectedMemberKey)}>
-													<ListItemIcon>
-														<Message />
-													</ListItemIcon>
-													<ListItemText primary="Message" />
-												</MenuItem>
+												<Fragment>
+													<MenuItem onClick={this.onClickMessage.bind(this, selectedMemberKey)}>
+														<ListItemIcon>
+															<Message />
+														</ListItemIcon>
+														<ListItemText primary="Message" />
+													</MenuItem>
+													<MenuItem onClick={this.onClickMeeting.bind(this, selectedMemberKey)}>
+														<ListItemIcon>
+															<Message />
+														</ListItemIcon>
+														<ListItemText primary="Meeting" />
+													</MenuItem>
+												</Fragment>
 											) : (
 												undefined
 											)}
@@ -397,6 +412,7 @@ class CompanyMembers extends Component {
 						</Button>
 					</DialogActions>
 				</Dialog>
+				<CreateEvent isOpen={this.state.openCreateEvent} onClose={this.onCloseCreateEvent} defaultDate={new Date()} currentUser={this.props.user} isMeeting={selectedMemberKey}/>
 				<Snackbar
 					anchorOrigin={{
 						vertical: "bottom",

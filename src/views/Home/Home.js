@@ -93,8 +93,6 @@ export default class Home extends Component {
 	render() {
 		const { currentUserData } = this.state;
 		const { taskData } = this.state;
-		const { ownedCompanies } = this.state;
-		const { eventsData } = this.state;
 		return (
 			<div>
 				<Card className="profile-card"> Welcome to eZLink, {currentUserData.firstName} </Card>
@@ -104,8 +102,8 @@ export default class Home extends Component {
 						Current status of your tasks
 						{taskData.map(planet => (
 							<Card className="profile-activity" value={planet.key} key={planet.key}>
-							<CardContent className="tasksStyle">
-								Task: {planet.title} 
+								<CardContent className="tasksStyle">
+								Task: {planet.title}
 								</CardContent>
 								<CardContent className="tasksStyle">
 								Decription:{planet.description}

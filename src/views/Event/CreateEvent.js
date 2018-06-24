@@ -20,6 +20,7 @@ class CreateEvent extends Component {
 		onClose: PropTypes.func,
 		defaultDate: PropTypes.object,
 		match: PropTypes.object,
+		currentUser: PropTypes.object,
 	};
 
 	constructor(props) {
@@ -43,9 +44,9 @@ class CreateEvent extends Component {
 		if (companyId){
 			firestore()
 				.collection('companies')
-				.doc(this.props.companyId)
+				.doc(companyId)
 				.collection('Members')
-				.get((snapshot)=> {
+				.get().then((snapshot)=> {
 					snapshot.forEach((doc)=> {
 						tempArray.push(`${doc.data().firstName} ${doc.data().lastName}`);
 						const tempUser = doc.data();
@@ -73,21 +74,39 @@ class CreateEvent extends Component {
 
 	onCreate = async () => {
 		const { description, title, startTime,endTime } = this.state;
+		const { companyId, isMeeting } = this.props;
 		let currentUser;
-		await firestore().collection("users").doc(this.props.match.params.userId).get().then((doc)=> {
-			currentUser = doc.data();
-			currentUser.id = doc.id;
-			this.users.push(currentUser);
-		});
+		if (!companyId && !isMeeting) {
+			await firestore().collection("users").doc(this.props.match.params.userId).get().then((doc)=> {
+				currentUser = doc.data();
+				currentUser.id = doc.id;
+				this.users.push(currentUser);
+			});
+		}
 		let eventId;
-		await firestore()
-			.collection("events")
-			.add({
+		let event = {};
+		if (companyId){
+			event = {
 				description: description,
 				title: title,
 				startTime: new Date(startTime),
-				endTime: new Date(endTime)
-			}).then(doc=>{
+				endTime: new Date(endTime),
+				companyId: companyId,
+				companyWide: true,
+				image: 'https://firebasestorage.googleapis.com/v0/b/proep-project.appspot.com/o/images%2Fmaterial_card_default.png?alt=media&token=c69c5ba4-4348-4dcd-91d6-1a5299db3a1a'
+			};
+		} else (
+			event = {
+				description: description,
+				title: title,
+				startTime: new Date(startTime),
+				endTime: new Date(endTime),
+				image: 'https://firebasestorage.googleapis.com/v0/b/proep-project.appspot.com/o/images%2Fmaterial_card_default.png?alt=media&token=c69c5ba4-4348-4dcd-91d6-1a5299db3a1a'
+			}
+		);
+		await firestore()
+			.collection("events")
+			.add(event).then(doc=>{
 				eventId = doc.id;
 			});
 		const batch = firestore().batch();
@@ -99,7 +118,7 @@ class CreateEvent extends Component {
 				.doc(eventId)
 				.collection("attendants")
 				.doc(user.id)
-				.set({name:`${user.firstName} ${user.lastName}`,avatar: user.photoURL});
+				.set({name:`${user.firstName} ${user.lastName}`,avatar: user.photoURL? user.photoURL:""});
 		}
 
 		batch.commit();
