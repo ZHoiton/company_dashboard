@@ -124,7 +124,7 @@
 .company-title {
 	text-transform: capitalize;
 	font-size: 32px;
-	padding-bottom: 20px;
+	padding: 20px 0 10px 0;
 }
 .company-events-container {
 	display: flex;
