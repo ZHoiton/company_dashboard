@@ -10,7 +10,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 class Tasks extends Component {
 	static propTypes = {
-		match: PropTypes.object
+		match: PropTypes.object,
+		numb: PropTypes.string
 	};
 
 	constructor(props) {
@@ -58,29 +59,45 @@ class Tasks extends Component {
 
 	render() {
 		const { tasks } = this.state;
+		const { numb } = this.props;
 		console.log(tasks);
+		let s = true;
 		return (
 			<div>
 				{tasks.length > 0 ? tasks.map((task, index) => {
-					return (
-						<Card key={index}>
-							<CardHeader title={task.title} />
-							<CardContent>Deadline: {task.deadline.toDate().toDateString(task.deadline)}</CardContent>
-							<CardActions>
-								<Checkbox
-									checked={task.isCompleted}
-									onChange={this.handleChange.bind(
-										this,
-										this.props.match.params.userId,
-										task.key,
-										task.isCompleted
-									)}
-									value="checked"
-									color="primary"
-								/>
-							</CardActions>
-						</Card>
-					);
+					switch (numb) {
+					case "1":
+						s = task.isCompleted;
+						break;
+					case "2":
+						s = !task.isCompleted;
+						break;
+					case "0":
+						s = true;
+						break;
+					}
+					if (s)
+					{
+						return (
+							<Card key={index}>
+								<CardHeader title={task.title} />
+								<CardContent>Deadline: {task.deadline.toDate().toDateString(task.deadline)}</CardContent>
+								<CardActions>
+									<Checkbox
+										checked={task.isCompleted}
+										onChange={this.handleChange.bind(
+											this,
+											this.props.match.params.userId,
+											task.key,
+											task.isCompleted
+										)}
+										value="checked"
+										color="primary"
+									/>
+								</CardActions>
+							</Card>
+						);
+					}
 				})
 					: undefined}
 			</div>
