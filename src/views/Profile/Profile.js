@@ -48,7 +48,6 @@ export default class Profile extends Component {
 				const lastName = info.data().lastName;
 				const image = info.data().photoURL;
 				const 	Height = info.data().height;
-				console.log(Height);
 				this.setState({height: Height});
 				const 	Weight = info.data().weight;
 				const 	Country = info.data().country;
@@ -83,29 +82,29 @@ export default class Profile extends Component {
 	}
 
 	getWeight() {
-		if(this.state.weight == "" || this.state.weight === undefined){
-			return("Unknown");
+		if(this.state.weight === undefined){
+			return(false);
 		}
 		else{
-			return("${this.state.weight} +  kg");
+			return(true);
 		}
 	}
 
 	getCountry() {
-		if(this.state.country == "" || this.state.country=== undefined){
-			return("Unknown");
+		if(this.state.country.trim() === "" ){
+			return(false);
 		}
 		else{
-			return("${this.state.country}");
+			return(true);
 		}
 	}
 
 	getPosition() {
-		if(this.state.position == "" || this.state.position === undefined){
-			return("Unknown");
+		if(this.state.position === undefined  || this.state.position.trim() === "" )  {
+			return(false);
 		}
 		else{
-			return("${this.state.weight}");
+			return(true);
 		}
 	}
 	componentDidMount(){
@@ -116,7 +115,6 @@ export default class Profile extends Component {
 	heightChange = (event)=>{
 		event.preventDefault();
 		this.setState({height : event.target.value});
-		console.log(this.state.height);
 		const h = this.state.height;
 		if(h !== "" || h !== undefined){
 			this.state.ref.doc(this.props.match.params.userId).update(
@@ -127,9 +125,8 @@ export default class Profile extends Component {
 	weightChange = (event)=>{
 		event.preventDefault();
 		this.setState({weight : event.target.value});
-		console.log(this.state.weight);
 		const w = this.state.weight;
-		if(w !== "" || w !== undefined){
+		if(w !== undefined){
 			this.state.ref.doc(this.props.match.params.userId).update(
 				{weight:w}
 			);
@@ -139,16 +136,15 @@ export default class Profile extends Component {
 	countryChange = (event)=>{
 		event.preventDefault();
 		this.setState({country : event.target.value});
-		console.log(this.state.country);
-		const h = this.state.height;
-		if(h !== "" || h !== undefined){
+		const c = this.state.country;
+		if(c !== undefined){
 			this.state.ref.doc(this.props.match.params.userId).update(
-				{height:h}
+				{country: c}
 			);
 		}
 	}
 	render() {
-		const { first, last, image, companies , height} = this.state;
+		const { first, last, image, companies , height,weight,country,position} = this.state;
 		return (
 			<Card className="profile-page">
 				<CardHeader title={first + " " + last} />
@@ -158,20 +154,23 @@ export default class Profile extends Component {
 						<Card className="profile-info">
 							<form>
 								<label>
-									Height
-									<input type="text" name="height" defaultValue={ height } onChange={(event) => this.heightChange(event)} />
+									Height:
+									<input type="text"  key={Math.floor((Math.random()*10))} name="height" defaultValue={this.getHeight() ? height : "Unknown" } onChange={(event) => this.heightChange(event)} />
 									: cm
 								</label>
 								<br/>
 								<label>
 									Weight:
-									<input type="text" name="weight" defaultValue={this.getWeight()} onChange={(event) => this.weightChange(event)} />
+									<input type="text" key={Math.floor((Math.random()*10))} name="weight" defaultValue={this.getWeight() ? weight : "Unknown"} onChange={(event) => this.weightChange(event)} />
 									: kg
 								</label>
 								<br/>
+								<label>
+									Country:
+									<input type="text" key={Math.floor((Math.random()*10))} name="country" defaultValue={this.getCountry() ? country : "Unknown"} onChange={(event)=>this.countryChange(event)}/>
+								</label>
 							</form>
-							<p>Position: {this.getPosition()}</p>
-							<p>Company:</p>
+							<p>Position: {this.getPosition() ? position : "Not Yet Assigned" }</p>
 						</Card>
 					</div>
 					{companies.length > 0
@@ -179,7 +178,7 @@ export default class Profile extends Component {
 							return (
 								<Card key={index}>
 									<CardMedia src={company.avatar} title={company.title} />
-									<CardContent>asd</CardContent>
+									<CardContent>Company Name: {company.name}</CardContent>
 									<CardActions>
 										<Button size="small" color="primary">
 											Share
@@ -191,7 +190,7 @@ export default class Profile extends Component {
 								</Card>
 							);
 						})
-						: undefined}
+						: "No Company"}
 					<Card className="profile-activity">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget iaculis leo. Donec ut quam tempus quam sagittis rhoncus eu sit amet eros. Fusce
 						ullamcorper velit tellus, id cursus diam suscipit ac. Praesent a erat dignissim, rhoncus nunc volutpat, euismod justo. Maecenas et facilisis tortor, ut

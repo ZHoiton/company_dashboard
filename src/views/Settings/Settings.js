@@ -14,6 +14,7 @@ import "../styles/SettingsStyles.css";
 import firebase from "firebase";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import { firestore } from "firebase";
+import Card from "@material-ui/core/Card";
 class Settings extends Component {
 	static propTypes = {
 		classes: PropTypes.object.isRequired,
@@ -91,28 +92,28 @@ class Settings extends Component {
 				{ merge: true }
 			);
 
-		firestore()
-			.collection("companies")
-			.get()
-			.then(docs => {
-				docs.forEach(doc => {
-					firestore()
-						.collection("companies")
-						.doc(doc.id)
-						.collection("Members")
-						.doc(this.props.currentUser.id)
-						.set(
-							{
-								firstName: firstName,
-								lastName: lastName
-							},
-							{ merge: true }
-						);
-				});
-			})
-			.catch(function(error) {
-				console.debug("Error getting documents: ", error);
-			});
+		// firestore()
+		// 	.collection("companies")
+		// 	.get()
+		// 	.then(docs => {
+		// 		docs.forEach(doc => {
+		// 			firestore()
+		// 				.collection("companies")
+		// 				.doc(doc.id)
+		// 				.collection("Members")
+		// 				.doc(this.props.currentUser.id)
+		// 				.set(
+		// 					{
+		// 						firstName: firstName,
+		// 						lastName: lastName
+		// 					},
+		// 					{ merge: true }
+		// 				);
+		// 		});
+		// 	})
+		// 	.catch(function(error) {
+		// 		console.debug("Error getting documents: ", error);
+		// 	});
 	};
 
 	loadPersonalData = user => {
@@ -242,126 +243,127 @@ class Settings extends Component {
 				</AppBar>
 				{value === 0 && (
 					<div>
-						<div className="settingsFields">
-							<FormControl className={classes.formControl}>
-								<TextField id="firstName" label="First Name" className="txtFieldWidth" value={firstName} onChange={this.onChange} margin="normal" />
-							</FormControl>
-							<TextField
-								id="password1"
-								value={password1}
-								label="New Password"
-								onChange={this.onChange}
-								className="passTextField"
-								type="password"
-								autoComplete="current-password"
-								margin="normal"
-							/>
-						</div>
-						<div className="settingsFields">
-							<FormControl className={classes.formControl}>
-								<TextField id="lastName" label="Last Name" className="txtFieldWidth" value={lastName} onChange={this.onChange} margin="normal" />
-							</FormControl>
-							<TextField
-								id="password2"
-								value={password2}
-								label="Confirm Password"
-								onChange={this.onChange}
-								className="passTextField"
-								type="password"
-								autoComplete="current-password"
-								margin="normal"
-							/>
-							{passwordError ? (
-								<FormHelperText className="passErrorMessage" id="password-error-text">
-									{passwordErrorMessage}
-								</FormHelperText>
-							) : (
-								undefined
-							)}
-						</div>
-
-						<div className="settingsFields">
-							<form className={classes.container} noValidate>
+						<Card className="settings-card">
+							<div className="settingsFields">
+								<FormControl className={classes.formControl}>
+									<TextField id="firstName" label="First Name" className="txtFieldWidth" value={firstName} onChange={this.onChange} margin="normal" />
+								</FormControl>
 								<TextField
-									id="birthDay"
-									label="Date of birth"
-									type="date"
-									value={birthDay}
+									id="password1"
+									value={password1}
+									label="New Password"
 									onChange={this.onChange}
-									InputLabelProps={{
-										shrink: true
-									}}
+									className="passTextField"
+									type="password"
+									autoComplete="current-password"
+									margin="normal"
 								/>
-							</form>
-							<Button size="large" variant="raised" color="primary" onClick={this.onSubmit} className="changePassButton">{`Change Password`}</Button>
-						</div>
-						<div className="settingsFields">
-							<FormControl className={classes.formControl}>
-								<InputLabel htmlFor="gender">Gender</InputLabel>
-								<NativeSelect
-									className="txtFieldWidth"
-									input={<Input id="uncontrolled2-native" />}
-									value={gender}
-									onChange={this.handleSelectChange("gender")}
-									name="gender"
-									defaultValue={gender}
-								>
-									<option />
-									<option value="Male">Male</option>
-									<option value="Female">Female</option>
-									<option value="Other">Other</option>
-								</NativeSelect>
-							</FormControl>
-						</div>
+							</div>
+							<div className="settingsFields">
+								<FormControl className={classes.formControl}>
+									<TextField id="lastName" label="Last Name" className="txtFieldWidth" value={lastName} onChange={this.onChange} margin="normal" />
+								</FormControl>
+								<TextField
+									id="password2"
+									value={password2}
+									label="Confirm Password"
+									onChange={this.onChange}
+									className="passTextField"
+									type="password"
+									autoComplete="current-password"
+									margin="normal"
+								/>
+								{passwordError ? (
+									<FormHelperText className="passErrorMessage" id="password-error-text">
+										{passwordErrorMessage}
+									</FormHelperText>
+								) : (
+									undefined
+								)}
+							</div>
+							<div className="settingsFields">
+								<form className={classes.container} noValidate>
+									<TextField
+										id="birthDay"
+										label="Date of birth"
+										type="date"
+										value={birthDay}
+										onChange={this.onChange}
+										InputLabelProps={{
+											shrink: true
+										}}
+									/>
+								</form>
+								<Button size="large" variant="raised" color="primary" onClick={this.onSubmit} className="changePassButton">{`Change Password`}</Button>
+							</div>
+							<div className="settingsFields">
+								<FormControl className={classes.formControl}>
+									<InputLabel htmlFor="gender">Gender</InputLabel>
+									<NativeSelect
+										className="txtFieldWidth"
+										input={<Input id="uncontrolled2-native" />}
+										value={gender}
+										onChange={this.handleSelectChange("gender")}
+										name="gender"
+										defaultValue={gender}
+									>
+										<option />
+										<option value="Male">Male</option>
+										<option value="Female">Female</option>
+										<option value="Other">Other</option>
+									</NativeSelect>
+								</FormControl>
+							</div>
 
-						<div className="settingsFields">
-							<FormControl className={classes.formControl}>
-								<InputLabel htmlFor="uncontrolled1-native">Department</InputLabel>
-								<NativeSelect
-									defaultValue={department}
-									input={<Input id="uncontrolled1-native" />}
-									value={department}
-									onChange={this.handleSelectChange("department")}
-									name="department"
-								>
-									<option />
-									<option value="Software">Software</option>
-									<option value="HR">HR</option>
-									<option value="Finance">Finance</option>
-								</NativeSelect>
-							</FormControl>
-						</div>
+							<div className="settingsFields">
+								<FormControl className={classes.formControl}>
+									<InputLabel htmlFor="uncontrolled1-native">Department</InputLabel>
+									<NativeSelect
+										defaultValue={department}
+										input={<Input id="uncontrolled1-native" />}
+										value={department}
+										onChange={this.handleSelectChange("department")}
+										name="department"
+									>
+										<option />
+										<option value="Software">Software</option>
+										<option value="HR">HR</option>
+										<option value="Finance">Finance</option>
+									</NativeSelect>
+								</FormControl>
+							</div>
 
-						<div className="settingsFields">
-							<FormControl className={classes.formControl}>
-								<InputLabel htmlFor="uncontrolled-native">Position</InputLabel>
-								<NativeSelect
-									defaultValue={position}
-									input={<Input id="uncontrolled-native" />}
-									value={position}
-									onChange={this.handleSelectChange("position")}
-									name="position"
-								>
-									<option />
-									<option value={"CEO"}>CEO</option>
-									<option value={"Junior Developer"}>Junior Developer</option>
-									<option value={"Senior Developer"}>Senior Developer</option>
-								</NativeSelect>
-							</FormControl>
-						</div>
-						<div className="settingsFields">
-							<FormControl className={classes.formControl}>
-								<TextField id="phoneNumber" label="Phone Number" type="number" className="txtFieldWidth" value={phoneNumber} onChange={this.onChange} margin="normal" />
-							</FormControl>
-						</div>
-						<div className="settingsFields">
-							<FormControl className={classes.formControl}>
-								<TextField id="country" label="Country" type="name" className="txtFieldWidth" value={country} onChange={this.onChange} margin="normal" />
-							</FormControl>
-						</div>
-						<div className="settingsFields">
-							<TextField id="description" label="Description" value={description} onChange={this.onChange} fullWidth multiline rowsMax="4" margin="normal" />
-						</div>
+							<div className="settingsFields">
+								<FormControl className={classes.formControl}>
+									<InputLabel htmlFor="uncontrolled-native">Position</InputLabel>
+									<NativeSelect
+										defaultValue={position}
+										input={<Input id="uncontrolled-native" />}
+										value={position}
+										onChange={this.handleSelectChange("position")}
+										name="position"
+									>
+										<option />
+										<option value={"CEO"}>CEO</option>
+										<option value={"Junior Developer"}>Junior Developer</option>
+										<option value={"Senior Developer"}>Senior Developer</option>
+									</NativeSelect>
+								</FormControl>
+							</div>
+							<div className="settingsFields">
+								<FormControl className={classes.formControl}>
+									<TextField id="phoneNumber" label="Phone Number" type="number" className="txtFieldWidth" value={phoneNumber} onChange={this.onChange} margin="normal" />
+								</FormControl>
+							</div>
+							<div className="settingsFields">
+								<FormControl className={classes.formControl}>
+									<TextField id="country" label="Country" type="name" className="txtFieldWidth" value={country} onChange={this.onChange} margin="normal" />
+								</FormControl>
+							</div>
+							<div className="settingsFields">
+								<TextField id="description" label="Description" value={description} onChange={this.onChange} fullWidth multiline rowsMax="4" margin="normal" />
+							</div>
+						</Card>
 						<Button size="large" variant="raised" onClick={this.onSaveClick} color="primary" className="btnSave">
 							{`Save`}
 						</Button>
@@ -369,45 +371,47 @@ class Settings extends Component {
 				)}
 				{value === 1 && (
 					<div>
-						<div className="settingsFields">
-							<InputLabel htmlFor="uncontrolled-native">Select company</InputLabel>
-							<select value={selectedCompany} onChange={this.onCompanySelected}>
-								<option />
-								{avaliableCompanies.map(planet => (
-									<option value={planet.key} key={planet.key}>
-										{planet.name}
-									</option>
-								))}
-							</select>
-						</div>
-						<div className="settingsFields">
-							<FormControl className={classes.formControl}>
-								<InputLabel htmlFor="companyName">Company Name</InputLabel>
-								<Input id="companyName" value={companyName} onChange={this.onChange} className="txtFieldWidth" style={{ width: "100%" }} />
-							</FormControl>
-						</div>
+						<Card className="companySettings-card">
+							<div className="settingsFields">
+								<InputLabel htmlFor="uncontrolled-native">Select company</InputLabel>
+								<select value={selectedCompany} onChange={this.onCompanySelected}>
+									<option />
+									{avaliableCompanies.map(planet => (
+										<option value={planet.key} key={planet.key}>
+											{planet.name}
+										</option>
+									))}
+								</select>
+							</div>
+							<div className="settingsFields">
+								<FormControl className={classes.formControl}>
+									<InputLabel htmlFor="companyName">Company Name</InputLabel>
+									<Input id="companyName" value={companyName} onChange={this.onChange} className="txtFieldWidth" style={{ width: "100%" }} />
+								</FormControl>
+							</div>
 
-						<div className="settingsFields">
-							<form className={classes.container} noValidate>
-								<TextField
-									id="companyFoundedDate"
-									label="Founded"
-									type="date"
-									onChange={this.onChange}
-									value={companyFoundedDate}
-									InputLabelProps={{
-										shrink: true
-									}}
-								/>
-							</form>
-						</div>
-						<div className="settingsFields">
-							<FormControl className={classes.formControl}>
-								<InputLabel htmlFor="companyLocation">Location</InputLabel>
-								<Input id="companyLocation" value={companyLocation} onChange={this.onChange} className="txtFieldWidth" />
-							</FormControl>
-						</div>
-						<Button size="large" variant="raised" color="primary" onClick={this.onSaveCompany} className="btnSave">{`Save`}</Button>
+							<div className="settingsFields">
+								<form className={classes.container} noValidate>
+									<TextField
+										id="companyFoundedDate"
+										label="Founded"
+										type="date"
+										onChange={this.onChange}
+										value={companyFoundedDate}
+										InputLabelProps={{
+											shrink: true
+										}}
+									/>
+								</form>
+							</div>
+							<div className="settingsFields">
+								<FormControl className={classes.formControl}>
+									<InputLabel htmlFor="companyLocation">Location</InputLabel>
+									<Input id="companyLocation" value={companyLocation} onChange={this.onChange} className="txtFieldWidth" />
+								</FormControl>
+							</div>
+						</Card>
+						<Button size="large" variant="raised" color="primary" onClick={this.onSaveCompany} className="compSaveBtn">{`Save`}</Button>
 					</div>
 				)}
 			</div>
