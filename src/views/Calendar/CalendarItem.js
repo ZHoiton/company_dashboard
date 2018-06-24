@@ -94,11 +94,6 @@ class CalendarItem extends Component {
 				{day.getDate()}
 				{events.map((event,index)=> {
 					return (
-<<<<<<< HEAD
-						<div key={index} className="event-outline">
-							{event.title}
-						</div>
-=======
 						<Fragment key={index}>
 							<div className="outline" onClick={this.onSelectEvent.bind(this,event.id)}>
 								{event.data().title}
@@ -129,7 +124,6 @@ class CalendarItem extends Component {
 									</DialogContent>
 								</Dialog>:undefined}
 						</Fragment>
->>>>>>> 5438eb90ecc014f5349b2590664fa52a848636ec
 					);
 				})}
 			</div>
