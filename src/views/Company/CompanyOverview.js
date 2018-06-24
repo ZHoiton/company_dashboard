@@ -127,7 +127,7 @@ class CompanyOverview extends Component {
 																<CardActions>date</CardActions>
 															</Card>
 														);
-													  }): undefined}
+													}): undefined}
 											</div>
 										</div>
 									</div>

@@ -11,6 +11,7 @@ class CalendarItem extends Component {
 	static propTypes = {
 		day: PropTypes.instanceOf(Date),
 		userId: PropTypes.string,
+		onClick: PropTypes.func,
 	};
 
 	constructor(props) {
@@ -87,10 +88,10 @@ class CalendarItem extends Component {
 		});
 	}
 	render() {
-		const { day } = this.props;
+		const { day, onClick } = this.props;
 		const { events, selectedEvent } = this.state;
 		return (
-			<div className='calendar-item outline'>
+			<div className='calendar-item outline' onClick={onClick}>
 				{day.getDate()}
 				{events.map((event,index)=> {
 					return (
