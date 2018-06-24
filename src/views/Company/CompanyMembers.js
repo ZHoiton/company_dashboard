@@ -78,18 +78,22 @@ class CompanyMembers extends Component {
 
 		//* creating and populating a temporaty object which will be assigned the the memberList variable later
 		const tempList = {};
-
+		console.log(company);
 		//* adding the groups
-		company.Groups.forEach(group => {
-			tempList[group.Name] = [];
-		});
+		if (company.Groups) {
+			company.Groups.forEach(group => {
+				tempList[group.Name] = [];
+			});
+		}
 
 		//* adding members to the groups
-		company.Members.forEach(member => {
-			member.Groups.forEach(group => {
-				tempList[group].push(member);
+		if (company.Members&&company.Groups) {
+			company.Members.forEach(member => {
+				member.Groups.forEach(group => {
+					tempList[group].push(member);
+				});
 			});
-		});
+		}
 
 		//* setting the list and the company var
 		this.setState({ memberList: tempList, company: company }, () => {

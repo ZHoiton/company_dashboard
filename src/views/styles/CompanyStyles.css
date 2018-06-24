@@ -183,7 +183,7 @@
 /*//* Company Members */
 .company-members {
 	display: flex;
-	background-color: lightgray;
+	background-color: white;
 	width: 15%;
 }
 .company-members .list {

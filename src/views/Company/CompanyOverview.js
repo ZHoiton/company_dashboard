@@ -2,6 +2,15 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { firestore } from "firebase";
 import CompanyMembers from "../Company/CompanyMembers";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Slide from "@material-ui/core/Slide";
+import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -10,7 +19,16 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import AccessTime from "@material-ui/icons/AccessTime";
 import AddCircleOutline from "@material-ui/icons/AddCircleOutline";
+// import CreateEvent from "../Event/CreateEvent";
 import { DrawerContext } from "../../context/DrawerContext";
+
+/**
+ * used for the Dialog's animation
+ * @param {PropTypes} props
+ */
+function Transition(props) {
+	return <Slide direction="up" {...props} />;
+}
 
 class CompanyOverview extends Component {
 	static propTypes = {
@@ -21,8 +39,14 @@ class CompanyOverview extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			openDialog: false,
+			error: "",
+			errorMessage: "",
+			clickedCard: "",
 			companyRef: firestore().collection("companies"),
 			company: null,
+			fieldValue: "",
+			openCreateEvent: false,
 			events: []
 		};
 	}
@@ -91,13 +115,49 @@ class CompanyOverview extends Component {
 					tempList.push(tempGroup);
 				});
 				tempCompany[collectionName] = tempList;
-				this.setState({ company: tempCompany });
+				this.setState({ company: tempCompany }, () => {
+					console.log(this.state.company);
+				});
 			});
 	};
 
+	/**
+	 * used to update the value for the @param name variable in the state
+	 */
+	handleFieldChange = name => event => {
+		this.setState({
+			[name]: event.target.value
+		});
+	};
+
+	handleOpenDialog = entityType => {
+		this.setState({ openDialog: true, clickedCard: entityType });
+	};
+
+	handleCloseDialog = () => {
+		this.setState({ openDialog: false });
+	};
+
+	handleOpenCreateEventDialog = () => {
+		this.setState({ openCreateEvent: true });
+	};
+
+	handleCloseCreateEventDialog = () => {
+		this.setState({ openCreateEvent: false });
+	};
+
+	addEntity = () => {
+		firestore()
+			.collection("companies")
+			.doc(this.state.company.key)
+			.collection(this.state.clickedCard)
+			.doc()
+			.set({ Name: this.state.fieldValue, Weight: 1 });
+	};
+
 	render() {
-		const {user} = this.props;
-		const { events, company } = this.state;
+		const { user } = this.props;
+		const { events, company, error, errorMessage, clickedCard } = this.state;
 		return (
 			<DrawerContext>
 				{context => (
@@ -117,25 +177,31 @@ class CompanyOverview extends Component {
 										<div className="company-title">events</div>
 										<div className="company-events-container">
 											<div className="event-list">
-												{user&&company?(user.id===company.FoundedBy?(
-													<Card className="event">
-														<div className="event-add-icon">
-															<AddCircleOutline className="add-icon" />
-														</div>
-														<CardMedia title={"Add Event"} image="none" />
-														<CardContent>
-															<Typography gutterBottom variant="headline" component="h2">
-																{"Add Event"}
-															</Typography>
-															<Typography component="p" className="event-desc">
-																{"add new event for the whole company, a group or member"}
-															</Typography>
-														</CardContent>
-														<CardActions className="event-actions">
-															<Typography component="p" className="event-date" />
-														</CardActions>
-													</Card>
-												):undefined):undefined}
+												{user && company ? (
+													user.id === company.FoundedBy ? (
+														<Card className="event" onClick={this.handleOpenCreateEventDialog}>
+															<div className="event-add-icon">
+																<AddCircleOutline className="add-icon" />
+															</div>
+															<CardMedia title={"Add Event"} image="none" />
+															<CardContent>
+																<Typography gutterBottom variant="headline" component="h2">
+																	{"Add Event"}
+																</Typography>
+																<Typography component="p" className="event-desc">
+																	{"add new event for the whole company, a group or member"}
+																</Typography>
+															</CardContent>
+															<CardActions className="event-actions">
+																<Typography component="p" className="event-date" />
+															</CardActions>
+														</Card>
+													) : (
+														undefined
+													)
+												) : (
+													undefined
+												)}
 												{events.length > 0
 													? events.map((event, index) => {
 														return (
@@ -157,36 +223,42 @@ class CompanyOverview extends Component {
 																	</Typography>
 																</CardActions>
 															</Card>
-														);
-													}): undefined}
+														);})
+													: undefined}
 											</div>
 										</div>
 										<div className="company-title">Groups</div>
 										<div className="company-events-container">
 											<div className="event-list">
-												{user&&company?(user.id===company.FoundedBy?(
-													<Card className="event">
-														<img
-															src={
-																"https://firebasestorage.googleapis.com/v0/b/proep-project.appspot.com/o/images%2Fadd_group.png?alt=media&token=8b8d91fd-dd34-4be9-906d-dc75cc3a1409"
-															}
-															alt={"Add Group"}
-															className="event-image"
-														/>
-														<CardMedia title={"Add Group"} image="none" />
-														<CardContent>
-															<Typography gutterBottom variant="headline" component="h2">
-																{"Add Group"}
-															</Typography>
-															<Typography component="p" className="event-desc">
-																{""}
-															</Typography>
-														</CardContent>
-														<CardActions className="event-actions">
-															<Typography component="p" className="event-date" />
-														</CardActions>
-													</Card>
-												):undefined):undefined}
+												{user && company ? (
+													user.id === company.FoundedBy ? (
+														<Card className="event" onClick={this.handleOpenDialog.bind(this, "Groups")}>
+															<img
+																src={
+																	"https://firebasestorage.googleapis.com/v0/b/proep-project.appspot.com/o/images%2Fadd_group.png?alt=media&token=8b8d91fd-dd34-4be9-906d-dc75cc3a1409"
+																}
+																alt={"Add Group"}
+																className="event-image"
+															/>
+															<CardMedia title={"Add Group"} image="none" />
+															<CardContent>
+																<Typography gutterBottom variant="headline" component="h2">
+																	{"Add Group"}
+																</Typography>
+																<Typography component="p" className="event-desc">
+																	{""}
+																</Typography>
+															</CardContent>
+															<CardActions className="event-actions">
+																<Typography component="p" className="event-date" />
+															</CardActions>
+														</Card>
+													) : (
+														undefined
+													)
+												) : (
+													undefined
+												)}
 												{company.Groups
 													? company.Groups.length > 0
 														? company.Groups.map((group, index) => {
@@ -210,37 +282,43 @@ class CompanyOverview extends Component {
 																		<Typography component="p" className="event-date" />
 																	</CardActions>
 																</Card>
-															);
-														}): undefined
+															);})
+														: undefined
 													: undefined}
 											</div>
 										</div>
 										<div className="company-title">Roles</div>
 										<div className="company-events-container">
 											<div className="event-list">
-												{user&&company?(user.id===company.FoundedBy?(
-													<Card className="event">
-														<img
-															src={
-																"https://firebasestorage.googleapis.com/v0/b/proep-project.appspot.com/o/images%2Fadd_role.png?alt=media&token=7482e32e-ebbc-4787-a3f5-6b7d694744dc"
-															}
-															alt={"Add Role"}
-															className="event-image"
-														/>
-														<CardMedia title={"Add Role"} image="none" />
-														<CardContent>
-															<Typography gutterBottom variant="headline" component="h2">
-																{"Add Role"}
-															</Typography>
-															<Typography component="p" className="event-desc">
-																{""}
-															</Typography>
-														</CardContent>
-														<CardActions className="event-actions">
-															<Typography component="p" className="event-date" />
-														</CardActions>
-													</Card>
-												):undefined):undefined}
+												{user && company ? (
+													user.id === company.FoundedBy ? (
+														<Card className="event" onClick={this.handleOpenDialog.bind(this, "Roles")}>
+															<img
+																src={
+																	"https://firebasestorage.googleapis.com/v0/b/proep-project.appspot.com/o/images%2Fadd_role.png?alt=media&token=7482e32e-ebbc-4787-a3f5-6b7d694744dc"
+																}
+																alt={"Add Role"}
+																className="event-image"
+															/>
+															<CardMedia title={"Add Role"} image="none" />
+															<CardContent>
+																<Typography gutterBottom variant="headline" component="h2">
+																	{"Add Role"}
+																</Typography>
+																<Typography component="p" className="event-desc">
+																	{""}
+																</Typography>
+															</CardContent>
+															<CardActions className="event-actions">
+																<Typography component="p" className="event-date" />
+															</CardActions>
+														</Card>
+													) : (
+														undefined
+													)
+												) : (
+													undefined
+												)}
 												{company.Roles
 													? company.Roles.length > 0
 														? company.Roles.map((role, index) => {
@@ -265,10 +343,46 @@ class CompanyOverview extends Component {
 																	</CardActions>
 																</Card>
 															);
-														}): undefined
-													: undefined}
+														}): undefined: undefined}
 											</div>
 										</div>
+										<Dialog
+											open={this.state.openDialog}
+											TransitionComponent={Transition}
+											keepMounted
+											onClose={this.handleCloseDialog}
+											aria-labelledby="alert-dialog-slide-title"
+											aria-describedby="alert-dialog-slide-description"
+										>
+											<DialogTitle id="alert-dialog-slide-title">{"Add " + clickedCard.slice(0, clickedCard.length - 1)}</DialogTitle>
+											<DialogContent>
+												<FormControl fullWidth={true}>
+													<TextField
+														id="addMemberFieldValue"
+														label={clickedCard.slice(0, clickedCard.length - 1)}
+														value={this.state.addMemberFieldValue}
+														onChange={this.handleFieldChange("fieldValue")}
+														margin="normal"
+													/>
+
+													{error ? (
+														<FormHelperText className="error" id="email-error-text">
+															{errorMessage}
+														</FormHelperText>
+													) : (
+														undefined
+													)}
+												</FormControl>
+											</DialogContent>
+											<DialogActions>
+												<Button onClick={this.handleCloseDialog} color="primary">
+													Cancel
+												</Button>
+												<Button onClick={this.addEntity} variant="contained" color="primary">
+													Add
+												</Button>
+											</DialogActions>
+										</Dialog>
 									</div>
 								</div>
 								<CompanyMembers company={this.state.company} user={this.props.user} />
