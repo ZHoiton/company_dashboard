@@ -91,8 +91,30 @@ class Settings extends Component {
 				{ merge: true }
 			);
 
-		console.log(gender, position, department);
+		firestore()
+			.collection("companies")
+			.get()
+			.then(docs => {
+				docs.forEach(doc => {
+					firestore()
+						.collection("companies")
+						.doc(doc.id)
+						.collection("Members")
+						.doc(this.props.currentUser.id)
+						.set(
+							{
+								firstName: firstName,
+								lastName: lastName
+							},
+							{ merge: true }
+						);
+				});
+			})
+			.catch(function(error) {
+				console.debug("Error getting documents: ", error);
+			});
 	};
+
 	loadPersonalData = user => {
 		firestore()
 			.collection("users")
@@ -135,7 +157,8 @@ class Settings extends Component {
 					tempObj["key"] = doc.id;
 					list.push(tempObj);
 				});
-				if (list.size > 0) {
+				if (list.length > 0) {
+					console.log("yes");
 					this.setState({ tabSwitcher: false, avaliableCompanies: list });
 				}
 			});

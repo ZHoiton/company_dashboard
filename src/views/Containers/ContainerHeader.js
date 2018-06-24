@@ -47,10 +47,12 @@ class ContainerHeader extends Component {
 		};
 		this.userName = React.createRef();
 	}
+
 	componentDidUpdate(prevPorps) {
 		if (prevPorps.user !== this.props.user) {
 			if (this.props.isUserLoggedIn) {
 				this.unReadMessagesListener(this.props.user.id);
+				this.companyInvitesListener(this.props.user.id);
 			}
 		}
 	}

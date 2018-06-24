@@ -74,7 +74,7 @@ export default class Company extends Component {
 			.set({
 				Groups: ["Members"],
 				Roles: ["Member"],
-				avatar: company.avatar,
+				avatar: this.props.user.picture,
 				firstName: this.props.user.firstName,
 				lastName: this.props.user.lastName
 			})

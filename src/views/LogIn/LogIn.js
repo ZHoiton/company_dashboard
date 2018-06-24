@@ -47,7 +47,8 @@ export default class Login extends Component {
 						emailError: true
 					});
 				} else {
-					this.props.history.push("/profile");
+					console.log(user);
+					this.props.history.push("/profile/" + user.uid);
 				}
 			})
 			.catch(error => {

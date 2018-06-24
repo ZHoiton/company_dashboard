@@ -95,35 +95,53 @@ export default class CompanyCreate extends Component {
 			companies
 				.doc(key)
 				.collection("Roles")
-				.add({ Name: role })
+				.add({
+					Name: role,
+					Weight: 1
+				})
 		);
 		//* adding defult role "Owner"
 		companies
 			.doc(key)
 			.collection("Roles")
-			.add({ Name: "Owner" });
+			.add({
+				Name: "Owner",
+				Weight: 10
+			});
 		companies
 			.doc(key)
 			.collection("Roles")
-			.add({ Name: "Member" });
+			.add({
+				Name: "Member",
+				Weight: 1
+			});
 
 		//* adding groups
 		groupList.map(group =>
 			companies
 				.doc(key)
 				.collection("Groups")
-				.add({ Name: group })
+				.add({
+					Name: group,
+					Weight: 1
+				})
 		);
 		//* adding defult role "Management"
 		companies
 			.doc(key)
 			.collection("Groups")
-			.add({ Name: "Management" });
+			.add({
+				Name: "Management",
+				Weight: 10
+			});
 
 		companies
 			.doc(key)
 			.collection("Groups")
-			.add({ Name: "Members" });
+			.add({
+				Name: "Members",
+				Weight: 1
+			});
 
 		//* adding the members list
 		companies
