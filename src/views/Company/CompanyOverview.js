@@ -96,6 +96,7 @@ class CompanyOverview extends Component {
 	};
 
 	render() {
+		const {user} = this.props;
 		const { events, company } = this.state;
 		return (
 			<DrawerContext>
@@ -116,22 +117,25 @@ class CompanyOverview extends Component {
 										<div className="company-title">events</div>
 										<div className="company-events-container">
 											<div className="event-list">
-												<Card className="event">
-													<div className="event-add-icon">
-														<AddCircleOutline className="add-icon"/>
-													</div>
-													<CardMedia title={"Add Event"} image="none" />
-													<CardContent>
-														<Typography gutterBottom variant="headline" component="h2">
-															{"Add Event"}
-														</Typography>
-														<Typography component="p" className="event-desc">{"add new event for the whole company, a group or member"}</Typography>
-													</CardContent>
-													<CardActions className="event-actions">
-														<Typography component="p" className="event-date">
-														</Typography>
-													</CardActions>
-												</Card>
+												{user&&company?(user.id===company.FoundedBy?(
+													<Card className="event">
+														<div className="event-add-icon">
+															<AddCircleOutline className="add-icon" />
+														</div>
+														<CardMedia title={"Add Event"} image="none" />
+														<CardContent>
+															<Typography gutterBottom variant="headline" component="h2">
+																{"Add Event"}
+															</Typography>
+															<Typography component="p" className="event-desc">
+																{"add new event for the whole company, a group or member"}
+															</Typography>
+														</CardContent>
+														<CardActions className="event-actions">
+															<Typography component="p" className="event-date" />
+														</CardActions>
+													</Card>
+												):undefined):undefined}
 												{events.length > 0
 													? events.map((event, index) => {
 														return (
@@ -142,7 +146,9 @@ class CompanyOverview extends Component {
 																	<Typography gutterBottom variant="headline" component="h2">
 																		{event.title}
 																	</Typography>
-																	<Typography component="p" className="event-desc">{event.description}</Typography>
+																	<Typography component="p" className="event-desc">
+																		{event.description}
+																	</Typography>
 																</CardContent>
 																<CardActions className="event-actions">
 																	<Typography component="p" className="event-date">
@@ -153,6 +159,114 @@ class CompanyOverview extends Component {
 															</Card>
 														);
 													}): undefined}
+											</div>
+										</div>
+										<div className="company-title">Groups</div>
+										<div className="company-events-container">
+											<div className="event-list">
+												{user&&company?(user.id===company.FoundedBy?(
+													<Card className="event">
+														<img
+															src={
+																"https://firebasestorage.googleapis.com/v0/b/proep-project.appspot.com/o/images%2Fadd_group.png?alt=media&token=8b8d91fd-dd34-4be9-906d-dc75cc3a1409"
+															}
+															alt={"Add Group"}
+															className="event-image"
+														/>
+														<CardMedia title={"Add Group"} image="none" />
+														<CardContent>
+															<Typography gutterBottom variant="headline" component="h2">
+																{"Add Group"}
+															</Typography>
+															<Typography component="p" className="event-desc">
+																{""}
+															</Typography>
+														</CardContent>
+														<CardActions className="event-actions">
+															<Typography component="p" className="event-date" />
+														</CardActions>
+													</Card>
+												):undefined):undefined}
+												{company.Groups
+													? company.Groups.length > 0
+														? company.Groups.map((group, index) => {
+															return (
+																<Card key={index} className="event">
+																	<img
+																		src={
+																			"https://firebasestorage.googleapis.com/v0/b/proep-project.appspot.com/o/images%2Fgroup.png?alt=media&token=9f683f35-1526-4488-bccd-d1f5b3f61dc5"
+																		}
+																		alt={"Group"}
+																		className="event-image"
+																	/>
+																	<CardMedia title={group.Name} image="none" />
+																	<CardContent>
+																		<Typography gutterBottom variant="headline" component="h2">
+																			{group.Name}
+																		</Typography>
+																		<Typography component="p" className="event-desc" />
+																	</CardContent>
+																	<CardActions className="event-actions">
+																		<Typography component="p" className="event-date" />
+																	</CardActions>
+																</Card>
+															);
+														}): undefined
+													: undefined}
+											</div>
+										</div>
+										<div className="company-title">Roles</div>
+										<div className="company-events-container">
+											<div className="event-list">
+												{user&&company?(user.id===company.FoundedBy?(
+													<Card className="event">
+														<img
+															src={
+																"https://firebasestorage.googleapis.com/v0/b/proep-project.appspot.com/o/images%2Fadd_role.png?alt=media&token=7482e32e-ebbc-4787-a3f5-6b7d694744dc"
+															}
+															alt={"Add Role"}
+															className="event-image"
+														/>
+														<CardMedia title={"Add Role"} image="none" />
+														<CardContent>
+															<Typography gutterBottom variant="headline" component="h2">
+																{"Add Role"}
+															</Typography>
+															<Typography component="p" className="event-desc">
+																{""}
+															</Typography>
+														</CardContent>
+														<CardActions className="event-actions">
+															<Typography component="p" className="event-date" />
+														</CardActions>
+													</Card>
+												):undefined):undefined}
+												{company.Roles
+													? company.Roles.length > 0
+														? company.Roles.map((role, index) => {
+															return (
+																<Card key={index} className="event">
+																	<img
+																		src={
+																			"https://firebasestorage.googleapis.com/v0/b/proep-project.appspot.com/o/images%2Fperson.png?alt=media&token=f2b7496b-4a5a-4207-8da0-ca867a9ca1c4"
+																		}
+																		alt={"Role"}
+																		className="event-image"
+																	/>
+																	<CardMedia title={role.Name} image="none" />
+																	<CardContent>
+																		<Typography gutterBottom variant="headline" component="h2">
+																			{role.Name}
+																		</Typography>
+																		<Typography component="p" className="event-desc" />
+																	</CardContent>
+																	<CardActions className="event-actions">
+																		<Typography component="p" className="event-date" />
+																	</CardActions>
+																</Card>
+															);
+														}): undefined
+													: undefined}
 											</div>
 										</div>
 									</div>

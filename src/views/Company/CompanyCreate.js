@@ -41,6 +41,7 @@ export default class CompanyCreate extends Component {
 			tempCompany.Founded = founded;
 			tempCompany.FoundedBy = this.props.user.id;
 			tempCompany.Avatar = null;
+			tempCompany.Cover = "https://firebasestorage.googleapis.com/v0/b/proep-project.appspot.com/o/images%2Fmaterial_company_background_default.jpg?alt=media&token=c41e3e6b-bc82-4bbc-bf1e-3a17fea85fdf";
 			this.setState({ company: tempCompany });
 			break;
 		case 1:
