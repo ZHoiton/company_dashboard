@@ -59,12 +59,13 @@ class CalendarItem extends Component {
 			});
 	}
 
-	onCloseEventTile = () => {
+	onCloseEventTile = e => {
+		e.stopPropagation();
 		this.setState({eventOpen: false});
 	}
 
-	onSelectEvent = (eventId) => {
-
+	onSelectEvent = (e, eventId) => {
+		e.stopPropagation();
 		const event = firestore()
 			.collection("events")
 			.doc(eventId)
@@ -87,6 +88,7 @@ class CalendarItem extends Component {
 			this.setState({eventOpen:true, selectedEvent: tempEvent});
 		});
 	}
+
 	render() {
 		const { day, onClick } = this.props;
 		const { events, selectedEvent } = this.state;
@@ -95,8 +97,8 @@ class CalendarItem extends Component {
 				{day.getDate()}
 				{events.map((event,index)=> {
 					return (
-						<Fragment key={index}>
-							<div className="event-outline" onClick={this.onSelectEvent.bind(this,event.id)}>
+						<div key={index}>
+							<div className="event-outline" onClick={(e) => this.onSelectEvent(e, event.id)}>
 								{event.data().title}
 							</div>
 							{selectedEvent?
@@ -124,7 +126,7 @@ class CalendarItem extends Component {
 										})}
 									</DialogContent>
 								</Dialog>:undefined}
-						</Fragment>
+						</div>
 					);
 				})}
 			</div>
