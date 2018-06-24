@@ -38,7 +38,7 @@ class Tasks extends Component {
 		});
 	};
 
-	handleChange = (userId, key) => {
+	handleChange = (userId, key, boo) => {
 		firestore()
 			.collection("users")
 			.doc(userId)
@@ -46,7 +46,7 @@ class Tasks extends Component {
 			.doc(key)
 			.set(
 				{
-					isCompleted: true
+					isCompleted: !boo
 				},
 				{ merge: true }
 			);
@@ -65,14 +65,15 @@ class Tasks extends Component {
 					return (
 						<Card key={index}>
 							<CardHeader title={task.title} />
-							<CardContent>Deadline: {tasks.deadline}</CardContent>
+							<CardContent>Deadline: {task.deadline.toDate().toDateString(task.deadline)}</CardContent>
 							<CardActions>
 								<Checkbox
 									checked={task.isCompleted}
 									onChange={this.handleChange.bind(
 										this,
 										this.props.match.params.userId,
-										this.key
+										task.key,
+										task.isCompleted
 									)}
 									value="checked"
 									color="primary"
