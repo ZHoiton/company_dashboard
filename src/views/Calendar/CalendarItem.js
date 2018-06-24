@@ -90,7 +90,7 @@ class CalendarItem extends Component {
 		const { day } = this.props;
 		const { events, selectedEvent } = this.state;
 		return (
-			<div className='calendar-item outline'>
+			<div className='calendar-item'>
 				{day.getDate()}
 				{events.map((event,index)=> {
 					return (

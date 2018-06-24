@@ -1,0 +1,8 @@
+.profile-activity {
+    margin-bottom: 10px;
+}
+
+.profile-activity:hover {
+    background-color: #a8bfff;
+    cursor: -webkit-grab;
+}

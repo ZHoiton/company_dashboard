@@ -36,7 +36,7 @@ class Calendar extends Component {
 	render() {
 		const { currentMonth, currentYear } = this.state;
 		return (
-			<div className='calendar-container'>
+			<div className='calendar-container outline'>
 				<CalendarInformation month={currentMonth} onClickChangeMonth={this.onClickChangeMonth}/>
 				<CalendarGrid month={currentMonth} year={currentYear}/>
 			</div>

@@ -42,10 +42,10 @@ class CalendarInformation extends Component {
 
 		return (
 			<div className='calendar-information-container'>
-				<div className='calendar-information outline'>
-					<KeyboardArrowLeft onClick={onClickChangeMonth.bind(this,'back')} className="calendar-arrow-backwards outline"/>
+				<div className='calendar-information'>
+					<KeyboardArrowLeft onClick={onClickChangeMonth.bind(this,'back')} className="calendar-arrow-backwards"/>
 					<p>{monthName}</p>
-					<KeyboardArrowRight onClick={onClickChangeMonth.bind(this,'forward')} className="calendar-arrow-forwards outline"/>
+					<KeyboardArrowRight onClick={onClickChangeMonth.bind(this,'forward')} className="calendar-arrow-forwards"/>
 				</div>
 				<div ref={this.userName}>
 					<Button  onClick={this.onClickTimeframe} className='calendar-information-button' variant="contained" color="secondary">
