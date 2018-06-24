@@ -1,6 +1,6 @@
 .settingsFields {
     margin: auto;
-    width: 50%;
+    width: 80%;
     padding: 10px;
 }
 .lTabs{
@@ -22,13 +22,35 @@ margin-left: 30%;
 margin-right: 30%
 }
 .passTextField{
-    margin-left: 45%;
+    margin-left: 50%;
 }
 .changePassButton
 {
-    margin-left: 60%;
+    margin-left: 73%;
 }
 .passErrorMessage{
-    margin-left: 70%;
+    margin-left: 50%;
     color:red;
+}
+.settings-card {
+    width: 40%;
+    height: 800px;
+    margin:auto;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+}
+.compSaveBtn{
+    
+width: 20%;
+margin-left: 40%;
+margin-right: 30%
+}
+.companySettings-card {
+    width: 40%;
+    height: 250px;
+    margin:auto;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
 }
