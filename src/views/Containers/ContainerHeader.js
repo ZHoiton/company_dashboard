@@ -21,6 +21,7 @@ import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
 import Business from "@material-ui/icons/Business";
 import DateRange from "@material-ui/icons/DateRange";
+import DoneOutline from "@material-ui/icons/Done";
 import Settings from "@material-ui/icons/Settings";
 import Message from "@material-ui/icons/Message";
 import Badge from "@material-ui/core/Badge";
@@ -99,6 +100,11 @@ class ContainerHeader extends Component {
 	onCalendarClick = userId => {
 		this.handleClick();
 		this.props.history.push("/calendar/" + userId);
+	};
+
+	onTasksClick = userId => {
+		this.handleClick();
+		this.props.history.push("/tasks/" + userId);
 	};
 
 	unReadMessagesListener = userId => {
@@ -204,6 +210,12 @@ class ContainerHeader extends Component {
 																		)}
 																	</ListItemIcon>
 																	<ListItemText primary="Companies" />
+																</MenuItem>
+																<MenuItem onClick={this.onTasksClick.bind(this, context.user.id)}>
+																	<ListItemIcon>
+																		<DoneOutline />
+																	</ListItemIcon>
+																	<ListItemText primary="Tasks" />
 																</MenuItem>
 																<MenuItem onClick={this.onCalendarClick.bind(this, context.user.id)}>
 																	<ListItemIcon>
