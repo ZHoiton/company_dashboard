@@ -150,6 +150,7 @@ class CompanyOverview extends Component {
 			.collection(this.state.clickedCard)
 			.doc()
 			.set({ Name: this.state.fieldValue, Weight: 1 });
+		this.handleCloseDialog();
 	};
 
 	render() {
@@ -207,7 +208,7 @@ class CompanyOverview extends Component {
 																<img src={event.image} alt={event.title} className="event-image" />
 																<CardMedia title={event.title} image="none" />
 																<CardContent>
-																	<Typography gutterBottom variant="headline" component="h2">
+																	<Typography gutterBottom variant="headline" component="h2" className="event-title">
 																		{event.title}
 																	</Typography>
 																	<Typography component="p" className="event-desc">
@@ -271,7 +272,7 @@ class CompanyOverview extends Component {
 																	/>
 																	<CardMedia title={group.Name} image="none" />
 																	<CardContent>
-																		<Typography gutterBottom variant="headline" component="h2">
+																		<Typography gutterBottom variant="headline" component="h2" className="event-title">
 																			{group.Name}
 																		</Typography>
 																		<Typography component="p" className="event-desc" />
@@ -331,7 +332,7 @@ class CompanyOverview extends Component {
 																	/>
 																	<CardMedia title={role.Name} image="none" />
 																	<CardContent>
-																		<Typography gutterBottom variant="headline" component="h2">
+																		<Typography gutterBottom variant="headline" component="h2" className="event-title">
 																			{role.Name}
 																		</Typography>
 																		<Typography component="p" className="event-desc" />
@@ -356,9 +357,9 @@ class CompanyOverview extends Component {
 											<DialogContent>
 												<FormControl fullWidth={true}>
 													<TextField
-														id="addMemberFieldValue"
+														id="fieldValue"
 														label={clickedCard.slice(0, clickedCard.length - 1)}
-														value={this.state.addMemberFieldValue}
+														value={this.state.fieldValue}
 														onChange={this.handleFieldChange("fieldValue")}
 														margin="normal"
 													/>

@@ -104,7 +104,7 @@ export default class Profile extends Component {
 	}
 
 	getPosition() {
-		if(this.state.position === undefined  || this.state.position.trim() === "" )  {
+		if(this.state.position === undefined  || this.state.position === "" )  {
 			return(false);
 		}
 		else{

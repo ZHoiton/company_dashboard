@@ -179,6 +179,9 @@
 	font-size: 70px;
 	color: lightgray;
 }
+.event-title{
+	max-width: 200px;
+}
 
 /*//* Company Members */
 .company-members {
