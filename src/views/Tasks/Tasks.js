@@ -11,6 +11,8 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 
 class Tasks extends Component {
 	static propTypes = {
@@ -143,17 +145,21 @@ class Tasks extends Component {
 									: (undefined)}
 								<CardContent>Deadline: {task.deadline.toDate().toDateString()}</CardContent>
 								<CardActions>
-									<Checkbox
-										checked={task.isCompleted}
-										onChange={this.handleChange.bind(
-											this,
-											this.props.match.params.userId,
-											task.key,
-											task.isCompleted
-										)}
-										value="checked"
-										color="primary"
-									/>
+									<FormControlLabel
+										control = {
+											<Checkbox
+												checked={task.isCompleted}
+												onChange={this.handleChange.bind(
+													this,
+													this.props.match.params.userId,
+													task.key,
+													task.isCompleted
+												)}
+												value="checked"
+												color="primary"
+											/>
+										}
+										label = "Completed"/>
 								</CardActions>
 							</Card>
 						);
