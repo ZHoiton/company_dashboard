@@ -6,6 +6,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
 import "../styles/ProfileStyles.css";
+import TextField from '@material-ui/core/TextField';
 import { firestore,storage } from "firebase";
 import PropTypes from "prop-types";
 import CardActions from "@material-ui/core/CardActions";
@@ -41,6 +42,7 @@ export default class Profile extends Component {
 		const { currentUser } = this.props;
 		const { ref } = this.state;
 
+		if (!currentUser) return;
 		ref
 			.doc(userId?userId: currentUser.id)
 			.get()
@@ -66,7 +68,6 @@ export default class Profile extends Component {
 			snapshot.forEach(doc => {
 				let tempObj = {};
 				tempObj = doc.data();
-				console.log(tempObj);
 				tempObj["key"] = doc.id;
 				list.push(tempObj);
 			});
@@ -74,43 +75,6 @@ export default class Profile extends Component {
 		});
 	};
 
-	getHeight() {
-		const Height = this.state.height;
-		if(Height === undefined){
-			return(false);
-		}
-		else{
-			return(true);
-		}
-	}
-
-	getWeight() {
-		if(this.state.weight === undefined){
-			return(false);
-		}
-		else{
-			return(true);
-		}
-	}
-
-	getCountry() {
-		if (!this.state.country) return false;
-		if(this.state.country.trim() === "" ){
-			return(false);
-		}
-		else{
-			return(true);
-		}
-	}
-
-	getPosition() {
-		if(this.state.position === undefined  || this.state.position === "" )  {
-			return(false);
-		}
-		else{
-			return(true);
-		}
-	}
 	componentDidMount(){
 		this.getUser(this.props.match.params.userId);
 		this.getCompanies(this.props.match.params.userId);
@@ -172,34 +136,27 @@ export default class Profile extends Component {
 		}
 	}
 	render() {
-		const { first, last, image, companies , height,weight,country,position, education} = this.state;
+		const { first, last, image, companies ,country,position, education} = this.state;
 		return (
 			<Card className="profile-page">
 				<CardHeader title={first + " " + last} />
 				<CardContent>
 					<div className="profile-info-box">
 						<Avatar alt="Remy Sharp" src={image} className="profile-picture"/>
-						<input className="button-upload" type="file" ref={(ref) => { this.uploadInput = ref; }} onChange={this.handleUploadImage} />
 						<Card className="profile-info">
 							<form>
 								<label>
-									Height:
-									<input className="profile-info-field1" type="text"  key={Math.floor((Math.random()*10))} name="height" defaultValue={this.getHeight() ? height : "Unknown" } onChange={(event) => this.heightChange(event)} />
-									 cm
+									Gender:
+									<TextField className="profile-info-field1" type="text"  key={Math.floor((Math.random()*10))} name="height" defaultValue={'Male'} onChange={(event) => this.heightChange(event)} />
 								</label>
 								<br/>
 								<label>
-									Weight:
-									<input className="profile-info-field2" type="text" key={Math.floor((Math.random()*10))} name="weight" defaultValue={this.getWeight() ? weight : "Unknown"} onChange={(event) => this.weightChange(event)} />
-									 kg
+									Country
+									<TextField className="profile-info-field2" type="text" key={Math.floor((Math.random()*10))} name="weight" defaultValue={country} onChange={(event) => this.weightChange(event)} />
 								</label>
 								<br/>
-								<label>
-									Country:
-									<input className="profile-info-field3" type="text" key={Math.floor((Math.random()*10))} name="country" defaultValue={this.getCountry() ? country : "Unknown"} onChange={(event)=>this.countryChange(event)}/>
-								</label>
 							</form>
-							<p>Position: {this.getPosition() ? position : "Not Yet Assigned" }</p>
+							<p>Position: {position !== ""? position : "Not Yet Assigned" }</p>
 						</Card>
 					</div>
 					{companies.length > 0

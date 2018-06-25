@@ -81,7 +81,6 @@ class CalendarGrid extends Component {
 	}
 
 	onClickDate = day => {
-		console.log(day);
 		this.setState({createEvent:true,clickedDate: day});
 	}
 

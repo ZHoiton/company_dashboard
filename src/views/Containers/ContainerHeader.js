@@ -17,7 +17,6 @@ import Popover from "@material-ui/core/Popover";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
-import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
 import Business from "@material-ui/icons/Business";
 import DateRange from "@material-ui/icons/DateRange";
@@ -189,12 +188,6 @@ class ContainerHeader extends Component {
 													<Grow in={clicked}>
 														<Paper>
 															<MenuList role="menu">
-																<MenuItem onClick={this.handleClick}>
-																	<ListItemIcon>
-																		<Dashboard />
-																	</ListItemIcon>
-																	<ListItemText primary="Dashboard" />
-																</MenuItem>
 																<MenuItem onClick={this.onProfileClick.bind(this, context.user.id)}>
 																	<ListItemIcon>
 																		<Person />

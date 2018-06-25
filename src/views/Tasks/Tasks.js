@@ -118,6 +118,8 @@ class Tasks extends Component {
 					case "0":
 						s = true;
 						break;
+					default:
+						break;
 					}
 					if (s)
 					{
@@ -164,6 +166,8 @@ class Tasks extends Component {
 								</CardActions>
 							</Card>
 						);
+					} else {
+						return undefined;
 					}
 				})
 					: undefined}

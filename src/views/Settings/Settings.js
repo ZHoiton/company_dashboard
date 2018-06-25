@@ -91,29 +91,6 @@ class Settings extends Component {
 				},
 				{ merge: true }
 			);
-
-		// firestore()
-		// 	.collection("companies")
-		// 	.get()
-		// 	.then(docs => {
-		// 		docs.forEach(doc => {
-		// 			firestore()
-		// 				.collection("companies")
-		// 				.doc(doc.id)
-		// 				.collection("Members")
-		// 				.doc(this.props.currentUser.id)
-		// 				.set(
-		// 					{
-		// 						firstName: firstName,
-		// 						lastName: lastName
-		// 					},
-		// 					{ merge: true }
-		// 				);
-		// 		});
-		// 	})
-		// 	.catch(function(error) {
-		// 		console.debug("Error getting documents: ", error);
-		// 	});
 	};
 
 	loadPersonalData = user => {
@@ -123,7 +100,7 @@ class Settings extends Component {
 			.get()
 			.then(doc => {
 				if (!doc.exists) {
-					console.log("No such document!");
+					console.debug("No such document!");
 				} else {
 					this.setState({
 						firstName: doc.data().firstName,
@@ -137,9 +114,6 @@ class Settings extends Component {
 						country: doc.data().country
 					});
 				}
-			})
-			.catch(err => {
-				console.log("Error getting document", err);
 			});
 	};
 	loadCompanyData = user => {
@@ -154,12 +128,10 @@ class Settings extends Component {
 				snapshot.forEach(doc => {
 					let tempObj = {};
 					tempObj = doc.data();
-					console.log(doc.data());
 					tempObj["key"] = doc.id;
 					list.push(tempObj);
 				});
 				if (list.length > 0) {
-					console.log("yes");
 					this.setState({ tabSwitcher: false, avaliableCompanies: list });
 				}
 			});
@@ -173,7 +145,7 @@ class Settings extends Component {
 				.get()
 				.then(doc => {
 					if (!doc.exists) {
-						console.log("No such document!");
+						console.debug("No such document!");
 					} else {
 						this.setState({
 							companyName: doc.data().Name,
@@ -183,7 +155,7 @@ class Settings extends Component {
 					}
 				})
 				.catch(err => {
-					console.log("Error getting document", err);
+					console.debug("Error getting document", err);
 				});
 		}
 	};

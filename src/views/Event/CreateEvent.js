@@ -20,7 +20,6 @@ class CreateEvent extends Component {
 		onClose: PropTypes.func,
 		defaultDate: PropTypes.object,
 		match: PropTypes.object,
-		currentUser: PropTypes.object,
 	};
 
 	constructor(props) {

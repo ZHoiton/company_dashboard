@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { firestore } from "firebase";
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Avatar } from '@material-ui/core';
 import '../styles/CalendarStyles.css';
@@ -23,7 +22,7 @@ class CalendarItem extends Component {
 			selectedEventAttendants: [],
 			eventOpen: false,
 		};
-		this.snapshot;
+		this.snapshot = ()=>{};
 	}
 
 	componentDidMount() {
@@ -35,7 +34,7 @@ class CalendarItem extends Component {
 
 	componentDidUpdate(prevProps){
 		const { userId, day } = this.props;
-
+		if (!userId) return;
 		if (prevProps.day.getTime() === day.getTime()) return;
 		this.snapshot();
 		this.getEvents(userId,day);
@@ -44,7 +43,7 @@ class CalendarItem extends Component {
 	getEvents = (userId, day) => {
 		const start = new Date(day.setHours(0,0,0,0));
 		const end = new Date(day.setHours(day.getHours() + 23,59,59));
-
+		if (!userId) return;
 		this.snapshot = firestore()
 			.collection("users")
 			.doc(userId)

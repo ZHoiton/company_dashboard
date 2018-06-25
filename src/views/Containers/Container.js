@@ -19,22 +19,23 @@ export default class Container extends Component {
 			<div className="root">
 				<AuthContext>{context => <ContainerHeader user={context.user} isUserLoggedIn={context.userIsLoggedIn}/>}</AuthContext>
 				<Switch>
-					<Route exact path="/" component={Home} />
+
 					<AuthContext>
 						{context => {
 							return context.userIsLoggedIn ? (
 								<Fragment>
+									<Route exact path="/" component={Calendar} />
 									<Route exact path="/settings" render={props => <Settings {...props} currentUser={context.user} />} />
 									<Route exact path="/calendar/:userId" component={Calendar} />
 									<Route exact path="/profile/:userId" render={props => <Profile {...props} currentUser={context.user} />} />
 									<Route path="/company" render={props => <Company {...props} user={context.user} />} />
 									<Route path="/tasks/:userId" component={TaskHolder} />
-									<Route exact path="/login" render={props => <Profile {...props} user={context.user} />} />
 									<Route path="/messenger/:targetUserId" render={props => <Messenger {...props} user={context.user} />} />
 									<Route exact path="/messenger" render={props => <Messenger {...props} user={context.user} />} />
 								</Fragment>
 							) : (
 								<Fragment>
+									<Route exact path="/" component={LogIn} />
 									<Route exact path="/login" component={LogIn} />
 									<Route exact path="/register" component={Register} />
 								</Fragment>

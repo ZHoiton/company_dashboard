@@ -8,7 +8,6 @@ import { firestore } from "firebase";
 
 export default class Messenger extends Component {
 	static propTypes = {
-		history: PropTypes.object,
 		match: PropTypes.object,
 		user: PropTypes.object
 	};
@@ -68,7 +67,6 @@ export default class Messenger extends Component {
 									const tempObj = {};
 									tempObj["data"] = doc.data();
 									tempObj["key"] = doc.id;
-									console.log(tempObj);
 									this.setState({ targetUser: tempObj });
 								});
 						}

@@ -3,15 +3,10 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import "../styles/ProfileStyles.css";
 import "../styles/HomePageStyles.css";
-import PropTypes from "prop-types";
 import firebase from "firebase";
 import { firestore } from "firebase";
 import "../styles/HomePageStyles.css";
 export default class Home extends Component {
-	static propTypes = {
-		classes: PropTypes.object.isRequired,
-		currentUser: PropTypes.object
-	};
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -26,15 +21,12 @@ export default class Home extends Component {
 			.doc(user.uid)
 			.get()
 			.then(doc => {
-				if (!doc.exists) {
-					console.log("No such document!");
-				} else {
-					console.log(doc.data());
+				if (doc.exists) {
 					this.setState({ currentUserData: doc.data() });
 				}
 			})
 			.catch(err => {
-				console.log("Error getting document", err);
+				console.debug("Error getting document", err);
 			});
 	};
 
@@ -47,12 +39,9 @@ export default class Home extends Component {
 				snapshot.forEach(doc => {
 					let tempObj = {};
 					tempObj = doc.data();
-					console.log(doc.data());
 					tempObj["key"] = doc.id;
 					list.push(tempObj);
 				});
-
-				console.log("yes");
 				this.setState({ taskData: list });
 			});
 	};
@@ -69,12 +58,10 @@ export default class Home extends Component {
 				snapshot.forEach(doc => {
 					let tempObj = {};
 					tempObj = doc.data();
-					console.log(doc.data());
 					tempObj["key"] = doc.id;
 					list.push(tempObj);
 				});
 				if (list.length > 0) {
-					console.log("yes");
 					this.setState({ ownedCompanies: list });
 				}
 			});
