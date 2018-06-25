@@ -179,8 +179,7 @@ export default class Profile extends Component {
 				<CardContent>
 					<div className="profile-info-box">
 						<Avatar alt="Remy Sharp" src={image} className="profile-picture"/>
-						<br/>
-						<input type="file" ref={(ref) => { this.uploadInput = ref; }} onChange={this.handleUploadImage} />
+						<input className="button-upload" type="file" ref={(ref) => { this.uploadInput = ref; }} onChange={this.handleUploadImage} />
 						<Card className="profile-info">
 							<form>
 								<label>
@@ -206,7 +205,7 @@ export default class Profile extends Component {
 					{companies.length > 0
 						? companies.map((company, index) => {
 							return (
-								<Card key={index}>
+								<Card className="profile-company" key={index}>
 									<CardMedia src={company.avatar} title={company.title} />
 									<CardContent>Company Name: {company.name}</CardContent>
 									<CardActions>
@@ -221,7 +220,7 @@ export default class Profile extends Component {
 							);
 						})
 						: "No Company"}
-					<Card className="profile-activity">
+					<Card className="profile-education">
 						Education :
 						<input type="text"  key={Math.floor((Math.random()*10))} name="education" defaultValue={education !== null ||education.toString().length > 0 ? education : "Unknown" } onChange={(event) => this.educationChange(event)} />
 					</Card>

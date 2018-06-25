@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Avatar } from '@material-ui/core';
+import '../styles/CalendarStyles.css';
 
 class CalendarItem extends Component {
 	static propTypes = {
@@ -109,15 +110,15 @@ class CalendarItem extends Component {
 								>
 									<DialogTitle>{selectedEvent.title}</DialogTitle>
 									<DialogContent>
-										<DialogContentText>
+										<div>
 											Start Time: {selectedEvent.startTime.toDate().toLocaleString('en-GB', { timeZone: 'UTC' })}
-										</DialogContentText>
-										<DialogContentText>
+										</div>
+										<div>
 											End Time: {selectedEvent.endTime.toDate().toLocaleString('en-GB', { timeZone: 'UTC' })}
-										</DialogContentText>
-										<DialogContentText>
+										</div>
+										<div>
 											{selectedEvent.description}
-										</DialogContentText>
+										</div>
 										{selectedEvent.attendants.map(att =>{
 											return (<Fragment key={att}>
 												<Avatar src={att.avatar}/>

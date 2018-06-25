@@ -10,20 +10,47 @@
 .profile-picture {
     width: 200px;
     height: 200px;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-.profile-activity {
-    margin: 50px 10px;
+.profile-education {
+    margin-top: 20px;
     padding: 10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.profile-education:hover {
+    background-color: #dbe5ff;
 }
 
 .profile-info-box {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .profile-info {
     width: 80%;
     padding: 20px;
+}
+
+.profile-info:hover {
+    background-color: #dbe5ff;
+}
+
+.profile-company {
+    margin-top: 20px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.profile-company:hover {
+    background-color: #dbe5ff;
+}
+
+.button-upload {
+    background-color: blue;
 }
