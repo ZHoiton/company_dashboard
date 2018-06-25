@@ -1,4 +1,4 @@
-
+![CircleCI Build Status](https://circleci.com/gh/ZHoiton/company_dashboard/tree/master.svg?style=shield&?circle-token=6c9505355f44572478b3170448b2571b7e4f776f)
 ## Company Dashboard
 
 Prerequisite:
