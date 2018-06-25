@@ -3,49 +3,82 @@
     width: 80%;
     padding: 10px;
 }
-.lTabs{
+
+.lTabs {
     margin: auto;
     width: 30%;
     padding: 10px;
 }
-.txtFieldWidth{
-    width: 220%
+
+.txtFieldWidth {
+    width: 220%;
 }
+
 .tabPersonal{
    padding-right: 40px;
 }
 
-.btnSave{
- 
-width: 40%;
-margin-left: 30%;
-margin-right: 30%
+.btnSave {
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
 }
-.passTextField{
+
+.btnSave:hover {    
+    background-color: #ffffff;
+    -webkit-text-fill-color: #3f51b5;
+    border: solid 1.5px;
+    border-color: #3f51b5;
+}
+
+.passTextField {
     margin-left: 50%;
 }
-.changePassButton
-{
+
+.changePassButton {
     margin-left: 73%;
 }
-.passErrorMessage{
+
+.changePassButton:hover {
+    background-color: #ffffff;
+    -webkit-text-fill-color: #3f51b5;
+    border: solid 1.5px;
+    border-color: #3f51b5;
+}
+
+.passErrorMessage {
     margin-left: 50%;
     color:red;
 }
+
 .settings-card {
     width: 40%;
     height: 800px;
     margin:auto;
-    margin-top: 15px;
+    margin-top: 15px;    
     display: flex;
     flex-direction: column;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
-.compSaveBtn{
-    
-width: 20%;
-margin-left: 40%;
-margin-right: 30%
+
+.settings-card:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
+
+.compSaveBtn {    
+    width: 20%;
+    margin-left: 40%;
+    margin-right: 30%;
+    margin-top: 10px;
+}
+
+.compSaveBtn:hover {    
+    background-color: #ffffff;
+    -webkit-text-fill-color: #3f51b5;
+    border: solid 1.5px;
+    border-color: #3f51b5;
+}
+
 .companySettings-card {
     width: 40%;
     height: 250px;
@@ -53,4 +86,9 @@ margin-right: 30%
     margin-top: 30px;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.companySettings-card:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }

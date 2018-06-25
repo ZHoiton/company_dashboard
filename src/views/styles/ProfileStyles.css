@@ -19,38 +19,67 @@
 .profile-education {
     margin-top: 20px;
     padding: 10px;
+    cursor: pointer;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .profile-education:hover {
     background-color: #dbe5ff;
+    box-shadow: 0 8px 12px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.education-field {
+    margin-left: 10px;
 }
 
 .profile-info-box {
     display: flex;
     flex-direction: row;
+    cursor: pointer;
     justify-content: space-between;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .profile-info {
     width: 80%;
-    padding: 20px;
+    padding-top: 50px;
+    padding-left: 50px;
+    margin: 10px 10px 10px 10px;
+}
+
+.profile-info-field1 {
+    margin-left: 22.5px;
+    margin-bottom: 5px;
+}
+
+.profile-info-field2 {
+    margin-left: 19px;
+    margin-bottom: 5px;
+}
+
+.profile-info-field3 {
+    margin-left: 13px;
 }
 
 .profile-info:hover {
     background-color: #dbe5ff;
+    box-shadow: 0 8px 12px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 .profile-company {
     margin-top: 20px;
+    cursor: pointer;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .profile-company:hover {
     background-color: #dbe5ff;
+    box-shadow: 0 8px 12px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
-.button-upload {
-    background-color: blue;
+.button-company:hover {
+    background-color: #dbe5ff;
+    -webkit-text-fill-color: #3f51b5;
+    border: solid 1.5px;
+    border-color: #3f51b5;
 }

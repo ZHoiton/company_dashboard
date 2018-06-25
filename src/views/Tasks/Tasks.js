@@ -12,6 +12,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import "../styles/TaskStyles.css";
 
 
 class Tasks extends Component {
@@ -121,7 +122,7 @@ class Tasks extends Component {
 					if (s)
 					{
 						return (
-							<Card key={index}>
+							<Card className="task" key={index}>
 								<CardHeader onClick={(e) => this.onSelectTask(e, task.key)} title={task.title}  />
 								{title?
 									<Dialog

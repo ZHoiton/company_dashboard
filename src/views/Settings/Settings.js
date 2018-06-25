@@ -294,7 +294,9 @@ class Settings extends Component {
 										}}
 									/>
 								</form>
-								<Button size="large" variant="raised" color="primary" onClick={this.onSubmit} className="changePassButton">{`Change Password`}</Button>
+								<Button className="changePassButton" size="large" variant="raised" color="primary" onClick={this.onSubmit}>
+									{`Change Password`}
+								</Button>
 							</div>
 							<div className="settingsFields">
 								<FormControl className={classes.formControl}>
@@ -364,7 +366,7 @@ class Settings extends Component {
 								<TextField id="description" label="Description" value={description} onChange={this.onChange} fullWidth multiline rowsMax="4" margin="normal" />
 							</div>
 						</Card>
-						<Button size="large" variant="raised" onClick={this.onSaveClick} color="primary" className="btnSave">
+						<Button className="btnSave" size="large" variant="contained" onClick={this.onSaveClick} color="primary">
 							{`Save`}
 						</Button>
 					</div>

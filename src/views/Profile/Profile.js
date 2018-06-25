@@ -184,19 +184,19 @@ export default class Profile extends Component {
 							<form>
 								<label>
 									Height:
-									<input type="text"  key={Math.floor((Math.random()*10))} name="height" defaultValue={this.getHeight() ? height : "Unknown" } onChange={(event) => this.heightChange(event)} />
-									: cm
+									<input className="profile-info-field1" type="text"  key={Math.floor((Math.random()*10))} name="height" defaultValue={this.getHeight() ? height : "Unknown" } onChange={(event) => this.heightChange(event)} />
+									 cm
 								</label>
 								<br/>
 								<label>
 									Weight:
-									<input type="text" key={Math.floor((Math.random()*10))} name="weight" defaultValue={this.getWeight() ? weight : "Unknown"} onChange={(event) => this.weightChange(event)} />
-									: kg
+									<input className="profile-info-field2" type="text" key={Math.floor((Math.random()*10))} name="weight" defaultValue={this.getWeight() ? weight : "Unknown"} onChange={(event) => this.weightChange(event)} />
+									 kg
 								</label>
 								<br/>
 								<label>
 									Country:
-									<input type="text" key={Math.floor((Math.random()*10))} name="country" defaultValue={this.getCountry() ? country : "Unknown"} onChange={(event)=>this.countryChange(event)}/>
+									<input className="profile-info-field3" type="text" key={Math.floor((Math.random()*10))} name="country" defaultValue={this.getCountry() ? country : "Unknown"} onChange={(event)=>this.countryChange(event)}/>
 								</label>
 							</form>
 							<p>Position: {this.getPosition() ? position : "Not Yet Assigned" }</p>
@@ -209,10 +209,10 @@ export default class Profile extends Component {
 									<CardMedia src={company.avatar} title={company.title} />
 									<CardContent>Company Name: {company.name}</CardContent>
 									<CardActions>
-										<Button size="small" color="primary">
+										<Button className="button-company" size="small" color="primary" variant="contained">
 											Share
 										</Button>
-										<Button size="small" color="primary">
+										<Button className="button-company" size="small" color="primary" variant="contained">
 											Learn More
 										</Button>
 									</CardActions>
@@ -221,8 +221,8 @@ export default class Profile extends Component {
 						})
 						: "No Company"}
 					<Card className="profile-education">
-						Education :
-						<input type="text"  key={Math.floor((Math.random()*10))} name="education" defaultValue={education !== null ||education.toString().length > 0 ? education : "Unknown" } onChange={(event) => this.educationChange(event)} />
+						Education:
+						<input type="text" className="education-field" key={Math.floor((Math.random()*10))} name="education" defaultValue={education !== null ||education.toString().length > 0 ? education : "Unknown" } onChange={(event) => this.educationChange(event)} />
 					</Card>
 				</CardContent>
 			</Card>
